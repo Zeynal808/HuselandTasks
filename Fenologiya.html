@@ -88,7 +88,7 @@ button{font-family:inherit}
           <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px">
             <template data-for="stages" data-as="s">
               <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.on}}" style="text-align: left; cursor: pointer; font: inherit; color: #16201A; background: {{s.bg}}; border: 2px solid {{s.border}}; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px">
-                <template data-if="s.hasImg"><img src="{{s.img}}" alt="{{s.alt}}" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block"></template>
+                <template data-if="s.hasImg"><img src="{{s.img}}" alt="{{s.alt}}" style="width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: #FFFFFF; border-radius: 8px; display: block"></template>
                 <template data-if="s.noImg"><span style="aspect-ratio: 4 / 3; border-radius: 8px; background: #EEF1EE; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #5A665E; text-align: center; padding: 4px">bu faza üçün foto hələ yoxdur</span></template>
                 <span style="font-weight: 700; font-size: 16px">{{s.code}}</span>
                 <span style="font-size: 13px; color: #33403A; line-height: 1.35">{{s.name}}</span>
@@ -241,18 +241,18 @@ class Component extends DCLogic {
     function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     var cur0 = getPhase(), picked = st.picked || cur0.code; var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
-    var list = [['B', 'Tumurcuq şişir', 'faza_b', 'tumurcuq şişib (kitab, Fəsil 4)'], ['C', 'Yaşıl uc görünür', 'faza_yasil_uc', 'yaşıl uc (BBCH 07–09 / 53)'],
-      ['C3', 'Yaşıl uc açılır', 'faza_c3', 'pulcuqlar açılır, yaşıl görünür'],
-      ['D', 'Yaşıl salxım', 'faza_bbch55', 'BBCH 55–56: qönçələr görünür, yarpaqlar açılır'], ['D3', 'Salxımda tumurcuqlar ayrılır', 'faza_bbch56', 'BBCH 56: sıx qrup, qönçələr yaşıl'],
-      ['E', 'Kasa yarpaqları görünür', 'faza_e', 'qönçələr ayrılıb, ləçək ucu görünməyə başlayır'], ['E2', 'Çəhrayı tumurcuq', 'faza_bbch57', 'BBCH 57: çəhrayı qönçə'],
-      ['F', 'İlk çiçəklər', 'faza_bbch60', 'BBCH 60–61: kral çiçək açılıb'],
-      ['F2', 'Tam çiçəkləmə', 'faza_cicek', 'açılmış çiçəklər'], ['G', 'Ləçəklər tökülür', 'faza_bbch69', 'BBCH 69–71: çiçəkləmənin sonu'],
-      ['H', 'Meyvə bağlayır', 'faza_h', 'cavan meyvələr, çiçək qalıqları quruyur'],
-      ['Payız-1', 'Yarpaqlar saralır, tökülməyə başlayır', 'faza_payiz1', 'yarpaq tökümünün başlanğıcı'],
-      ['Payız-2', 'Yarpaqların ~95%-i töküldü', 'faza_payiz2', 'qış sanitariyasının vaxtı']];
+    var list = [['B', 'Tumurcuq şişir', 'r_51.png', 'tumurcuq şişib (kitab, Fəsil 4) · rəsm: BBCH (Meier 2018, CC BY 4.0)'], ['C', 'Yaşıl uc görünür', 'r_53.png', 'yaşıl uc (BBCH 07–09 / 53) · rəsm: BBCH (Meier 2018, CC BY 4.0)'],
+      ['C3', 'Yaşıl uc açılır', 'r_54.png', 'pulcuqlar açılır, yaşıl görünür · rəsm: BBCH (Meier 2018, CC BY 4.0)'],
+      ['D', 'Yaşıl salxım', 'r_55.png', 'BBCH 55–56: qönçələr görünür, yarpaqlar açılır · rəsm: BBCH (Meier 2018, CC BY 4.0)'], ['D3', 'Salxımda tumurcuqlar ayrılır', 'our_56.svg', 'BBCH 56: sıx qrup, qönçələr yaşıl · sxematik rəsm, rənglənib'],
+      ['E', 'Kasa yarpaqları görünür', 'r_57.png', 'qönçələr ayrılıb, ləçək ucu görünməyə başlayır · rəsm: BBCH (Meier 2018, CC BY 4.0)'], ['E2', 'Çəhrayı tumurcuq', 'r_59.png', 'BBCH 57: çəhrayı qönçə · rəsm: BBCH (Meier 2018, CC BY 4.0)'],
+      ['F', 'İlk çiçəklər', 'r_61.png', 'BBCH 60–61: kral çiçək açılıb · rəsm: BBCH (Meier 2018, CC BY 4.0)'],
+      ['F2', 'Tam çiçəkləmə', 'our_65.svg', 'açılmış çiçəklər · sxematik rəsm, rənglənib'], ['G', 'Ləçəklər tökülür', 'our_67.svg', 'BBCH 69–71: çiçəkləmənin sonu · sxematik rəsm, rənglənib'],
+      ['H', 'Meyvə bağlayır', 'r_71.png', 'cavan meyvələr, çiçək qalıqları quruyur · rəsm: BBCH (Meier 2018, CC BY 4.0)'],
+      ['Payız-1', 'Yarpaqlar saralır, tökülməyə başlayır', 'our_93.svg', 'yarpaq tökümünün başlanğıcı · sxematik rəsm, rənglənib'],
+      ['Payız-2', 'Yarpaqların ~95%-i töküldü', 'our_97.svg', 'qış sanitariyasının vaxtı · sxematik rəsm, rənglənib']];
     var stages = list.map(function (x) {
       var on = picked === x[0];
-      return { code: x[0], name: x[1], on: on, hasImg: !!x[2], noImg: !x[2], img: x[2] ? 'img/' + x[2] + '.jpg' : '', alt: x[0] + ' fazası — ' + x[1], cap: x[3] || 'kitab Fəsil 7', bg: on ? '#E7EFE9' : '#FFFFFF', border: on ? '#1F5E3B' : '#E2E6E2',
+      return { code: x[0], name: x[1], on: on, hasImg: !!x[2], noImg: !x[2], img: x[2] ? 'img/feno/' + x[2] : '', alt: x[0] + ' fazası — ' + x[1], cap: x[3] || 'kitab Fəsil 7', bg: on ? '#E7EFE9' : '#FFFFFF', border: on ? '#1F5E3B' : '#E2E6E2',
         pick: function () { self.setState({ picked: x[0], done: false }); } };
     });
     return { stages: stages, picked: picked, p1: dd(-12), curLine: phLine(cur0), curCode: cur0.code, previewTitle: 'Faza ' + picked + ' üçün plan (düzəldilmiş plan):', preview: itemsFor(picked).map(function (it) { var m = getMarks()[itemKey(picked, it)] || {}; return { t: (m.st === 'done' ? '✓ Edildi ' + m.date + ' — ' : '') + it.title, w: it.why }; }), noPreview: itemsFor(picked).length === 0,
