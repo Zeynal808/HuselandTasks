@@ -11,7 +11,12 @@
 body{margin:0;background:#F4F5F2}
 a{color:#1F5E3B}a:hover{color:#123D26}
 button{font-family:inherit}
+#bag-map{height:560px;width:100%;background:#2F3A2C}
+.leaflet-tooltip.blk{background:rgba(22,32,26,.85);color:#fff;border:0;font:600 13px Inter,sans-serif;box-shadow:none}
+.leaflet-tooltip.blk:before{display:none}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 </head>
 <body>
@@ -20,8 +25,8 @@ button{font-family:inherit}
 
 <div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
   <div style="background: #16201A; color: #F4F5F2; padding: 8px 24px; font-size: 13px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
-    <span style="background: #F4C542; color: #16201A; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em">DEMO</span>
-    <span>Blok sərhədləri nümunədir. Real sərhədləri peyk xəritəsində siz çəkəcəksiniz.</span>
+    <span style="background: #6FA37F; color: #16201A; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em">REAL SƏRHƏD</span>
+    <span>Blok sərhədləri sizin KML fayllarınızdandır (11.11.2026). Sahə koordinatlardan hesablanıb.</span>
   </div>
   <div style="display: flex; flex-wrap: wrap; align-items: stretch">
     <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
@@ -61,58 +66,14 @@ button{font-family:inherit}
           <span style="font-weight: 400; color: #33403A">Sensor yoxdur — bütün bloklar eyni hava nöqtəsi ilə hesablanır.</span>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 16px">
-          <section aria-label="Bağın xəritəsi" style="flex: 2 1 520px; min-width: 0; background: #2F3A2C; border-radius: 14px; overflow: hidden; position: relative">
-            <svg viewBox="0 0 760 560" style="width: 100%; height: auto; display: block" role="img" aria-label="Dörd blokun sxematik xəritəsi və hava nöqtəsi">
-              <rect width="760" height="560" fill="#3A4636"></rect>
-              <g stroke="#4B5846" stroke-width="1">
-                <line x1="0" y1="80" x2="760" y2="60"></line><line x1="0" y1="200" x2="760" y2="180"></line>
-                <line x1="0" y1="320" x2="760" y2="300"></line><line x1="0" y1="440" x2="760" y2="420"></line>
-              </g>
-              <polygon points="60,70 360,58 370,270 70,284" fill="#6FA37F" fill-opacity="0.45" stroke="#FFFFFF" stroke-width="3"></polygon>
-              <polygon points="390,56 700,44 710,256 400,268" fill="#6FA37F" fill-opacity="0.35" stroke="#F4F5F2" stroke-width="1.5"></polygon>
-              <polygon points="72,306 372,292 380,500 80,514" fill="#6FA37F" fill-opacity="0.35" stroke="#F4F5F2" stroke-width="1.5"></polygon>
-              <polygon points="402,290 712,278 720,486 410,498" fill="#6FA37F" fill-opacity="0.35" stroke="#F4F5F2" stroke-width="1.5"></polygon>
-              <g font-family="Inter, sans-serif" fill="#FFFFFF">
-                <text x="90" y="104" font-size="18" font-weight="700">Fuji — Blok 1</text>
-                <text x="90" y="126" font-size="13">yarpaq tökümü</text>
-                <text x="420" y="92" font-size="18" font-weight="700">Gala — Blok 2</text>
-                <text x="420" y="114" font-size="13">yarpaq tökümü</text>
-                <text x="100" y="340" font-size="18" font-weight="700">Granny Smith — Blok 3</text>
-                <text x="100" y="362" font-size="13">yarpaq tökümü</text>
-                <text x="430" y="326" font-size="18" font-weight="700">Story — Blok 4</text>
-                <text x="430" y="348" font-size="13">yarpaq tökümü</text>
-              </g>
-              <g>
-                <circle cx="385" cy="280" r="14" fill="#FFFFFF" stroke="#1F5E3B" stroke-width="3"></circle>
-                <path d="M379 283a6 6 0 0 1 3-10 7 7 0 0 1 12 3 4 4 0 0 1-1 7z" fill="none" stroke="#1F5E3B" stroke-width="2"></path>
-                <rect x="404" y="266" width="196" height="28" rx="6" fill="#FFFFFF"></rect>
-                <text x="414" y="285" font-size="13" font-weight="600" fill="#16201A" font-family="Inter, sans-serif">Hava nöqtəsi · Open-Meteo</text>
-              </g>
-            </svg>
-            <div style="position: absolute; right: 12px; top: 12px; background: #FFFFFF; border-radius: 8px; padding: 6px 10px; font-size: 12px; color: #33403A">Sxematik · real versiyada peyk şəkli</div>
+          <section aria-label="Bağın peyk xəritəsi" style="flex: 2 1 520px; min-width: 0; background: #2F3A2C; border-radius: 14px; overflow: hidden; position: relative">
+            <div id="bag-map" role="application" aria-label="Peyk xəritəsi: bloka toxunun"></div>
           </section>
 
           <aside aria-labelledby="card-h" style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
-            <h2 id="card-h" style="margin: 0; font-size: 20px">Fuji — Blok 1</h2>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 12px; font-size: 14px">
-              <div style="color: #5A665E">Sort / klon</div><div>Fuji · klon —</div>
-              <div style="color: #5A665E">Calaqaltı</div><div>M.9</div>
-              <div style="color: #5A665E">Sxem</div><div>3,5 × 0,9 m</div>
-              <div style="color: #5A665E">Sahə</div><div>[sahə, ha]</div>
-              <div style="color: #5A665E">Ağac sayı</div><div>[ağac sayı]</div>
-              <div style="color: #5A665E">Əkin ili</div><div>[il]</div>
-              <div style="color: #5A665E">Faza</div><div>Payız-1 (yarpaqlar saralır)</div>
-              <div style="color: #5A665E">Hava</div><div>Open-Meteo · TƏXMİNİ</div>
-            </div>
-            <div style="border-top: 1px solid #ECEFEC; padding-top: 12px; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
-              <div style="font-weight: 600">Son işlər</div>
-              <div style="color: #33403A">12.10.2026 · Kalsi-bor (jurnal)</div>
-              <div style="color: #33403A">28.08.2026 · Malatyon + xlorpirifos (jurnal · qiymət: SƏHV)</div>
-            </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto">
-              <a href="Qara_leke.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 8px; background: #1F5E3B; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Risk tarixçəsi</a>
-              <button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 14px">Bloku redaktə et</button>
-            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px" role="group" aria-label="Bloku seç" id="blk-btns"></div>
+            <h2 id="card-h" style="margin: 0; font-size: 20px">Bloka toxunun</h2>
+            <div id="card-body" style="font-size: 14px; color: #33403A; line-height: 1.5">Xəritədə bloka və ya yuxarıdakı düyməyə toxunun. Cəmi 3 blok, 7,88 ha.</div>
           </aside>
         </div>
       </div>
@@ -177,7 +138,59 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 
 class Component extends DCLogic {
-  renderVals() { return {}; }
+  renderVals() { setTimeout(initBagMap, 0); return {}; }
+}
+var BLK = [{"id": "fuji", "name": "Fuji", "kml": "Bagimiz Fuji 3.3 ha", "color": "#E8B04A", "coords": [[40.8127506, 48.0733857], [40.8114356, 48.0716034], [40.8100661, 48.0732027], [40.8105594, 48.073485], [40.8108111, 48.0736506], [40.811125, 48.0738186], [40.8115627, 48.0739728], [40.8123644, 48.0742517], [40.8127506, 48.0733857]], "area": 3.4, "per": 769, "c": [40.811334, 48.073421], "n26": 51, "last": [["12.10.2026", "Fuji + Roza", "Kalsi-bor 4 l /1 t", "Normal"], ["22.09.2026", "Fuji + Roza", "Kalsi-bor 4 l /1 t", "Normal"], ["16.09.2026", "Fuji", "Kalium oksid 3 l /1 t (27.09 təkrar)", "Normal"], ["13.09.2026", "Fuji + Roza", "Kaptan 5 kq (50%), asetamiprid 2 kq, mikroelement 4 kq; pH 300 q/2 t", "Yoxlanmalı"]]}, {"id": "gala", "name": "Gala", "kml": "Bagimiz Qala buki qala wall", "color": "#E06A4E", "coords": [[40.8105736, 48.070732], [40.8099113, 48.0700256], [40.8080382, 48.072105], [40.8083042, 48.0722984], [40.8090284, 48.0726119], [40.8103896, 48.071069], [40.8103358, 48.0710116], [40.8105736, 48.070732]], "area": 2.6, "per": 729, "c": [40.809512, 48.071408], "n26": 35, "last": [["24.09.2026", "Roza + Gala", "Malatyon 1,5 l, xlorpirifos-etil 1,5 l /1 t (qanlı mənənəyə)", "Səhv"], ["14.08.2026", "Alma bağı", "Kalsi-bor 4 l /1 t", "Normal"], ["07.08.2026", "Roza + Gala", "Gibberellin turşusu 500 q /1 t", "Yoxlanmalı"], ["04.08.2026", "Alma bağı", "Abamektin 1 l, heksitiazoks 500 q, piridaben 1 kq, mikroelement 2 kq /1 t; pH 150 q", "Artıq"]]}, {"id": "roza", "name": "Roza", "kml": "Bagimiz Roz 1.9 ha", "color": "#C95C9A", "coords": [[40.8111174, 48.0717891], [40.8104013, 48.0710626], [40.809036, 48.0726102], [40.8099478, 48.0731651], [40.8111174, 48.0717891]], "area": 1.88, "per": 587, "c": [40.810126, 48.072157], "n26": 43, "last": [["12.10.2026", "Fuji + Roza", "Kalsi-bor 4 l /1 t", "Normal"], ["24.09.2026", "Roza + Gala", "Malatyon 1,5 l, xlorpirifos-etil 1,5 l /1 t (qanlı mənənəyə)", "Səhv"], ["22.09.2026", "Fuji + Roza", "Kalsi-bor 4 l /1 t", "Normal"], ["13.09.2026", "Fuji + Roza", "Kaptan 5 kq (50%), asetamiprid 2 kq, mikroelement 4 kq; pH 300 q/2 t", "Yoxlanmalı"]]}];
+var HAVA = [40.8114, 48.0714];
+function fmt(n) { return String(n).replace('.', ','); }
+function initBagMap() {
+  var el = document.getElementById('bag-map');
+  if (!el || el.dataset.ok) return;
+  if (!window.L) { setTimeout(initBagMap, 200); return; }
+  el.dataset.ok = '1';
+  var sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Peyk: Esri, Maxar, Earthstar Geographics' });
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
+  var map = L.map(el, { layers: [sat], scrollWheelZoom: true });
+  L.control.layers({ 'Peyk': sat, 'Xəritə': osm }, null, { position: 'topright' }).addTo(map);
+  L.control.scale({ imperial: false }).addTo(map);
+  var all = [], polys = {};
+  BLK.forEach(function (b) {
+    var p = L.polygon(b.coords, { color: '#FFFFFF', weight: 2, fillColor: b.color, fillOpacity: 0.35 }).addTo(map);
+    p.bindTooltip(b.name + ' · ' + fmt(b.area) + ' ha', { permanent: true, direction: 'center', className: 'blk' });
+    p.on('click', function () { pick(b.id, true); });
+    polys[b.id] = p; all = all.concat(b.coords);
+  });
+  L.circleMarker(HAVA, { radius: 7, color: '#1F5E3B', weight: 3, fillColor: '#FFFFFF', fillOpacity: 1 }).addTo(map)
+    .bindTooltip('Hava nöqtəsi (Open-Meteo) · 520 m', { direction: 'top' });
+  map.fitBounds(L.latLngBounds(all), { padding: [24, 24] });
+  var btns = document.getElementById('blk-btns');
+  BLK.forEach(function (b) {
+    var x = document.createElement('button'); x.type = 'button'; x.id = 'btn-' + b.id;
+    x.textContent = b.name + ' · ' + fmt(b.area) + ' ha';
+    x.style.cssText = 'min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CDD4CE;background:#fff;color:#16201A;font-size:14px;cursor:pointer;border-left:6px solid ' + b.color;
+    x.onclick = function () { pick(b.id, true); }; btns.appendChild(x);
+  });
+  function phaseText() {
+    try { if (window.ORCHARD && window.ORCHARD.phase) return window.ORCHARD.phase.code; var v = JSON.parse(localStorage.getItem('orchard_phase')); if (v && v.code) return v.code; } catch (e) {}
+    return 'Fenologiya səhifəsində təsdiqlənməyib';
+  }
+  function pick(id, fly) {
+    var b = BLK.filter(function (x) { return x.id === id; })[0];
+    BLK.forEach(function (x) { polys[x.id].setStyle({ weight: x.id === id ? 4 : 2, fillOpacity: x.id === id ? 0.5 : 0.3, color: x.id === id ? '#F4C542' : '#FFFFFF' });
+      var bt = document.getElementById('btn-' + x.id); bt.style.background = x.id === id ? '#E7EFE9' : '#fff'; bt.setAttribute('aria-pressed', x.id === id); });
+    if (fly) map.fitBounds(polys[id].getBounds(), { padding: [40, 40], maxZoom: 18 });
+    document.getElementById('card-h').textContent = b.name + ' bloku';
+    var gr = { 'Yaxşı': '#17603A', 'Normal': '#444C52', 'Artıq': '#7A5300', 'Səhv': '#9F1C14', 'Yoxlanmalı': '#284A73' };
+    var rows = [['Sahə (koordinatdan)', fmt(b.area) + ' ha'], ['Perimetr', b.per + ' m'], ['Mərkəz', b.c[0].toFixed(5) + ', ' + b.c[1].toFixed(5)],
+      ['KML adı', b.kml], ['Cari faza (bağ üzrə)', phaseText()], ['Hava', 'Open-Meteo · TƏXMİNİ'], ['2026 çiləmələri', b.n26 + ' qeyd (bütün bağa yazılanlar daxil)']];
+    var h = '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:6px 12px">' +
+      rows.map(function (r) { return '<div style="color:#5A665E">' + r[0] + '</div><div style="color:#16201A">' + r[1] + '</div>'; }).join('') + '</div>' +
+      '<div style="border-top:1px solid #ECEFEC;margin-top:12px;padding-top:10px;font-weight:600;color:#16201A">Son işlər (2026 jurnalı)</div>' +
+      b.last.map(function (x) { return '<div style="margin-top:6px">' + x[0] + ' · ' + x[1] + ' — ' + x[2] + ' <b style="color:' + (gr[x[3]] || '#444') + '">(' + x[3] + ')</b></div>'; }).join('') +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><a href="Dermanlama.html" style="display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:8px;background:#1F5E3B;color:#fff;font-weight:600;text-decoration:none">Bütün jurnal</a>' +
+      '<a href="https://www.google.com/maps/search/?api=1&query=' + b.c[0] + ',' + b.c[1] + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:8px;border:1px solid #CDD4CE;color:#16201A;text-decoration:none">Google Xəritədə aç</a></div>';
+    document.getElementById('card-body').innerHTML = h;
+  }
 }
 
 </script>
