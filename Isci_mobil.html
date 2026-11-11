@@ -29,7 +29,7 @@ button,input{font-family:inherit}
       <span style="font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 99px; background: {{netBg}}; color: {{netFg}}">{{netLabel}}</span>
     </div>
     <h1 style="margin: 0; font-size: 24px; letter-spacing: -0.02em">Bugünkü işlərim</h1>
-    <div style="font-size: 14px; color: #33403A">{{doneN}} / {{total}} tamamlandı · 04.04</div>
+    <div style="font-size: 14px; color: #33403A">{{doneN}} / {{total}} tamamlandı · {{today}}</div>
   </header>
   <div style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px">
     <template data-for="tasks" data-as="t">
@@ -43,6 +43,7 @@ button,input{font-family:inherit}
         </template>
         <div style="font-size: 18px; font-weight: 600; line-height: 1.3; text-decoration: {{t.strike}}">{{t.title}}</div>
         <div style="font-size: 14px; color: #33403A; line-height: 1.45">{{t.note}}</div>
+        <template data-if="t.hasWhy"><div style="font-size: 14px; color: #33403A; line-height: 1.45; background: #E7EFE9; border-radius: 10px; padding: 8px 10px"><b>Niyə:</b> {{t.why}}</div></template>
         <template data-if="t.hasMix">
           <div style="background: #F4F5F2; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 14px">
             <template data-for="t.mix" data-as="m">
@@ -136,16 +137,18 @@ class Component extends DCLogic {
     var self = this, st = this.state, n = 0, pending = 0;
     var C = { 'YÜKSƏK': ['#FDEBDD', '#9A3412'], 'ORTA': ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'] };
     var raw = [
-      { id: 1, kind: 'spray', kindLabel: 'Dərmanlama', block: 'Bütün bağ', prio: 'ORTA', tag: '★ TÖVSİYƏ · düzəldilmiş plan',
-        title: 'Çiləmə — D3 fazası', note: 'Aqronom təsdiqləyib: 04.04 09:30. Yağış başlamadan bitirin.',
-        mix: [{ name: 'Ditianon', dose: '500 q /ha' }, { name: 'Siprodinil', dose: '400 q /ha' }],
-        mixNote: 'Doza təsdiqlənmiş plandan · çəninə görə miqdarı aqronom yazır',
-        safety: 'Qoruyucu geyim, maska, əlcək. Çilədikdən sonra bağa giriş qadağası etiketdə yazıldığı qədər.' },
-      { id: 2, kind: 'fert', kindLabel: 'Gübrələmə', block: 'Bütün bağ', prio: 'AŞAĞI', tag: '★ TÖVSİYƏ · düzəldilmiş plan',
-        title: 'Damlama ilə gübrə — E2', note: 'Suvarma ilə birlikdə verin.',
-        mix: [{ name: 'MAP 12-61-0', dose: '25 kq /ha' }], mixNote: 'Plandan · təxminən 09.04, faza təsdiqlənəndə' },
-      { id: 3, kind: 'other', kindLabel: 'Faza', block: 'Bütün bloklar', prio: 'ORTA', title: 'Faza şəkli çək', note: 'Nişanlı 5 ağacda tumurcuqları yaxından çək. Aqronom fazanı təsdiqləyəcək.' },
-      { id: 4, kind: 'other', kindLabel: 'Sayım', block: 'Gala — Blok 2', prio: 'ORTA', title: 'Qırmızı gənə sayımı', note: '10 ağac, hər ağacdan 10 yarpaq. Sayı formaya yaz.' }
+      { id: 1, kind: 'fert', kindLabel: 'Gübrə çiləməsi', block: 'Bütün bağ', prio: 'ORTA', tag: '★ TÖVSİYƏ · düzəldilmiş plan',
+        title: 'Dəmir sulfat + Karbamid (gecikib)', note: 'Siz bu gün təsdiqlədiniz. Quru gündə, sərin vaxtda edin.',
+        why: 'yığımdan sonra yarpaqdan qidalanma — planda oktyabrda, Borzinc-dən sonra idi.',
+        mix: [{ name: 'Dəmir sulfat', dose: '15 kq /ha' }, { name: 'Karbamid', dose: '10 kq /ha' }],
+        mixNote: 'Doza plandan · çənə görə miqdarı aqronom yazır · etiketlə yoxlanmalıdır',
+        safety: 'Əlcək və maska taxın.' },
+      { id: 2, kind: 'other', kindLabel: 'Faza', block: 'Bütün bloklar', prio: 'ORTA', title: 'Yarpaq tökümünü qeyd et',
+        note: 'Nişanlı 5 ağaca bax: yarpaqların təxminən neçə faizi töküldü? Faizi yaz, şəkil çək.',
+        why: '~95% olanda qış sanitariyası (xırdalama + karbamid) başlayır.' },
+      { id: 3, kind: 'other', kindLabel: 'Sanitariya', block: 'Bütün bağ', prio: 'AŞAĞI', title: 'Sıra aralarında yarpaqları bir yerə yığ',
+        note: 'Xırdalama gününə hazırlıq: yarpaqlar sıra arasında olsun.',
+        why: 'xırdalanmamış yarpaqlarda qara ləkə göbələyi qışlayır (kitab, Fəsil 45).' }
     ];
     var tasks = raw.map(function (r) {
       var s = st.step[r.id] || 0, isChem = r.kind !== 'other';
@@ -154,12 +157,13 @@ class Component extends DCLogic {
       var label = done ? 'Bitdi ✓' : (isChem && s === 1 ? 'Qeyd et' : 'Bitirdim');
       return Object.assign({}, r, {
         chipBg: C[r.prio][0], chipFg: C[r.prio][1], hasTag: !!r.tag, tag: r.tag || '',
-        hasMix: !!r.mix, mix: r.mix || [], mixNote: r.mixNote || '', hasSafety: !!r.safety, safety: r.safety || '',
+        hasWhy: !!r.why, why: r.why || '', hasMix: !!r.mix, mix: r.mix || [], mixNote: r.mixNote || '', hasSafety: !!r.safety, safety: r.safety || '',
         showForm: isChem && s === 1, opacity: done ? '0.6' : '1', strike: done ? 'line-through' : 'none',
         btnLabel: label, btnBg: done ? '#FFFFFF' : '#1F5E3B', btnFg: done ? '#1F5E3B' : '#FFFFFF',
         toggle: function () { var o = Object.assign({}, st.step); var max = isChem ? 2 : 1; o[r.id] = s >= max ? 0 : s + 1; self.setState({ step: o }); } });
     });
-    return { tasks: tasks, doneN: n, total: raw.length,
+    var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    return { tasks: tasks, doneN: n, total: raw.length, today: dd(0),
       netLabel: st.offline ? 'Oflayn · ' + pending + ' gözləyir' : 'Onlayn',
       netBg: st.offline ? '#ECEEEF' : '#E3F1E8', netFg: st.offline ? '#444C52' : '#17603A',
       toggleNet: function () { self.setState({ offline: !st.offline }); } };

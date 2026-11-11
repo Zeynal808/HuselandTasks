@@ -164,36 +164,38 @@ class Component extends DCLogic {
   }
   renderVals() {
     var self = this;
+    var daysSince = Math.round((new Date() - new Date(2026, 9, 12)) / 864e5);
     var A = {
       risk: { q: 'Fuji blokunda qara ləkə riski varmı?', parts: [
-        ['Vəziyyət.', '03.04 21:40-dan yarpaqlar təxminən 12 s 40 dəq islaq qalıb, orta temperatur 12,4 °C.'],
-        ['Problem.', 'Mills cədvəlinə görə bu temperaturda infeksiya üçün 11 saat kifayətdir — şərtlər ödənib.'],
-        ['Məlumat və keyfiyyəti.', 'TƏXMİNİ: sensor yoxdur, hava Open-Meteo-dan, islanma rütubət və yağışdan təxmin edilib. Ona görə nəticə KRİTİK sayılmır.'],
-        ['Elmi əsas.', 'Mills cədvəli, kitab Fəsil 45.3, səh. 362 (ilkin mənbə: Agriculture Victoria).'],
-        ['Tövsiyə.', 'Qorunma vəziyyətini qiymətləndirin: son çiləmə 31.03, ondan sonra təxminən 18 mm yağış. Qərarı aqronom preparatın etiketinə görə verir.'],
-        ['Qeyri-müəyyənlik.', 'Bağda yağış və islanma ölçülmür; model bağınızda yoxlanmayıb. 14–16 gün sonra yarpaqlara baxıb nəticəni qeyd edin.']],
-        src: ['[KİTAB] Fəsil 45.3, səh. 362', '[MODEL] SCAB_MILLS_VIC v1.0', 'Open-Meteo · 10:00', 'Jurnal: çiləmə 31.03'] },
+        ['Vəziyyət.', 'İndi yarpaq tökümü dövrüdür. Qara ləkənin ilkin infeksiya dövrü yazda, yaşıl ucdan sonra başlayır — ona görə hazırda yeni infeksiya riski aşağıdır.'],
+        ['Problem.', 'Göbələk indi tökülən yarpaqlarda qışlayır və yazda askospor buraxacaq.'],
+        ['Tövsiyə.', 'Yarpaqların ~95%-i töküləndə yarpaq döşənəyini xırdalayın və karbamid verin (doza — aqronom). Xırdalama riski 80–90%, payız karbamidi askosporları ~50% azaldıb.'],
+        ['Məlumat.', 'Mövsüm faza qeydinə və kitaba əsaslanır; hava TƏXMİNİ (sensor yoxdur).'],
+        ['Növbəti addım.', 'Fenologiyada yarpaq tökümü faizini qeyd edin — tapşırıq avtomatik təsdiqə düşəcək.']],
+        src: ['[KİTAB] Fəsil 45 — sanitariya', 'Düzəldilmiş plan, 0-cı sətir', 'Fenologiya: Payız-1'] },
       today: { q: 'Bu gün bağda nə etməliyəm?', parts: [
-        ['1. Yüksək:', 'qara ləkə şərtləri ödənib — qorunma vəziyyətini qiymətləndirin (bütün bağ).'],
-        ['2. Orta:', 'D3 çiləməsi (Ditianon 500 q + Siprodinil 400 q /ha) — sabahkı yağışdan əvvəl bitirin. Aqronom təsdiqləyib, işçinin siyahısındadır.'],
-        ['3. Orta:', 'qırmızı gənə sayımı (Gala) — 1 gün gecikib.'],
-        ['4. Aşağı:', 'fazanı şəkillə təsdiqləyin — sistem D3 təxmin edir.']],
+        ['1. Orta:', 'qış sanitariyasını təsdiqləyin — yarpaq xırdalama + karbamid (təsdiq gözləyir).'],
+        ['2. Gecikib:', 'Dəmir sulfat 15 kq + Karbamid 10 kq /ha — planda oktyabrda idi.'],
+        ['3. Orta:', 'yarpaq tökümü faizini qeyd edin (nişanlı 5 ağac).'],
+        ['4. Aşağı:', 'torpaq və yarpaq analizi üçün laboratoriya ilə yanvar–fevral tarixini razılaşdırın.']],
         src: ['Tapşırıqlar', 'Düzəldilmiş plan', 'Open-Meteo proqnozu'] },
-      rain: { q: 'Son yağış Mills hesablamasına necə təsir etdi?', parts: [
+      rain: { q: 'Yazda Mills hesablaması necə işləyəcək?', parts: [
+        ['Nümunə', '(2026 yazından, 03.04): yağış başlayanda islanma epizodu sayılmağa başlayır.'],
         ['Yağış', '03.04 21:40-da başladı və islanma epizodu o andan sayıldı (kitab: islanma yağışın başlanğıcından sayılır).'],
         ['Fasilə.', 'Arada 6 saatlıq quruluq olmadığı üçün epizod kəsilmədi (UC IPM qaydası).'],
         ['Nəticə.', '04.04 08:40-da 11 saat dolub — şərtlər ödənib. Ləkələr təxminən 18–20.04-də görünə bilər (cədvəl: 14–16 gün).'],
         ['Qeyd.', 'Rəqəmlər TƏXMİNİ-dir: bağda yağış ölçülmür.']],
         src: ['[KİTAB] Fəsil 45.3', '[ELMİ] S362 UC IPM', 'Open-Meteo'] },
       next: { q: 'Növbəti çiləmə nə vaxtdır?', parts: [
-        ['İndi:', 'D3 fazası — Ditianon 500 q + Siprodinil 400 q /ha (düzəldilmiş plan). Əvəzi: Siprodinil yerinə Pirimetanil.'],
-        ['Sonra:', 'E–E2 fazası, təxminən 10.04 — Mankozeb 2 kq + Dodin + Bor 1 kq + Aminogal 1 l /ha.'],
-        ['Xatırlatma:', 'F fazasında (çiçək) insektisid vurulmur. Dozalar etiketlə yoxlanmalıdır.']],
-        src: ['Düzəldilmiş plan (2027_dermanlama_gubreleme_plani.xlsx)', 'Fenologiya: D3 (təxmini)'] },
+        ['İndi:', 'qış sanitariyası (xırdalama + karbamid) və gecikən gübrə çiləməsi: Dəmir sulfat + Karbamid.'],
+        ['Yeni mövsümün ilki:', 'mart ortası, B–C fazası — Bordo 50% 5 kq/ha, yağışdan əvvəl.'],
+        ['Niyə Bordo:', 'mis kontakt qoruyucudur: yazın ilk yağışlarından əvvəl qara ləkəyə qarşı təbəqə yaradır.'],
+        ['Xatırlatma:', 'dozalar etiketlə yoxlanmalıdır.']],
+        src: ['Düzəldilmiş plan (2027_dermanlama_gubreleme_plani.xlsx)', 'Fenologiya: Payız-1'] },
       last: { q: 'Son dərmanlamadan neçə gün keçib?', parts: [
-        ['4 gün.', 'Son çiləmə 31.03, D fazası: Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha, bütün bağ. İşçi bitirib: 8 t su, 2 foto.'],
-        ['Ondan sonra', 'təxminən 18 mm yağış yağıb (Open-Meteo, təxmini).']],
-        src: ['Tapşırıqlar: 31.03', 'Open-Meteo'] }
+        [daysSince + ' gün.', 'Jurnalda son qeyd 12.10.2026: Kalsi-bor 4 l /1 t (Fuji + Roza). Bu, qida çiləməsidir.'],
+        ['Son dərman', '24.09.2026: Malatyon + Xlorpirifos-etil (Roza + Gala) — mənim qiymətim: SƏHV, ikisi də eyni qrupdandır (IRAC 1B).']],
+        src: ['2026 dərmanlama jurnalı'] }
     };
     var msgs = this.state.msgs.map(function (k) {
       if (typeof k === 'object') return { q: k.q, parts: [{ b: 'DEMO:', t: 'Bu nümunə saytda AI qoşulmayıb, ona görə öz sualınıza cavab verə bilmirəm. Real sistemdə (Mərhələ 5) AI bağın məlumatlarına və kitaba baxıb cavab verəcək. Hələlik yuxarıdakı hazır suallardan birini seçin.' }], hasSrc: false, src: [] };

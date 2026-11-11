@@ -21,7 +21,7 @@ button{font-family:inherit}
 <div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
   <div style="background: #16201A; color: #F4F5F2; padding: 8px 24px; font-size: 13px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
     <span style="background: #F4C542; color: #16201A; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em">DEMO</span>
-    <span>Nümunə. Faza fotoları kitabdandır (Wikimedia Commons, açıq lisenziya). Sizin şəkil yerləriniz boşdur.</span>
+    <span>Nümunə. Faza fotoları kitabdan və Wikimedia Commons-dandır (açıq lisenziya). Sizin şəkil yerləriniz boşdur.</span>
   </div>
   <div style="display: flex; flex-wrap: wrap; align-items: stretch">
     <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
@@ -61,10 +61,10 @@ button{font-family:inherit}
           <section aria-labelledby="est-h" style="flex: 1 1 360px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
             <h2 id="est-h" style="margin: 0; font-size: 18px">Sistemin təxmini</h2>
             <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
-              <span style="font-size: 34px; font-weight: 700">D3</span>
+              <span style="font-size: 30px; font-weight: 700">Yarpaq tökümü</span>
               <span style="font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #FDF3D7; color: #7A5300">TƏXMİNİ</span>
             </div>
-            <div style="font-size: 14px; color: #33403A; line-height: 1.5">Son təsdiqlənmiş faza D (31.03). O vaxtdan istilik cəmi artıb — çox güman D3-dür.</div>
+            <div style="font-size: 14px; color: #33403A; line-height: 1.5">Son təsdiqlənmiş faza: Payız-1 (yarpaqlar saralır). Neçə faizin töküldüyünü hava modeli bilmir — bağda baxıb qeyd edin; ~95% olanda sanitariya başlayır.</div>
             <div style="font-size: 13px; color: #5A665E; line-height: 1.5">Mənbə: Open-Meteo havası (sensor yoxdur). Model bağınızda hələ yoxlanmayıb — ilk il yalnız istiqamət üçündür, hər təsdiqinizlə dəqiqləşəcək.</div>
           </section>
 
@@ -96,7 +96,7 @@ button{font-family:inherit}
               </button>
             </template>
           </div>
-          <div style="font-size: 12px; color: #5A665E; line-height: 1.5">Fotolar: Wikimedia Commons — AnRo0002 (CC0), Norbert Nagel (CC BY-SA 3.0), Dietmar Rabich (CC BY-SA 4.0), W.carter (CC BY-SA 4.0); kitabın 1 və 7-ci fəsillərindən. Hərf (Fleckinger) ilə BBCH kodunun uyğunluğu təxminidir.</div>
+          <div style="font-size: 12px; color: #5A665E; line-height: 1.5">Fotolar: Wikimedia Commons — AnRo0002 (CC0), Norbert Nagel (CC BY-SA 3.0), Dietmar Rabich (CC BY-SA 4.0), W.carter (CC BY-SA 4.0), Wilhelm Zimmerling (CC BY-SA 4.0); bir hissəsi kitabın 1, 4 və 7-ci fəsillərindən. Hərf (Fleckinger) ilə BBCH kodunun uyğunluğu təxminidir.</div>
           <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border-top: 1px solid #ECEFEC; padding-top: 14px">
             <button type="button" onClick="{{confirm}}" style="min-height: 48px; padding: 0 20px; border-radius: 10px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 15px; font-weight: 700; cursor: pointer">Təsdiqlə: {{picked}}</button>
             <span style="font-size: 14px; color: {{msgColor}}; font-weight: 600">{{msg}}</span>
@@ -104,11 +104,12 @@ button{font-family:inherit}
         </section>
 
         <section aria-labelledby="his-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
-          <h2 id="his-h" style="margin: 0; font-size: 18px">Bu mövsümün fazaları</h2>
+          <h2 id="his-h" style="margin: 0; font-size: 18px">2026 mövsümünün fazaları</h2>
           <div style="overflow-x: auto">
             <table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px">
               <thead><tr style="text-align: left; font-size: 12px; color: #5A665E"><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">FAZA</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">TARİX</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">KİM</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">SÜBUT</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">VƏZİYYƏT</th></tr></thead>
               <tbody>
+                <tr><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; font-weight: 600">Payız-1</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">{{p1}}</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">Sahib</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">2 şəkil</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; color: #17603A; font-weight: 600">TƏSDİQLƏNİB</td></tr>
                 <tr><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; font-weight: 600">D</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">31.03</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">Sahib</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">3 şəkil</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; color: #17603A; font-weight: 600">TƏSDİQLƏNİB</td></tr>
                 <tr><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; font-weight: 600">C3</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">27.03</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">Aqronom</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">2 şəkil</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; color: #17603A; font-weight: 600">TƏSDİQLƏNİB</td></tr>
                 <tr><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; font-weight: 600">C</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">24.03</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">Sahib</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">2 şəkil</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; color: #17603A; font-weight: 600">TƏSDİQLƏNİB</td></tr>
@@ -175,20 +176,25 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { picked: 'D3', done: false }; }
+  constructor(p) { super(p); this.state = { picked: 'Payız-2', done: false }; }
   renderVals() {
-    var self = this, st = this.state;
-    var list = [['B', 'Tumurcuq şişir', '', ''], ['C', 'Yaşıl uc görünür', 'faza_yasil_uc', 'yaşıl uc (BBCH 07–09 / 53)'], ['C3', 'Yaşıl uc açılır', '', ''],
+    var self = this, st = this.state; var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    var list = [['B', 'Tumurcuq şişir', 'faza_b', 'tumurcuq şişib (kitab, Fəsil 4)'], ['C', 'Yaşıl uc görünür', 'faza_yasil_uc', 'yaşıl uc (BBCH 07–09 / 53)'],
+      ['C3', 'Yaşıl uc açılır', 'faza_c3', 'pulcuqlar açılır, yaşıl görünür'],
       ['D', 'Yaşıl salxım', 'faza_bbch55', 'BBCH 55–56: qönçələr görünür, yarpaqlar açılır'], ['D3', 'Salxımda tumurcuqlar ayrılır', 'faza_bbch56', 'BBCH 56: sıx qrup, qönçələr yaşıl'],
-      ['E', 'Kasa yarpaqları görünür', '', ''], ['E2', 'Çəhrayı tumurcuq', 'faza_bbch57', 'BBCH 57: çəhrayı qönçə'], ['F', 'İlk çiçəklər', 'faza_bbch60', 'BBCH 60–61: kral çiçək açılıb'],
-      ['F2', 'Tam çiçəkləmə', 'faza_cicek', 'açılmış çiçəklər'], ['G', 'Ləçəklər tökülür', 'faza_bbch69', 'BBCH 69–71: çiçəkləmənin sonu'], ['H', 'Meyvə bağlayır', '', '']];
+      ['E', 'Kasa yarpaqları görünür', 'faza_e', 'qönçələr ayrılıb, ləçək ucu görünməyə başlayır'], ['E2', 'Çəhrayı tumurcuq', 'faza_bbch57', 'BBCH 57: çəhrayı qönçə'],
+      ['F', 'İlk çiçəklər', 'faza_bbch60', 'BBCH 60–61: kral çiçək açılıb'],
+      ['F2', 'Tam çiçəkləmə', 'faza_cicek', 'açılmış çiçəklər'], ['G', 'Ləçəklər tökülür', 'faza_bbch69', 'BBCH 69–71: çiçəkləmənin sonu'],
+      ['H', 'Meyvə bağlayır', 'faza_h', 'cavan meyvələr, çiçək qalıqları quruyur'],
+      ['Payız-1', 'Yarpaqlar saralır, tökülməyə başlayır', 'faza_payiz1', 'yarpaq tökümünün başlanğıcı'],
+      ['Payız-2', 'Yarpaqların ~95%-i töküldü', 'faza_payiz2', 'qış sanitariyasının vaxtı']];
     var stages = list.map(function (x) {
       var on = st.picked === x[0];
       return { code: x[0], name: x[1], on: on, hasImg: !!x[2], noImg: !x[2], img: x[2] ? 'img/' + x[2] + '.jpg' : '', alt: x[0] + ' fazası — ' + x[1], cap: x[3] || 'kitab Fəsil 7', bg: on ? '#E7EFE9' : '#FFFFFF', border: on ? '#1F5E3B' : '#E2E6E2',
         pick: function () { self.setState({ picked: x[0], done: false }); } };
     });
-    return { stages: stages, picked: st.picked,
-      msg: st.done ? 'Təsdiqləndi: ' + st.picked + ' (04.04). Plan yeniləndi: növbəti çiləmə E–E2, ≈ 10.04.' : 'Təsdiqləyəndə plan bu fazaya görə yenilənəcək.',
+    return { stages: stages, picked: st.picked, p1: dd(-12),
+      msg: st.done ? 'Təsdiqləndi: ' + st.picked + ' (' + dd(0) + '). ' + (st.picked === 'Payız-2' ? 'Qış sanitariyası tapşırığı təsdiqə göndərildi.' : 'Plan bu fazaya görə yeniləndi.') : 'Təsdiqləyəndə plan bu fazaya görə yenilənəcək.',
       msgColor: st.done ? '#17603A' : '#5A665E',
       confirm: function () { self.setState({ done: true }); } };
   }

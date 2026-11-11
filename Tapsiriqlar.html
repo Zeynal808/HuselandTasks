@@ -21,7 +21,7 @@ button{font-family:inherit}
 <div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
   <div style="background: #16201A; color: #F4F5F2; padding: 8px 24px; font-size: 13px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
     <span style="background: #F4C542; color: #16201A; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em">DEMO</span>
-    <span>Nümunə tapşırıqlar. Tarixlər 2026 mövsümünə uyğun nümunədir.</span>
+    <span>Tarixlər bu günə görədir. "2026 JURNAL" sətirləri real qeydlərdir, qalanları nümunədir.</span>
   </div>
   <div style="display: flex; flex-wrap: wrap; align-items: stretch">
     <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
@@ -50,13 +50,12 @@ button{font-family:inherit}
       <a href="Ayarlar.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Ayarlar</a>
       <div style="margin-top: auto; padding: 16px 12px 4px; font-size: 12px; line-height: 1.5; color: #5A665E">Sistem qərar dəstəyidir. Yekun qərar bağ sahibi və aqronomdadır.</div>
     </nav>
-
     <main style="flex: 999 1 560px; min-width: 0; padding: 24px; box-sizing: border-box">
       <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
         <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
           <div style="display: flex; flex-direction: column; gap: 4px">
             <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Tapşırıqlar</h1>
-            <div style="font-size: 14px; color: #5A665E">İsmayıllı Alma Bağı · 04.04.2026 · mövsüm: 2026</div>
+            <div style="font-size: 14px; color: #5A665E">İsmayıllı Alma Bağı · {{today}} · mövsüm: yarpaq tökümü</div>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap">
             <a href="Isci_mobil.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 14px; text-decoration: none">İşçinin ekranına bax</a>
@@ -73,59 +72,65 @@ button{font-family:inherit}
           </template>
         </section>
 
-        <section aria-labelledby="list-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
-          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline">
-            <h2 id="list-h" style="margin: 0; font-size: 18px">{{listTitle}}</h2>
-            <span style="font-size: 12px; color: #5A665E">Yuxarıdakı kartlara basıb süzün</span>
-          </div>
-          <div style="overflow-x: auto">
-            <table style="width: 100%; min-width: 940px; border-collapse: collapse; font-size: 14px">
-              <thead>
-                <tr style="text-align: left; color: #5A665E; font-size: 12px; letter-spacing: 0.03em">
-                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 140px">VƏZİYYƏT</th>
-                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600">TAPŞIRIQ</th>
-                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 120px">PLAN</th>
-                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 110px">İCRAÇI</th>
-                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 280px">FAKTİKİ / SƏBƏB</th>
-                </tr>
-              </thead>
-              <tbody>
-                <template data-for="rows" data-as="r">
-                  <tr style="vertical-align: top">
-                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><span style="display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; padding: 3px 8px; border-radius: 6px; background: {{r.sBg}}; color: {{r.sFg}}; white-space: nowrap">{{r.status}}</span></td>
-                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC">
-                      <div style="display: flex; flex-direction: column; gap: 4px">
-                        <span style="align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 5px; background: {{r.tBg}}; color: {{r.tFg}}; border: 1px solid {{r.tBorder}}">{{r.tag}}</span>
-                        <span style="font-weight: 600">{{r.title}}</span>
-                        <span style="font-size: 13px; color: #5A665E">{{r.block}} · {{r.detail}}</span>
-                      </div>
-                    </td>
-                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><div>{{r.plan}}</div><div style="font-size: 12px; color: #5A665E">{{r.planNote}}</div></td>
-                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC">{{r.who}}</td>
-                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; font-size: 13px; color: #33403A; line-height: 1.45">{{r.actual}}</td>
-                  </tr>
-                </template>
-              </tbody>
-            </table>
-          </div>
-        </section>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+          <section aria-labelledby="list-h" style="flex: 3 1 480px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline; padding: 0 4px 4px">
+              <h2 id="list-h" style="margin: 0; font-size: 18px">{{listTitle}}</h2>
+              <span style="font-size: 12px; color: #5A665E">Tapşırığa basın — təfərrüatı açılacaq</span>
+            </div>
+            <template data-if="empty"><div style="padding: 20px; text-align: center; color: #5A665E; font-size: 14px">Bu bölmədə iş yoxdur.</div></template>
+            <template data-for="rows" data-as="r">
+              <button type="button" onClick="{{r.select}}" aria-pressed="{{r.sel}}" style="text-align: left; cursor: pointer; font: inherit; color: #16201A; background: {{r.bg}}; border: 2px solid {{r.border}}; border-radius: 12px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center">
+                <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.03em; padding: 3px 8px; border-radius: 6px; background: {{r.sBg}}; color: {{r.sFg}}; white-space: nowrap">{{r.status}}</span>
+                <span style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                  <span style="font-weight: 600">{{r.title}}</span>
+                  <span style="font-size: 13px; color: #5A665E">{{r.block}} · {{r.plan}}</span>
+                </span>
+                <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 5px; background: {{r.tBg}}; color: {{r.tFg}}; border: 1px solid {{r.tBorder}}; white-space: nowrap">{{r.tag}}</span>
+                <span aria-hidden="true" style="color: #5A665E; font-size: 18px">›</span>
+              </button>
+            </template>
+          </section>
+
+          <aside aria-labelledby="det-h" style="flex: 2 1 340px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+            <template data-if="hasSel">
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap">
+                  <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: {{d.sBg}}; color: {{d.sFg}}">{{d.status}}</span>
+                  <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: {{d.tBg}}; color: {{d.tFg}}; border: 1px solid {{d.tBorder}}">{{d.tag}}</span>
+                </div>
+                <h2 id="det-h" style="margin: 0; font-size: 20px; line-height: 1.3">{{d.title}}</h2>
+                <div style="display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px 12px; font-size: 14px">
+                  <span style="color: #5A665E">Harada</span><span>{{d.block}}</span>
+                  <span style="color: #5A665E">Nə</span><span>{{d.what}}</span>
+                  <span style="color: #5A665E">Plan</span><span>{{d.plan}}</span>
+                  <span style="color: #5A665E">İcraçı</span><span>{{d.who}}</span>
+                  <span style="color: #5A665E">Vəziyyət</span><span>{{d.actual}}</span>
+                </div>
+                <div style="background: #F4F5F2; border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.55; color: #33403A"><b>Niyə:</b> {{d.why}}</div>
+                <div style="font-size: 12px; color: #5A665E">Mənbə: {{d.source}}</div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                  <template data-for="d.actions" data-as="a">
+                    <button type="button" onClick="{{a.run}}" style="min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid {{a.border}}; background: {{a.bg}}; color: {{a.fg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{a.label}}</button>
+                  </template>
+                  <a href="{{d.link}}" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #CDD4CE; color: #16201A; font-size: 14px; text-decoration: none">{{d.linkLabel}} →</a>
+                </div>
+              </div>
+            </template>
+          </aside>
+        </div>
 
         <section aria-labelledby="season-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
           <h2 id="season-h" style="margin: 0; font-size: 18px">Mövsüm planı fazaya görə özü dəyişir</h2>
-          <div style="font-size: 14px; color: #33403A; line-height: 1.55">Plandakı işlər tarixə yox, <b>fazaya</b> bağlıdır. Faza tez gəlsə, iş də tez təklif olunur, gec gəlsə gecikir. Siz yalnız fazanı təsdiqləyirsiniz (foto ilə), qalan tarixləri sistem sürüşdürür.</div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px">
+          <div style="font-size: 14px; color: #33403A; line-height: 1.55">Plandakı işlər tarixə yox, <b>fazaya</b> bağlıdır. Siz fazanı təsdiqləyirsiniz (foto ilə), sistem işləri o fazaya görə təklif edir. Dərmanlama və gübrə təsdiqdən sonra işçinin siyahısına düşür.</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px">
             <template data-for="phases" data-as="p">
               <div style="border-radius: 10px; padding: 10px 8px; background: {{p.bg}}; color: {{p.fg}}; border: 2px solid {{p.border}}; display: flex; flex-direction: column; gap: 2px; text-align: center">
-                <span style="font-weight: 700; font-size: 15px">{{p.code}}</span>
+                <span style="font-weight: 700; font-size: 14px">{{p.code}}</span>
                 <span style="font-size: 12px">{{p.date}}</span>
                 <span style="font-size: 11px; font-weight: 600">{{p.state}}</span>
               </div>
             </template>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-size: 14px; line-height: 1.5">
-            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 12px 14px"><b>Avtomatik gələnlər</b><br>Plan işləri (fazaya görə), qara ləkə riskindən gələn işlər, təkrarlanan işlər (məs. kalsi-bor ~2 həftədən bir), hava proqnozu xəbərdarlıqları.</div>
-            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 12px 14px"><b>Sizin təsdiqiniz lazım olanlar</b><br>Dərmanlama və gübrə: sistem təklif edir, aqronom və ya siz təsdiqləyəndən sonra işçinin siyahısına düşür.</div>
-            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 12px 14px"><b>Əl ilə</b><br>İstənilən işi özünüz əlavə edə, tarixini dəyişə və ya ləğv edə bilərsiniz. Səbəb yazılır.</div>
           </div>
         </section>
       </div>
@@ -186,51 +191,101 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { f: 'today' }; }
+  constructor(p) { super(p); this.state = { f: 'today', sel: 't1', over: {} }; }
   renderVals() {
-    var self = this, st = this.state;
+    var self = this, st = this.state, T0 = new Date(), DAY = 864e5;
+    function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    var now = ('0' + T0.getHours()).slice(-2) + ':' + ('0' + T0.getMinutes()).slice(-2);
+    var lateDays = Math.max(1, Math.round((T0 - new Date(T0.getFullYear(), 9, 31)) / DAY));
     var S = {
       done: ['TAMAMLANDI', '#E3F1E8', '#17603A'], late: ['GECİKİB', '#FDE8E7', '#9F1C14'], cancel: ['LƏĞV EDİLDİ', '#ECEEEF', '#444C52'],
-      wait: ['İŞÇİDƏ · GÖZLƏYİR', '#E8EEF6', '#284A73'], approve: ['TƏSDİQ GÖZLƏYİR', '#FDF3D7', '#7A5300'], planned: ['PLANLAŞDIRILIB', '#FFFFFF', '#33403A']
+      wait: ['İŞÇİDƏ · GÖZLƏYİR', '#E8EEF6', '#284A73'], approve: ['TƏSDİQ GÖZLƏYİR', '#FDF3D7', '#7A5300'], planned: ['GƏLƏCƏK', '#FFFFFF', '#33403A']
     };
     var T = {
-      plan: ['★ TÖVSİYƏ', '#1F5E3B', '#FFFFFF', '#1F5E3B'], risk: ['⚑ RİSK', '#FDEBDD', '#9A3412', '#FDEBDD'],
+      plan: ['★ TÖVSİYƏ', '#1F5E3B', '#FFFFFF', '#1F5E3B'], j26: ['● 2026 JURNAL', '#E6E9F4', '#2E3A6B', '#E6E9F4'],
       hand: ['✎ ƏL İLƏ', '#FFFFFF', '#33403A', '#CDD4CE'], sys: ['⚙ SİSTEM', '#ECEEEF', '#444C52', '#ECEEEF']
     };
+    var SAN = 'Qara ləkə göbələyi tökülmüş yarpaqlarda qışlayır və yazda askospor buraxır. Yarpaqların xırdalanması riski 80–90%, payızda verilən karbamid askosporları təxminən 50% azaldıb — yazda lazım olan çiləmələr azalır.';
     var data = [
-      ['wait', 'today', 'plan', 'Çiləmə — D3 fazası', 'Bütün bağ', 'Ditianon 500 q + Siprodinil 400 q /ha', '04.04', 'faza D3', '[işçi 1]', 'Aqronom təsdiqlədi 09:30. İşçi hələ "Bitirdim" basmayıb.'],
-      ['approve', 'today', 'plan', 'Gübrə — E2, damlama', 'Bütün bağ', 'MAP 12-61-0 25 kq/ha', '≈ 09.04', 'faza E2', '—', 'Təklif. Təsdiqləsəniz işçinin siyahısına düşəcək.'],
-      ['wait', 'today', 'sys', 'Faza şəkli çək', 'Bütün bloklar', 'nişanlı 5 ağac, yaxından', '04.04', '', '[işçi 2]', 'Hava təxmini D3 deyir — təsdiq üçün şəkil lazımdır'],
-      ['late', 'late', 'hand', 'Qırmızı gənə sayımı', 'Gala — Blok 2', '10 ağac × 10 yarpaq', '03.04', '1 gün gecikib', '[işçi 2]', 'Hələ edilməyib. Sabah yenə siyahıda olacaq.'],
-      ['done', 'done', 'plan', 'Çiləmə — D fazası', 'Bütün bağ', 'Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha', '≈ 31.03', 'faza D', '[işçi 1]', 'Bitdi 31.03 17:40 · su 8 t · foto 2 · fərq yoxdur'],
-      ['done', 'done', 'plan', 'Damlama — B fazası', 'Bütün bağ', 'Humik-fulvik 20 l + Kükürd 10 kq /ha', 'Mart sonu', '', '[işçi 1]', 'Bitdi 02.04 · planla müqayisədə 2 gün gec'],
-      ['done', 'done', 'risk', 'Qorunmanı yoxla (Mills)', 'Fuji — Blok 1', 'qara ləkə şərtləri ödənmişdi', '29.03', '', 'Aqronom', 'Yoxlandı 29.03 · qərar: qoruyucu vaxtında olub, əlavə çiləmə yox'],
-      ['done', 'done', 'plan', 'Çiləmə — C3 fazası', 'Bütün bağ', 'Mankozeb 2 kq/ha', '≈ 27.03', 'faza C3', '[işçi 1]', 'Bitdi 27.03 · su 8 t · foto 1'],
-      ['done', 'done', 'plan', 'Çiləmə — B–C', 'Bütün bağ', 'Bordo 50% 5 kq/ha', '≈ 24.03', 'yağışdan əvvəl', '[işçi 1]', 'Bitdi 24.03 · cəmi 40 kq'],
-      ['cancel', 'skip', 'plan', 'Yağ + Piriproksifen (C3, quru gün)', 'Bütün bağ', 'Yağ 20 l + Piriproksifen 0,5 l /ha', 'C3', '', '—', 'Avtomatik ləğv: faza D-yə keçdi. Plan qaydası: "D fazasına keçibsə vurmayın".'],
-      ['cancel', 'skip', 'hand', 'Ot biçimi — Fuji 1–12 sıra', 'Fuji — Blok 1', '', '01.04', '', '[işçi 2]', 'Siz ləğv etdiniz: "torpaq yaşdır, traktor girməsin"'],
-      ['planned', 'next', 'plan', 'Çiləmə — E–E2', 'Bütün bağ', 'Mankozeb 2 kq + Dodin + Bor 1 kq + Aminogal 1 l /ha', '≈ 10.04', 'faza E–E2', '—', 'Faza gələndə təsdiqə düşəcək'],
-      ['planned', 'next', 'plan', 'Gübrə — Dəmir (EDDHA 6%)', 'Bütün bağ', '25 kq/ha, damlama', '≈ 16.04', 'faza D3–E', '—', 'Yarpaq analizinə görə dəyişə bilər'],
-      ['planned', 'next', 'plan', 'Çiləmə — F (çiçək başlayır)', 'Bütün bağ', 'Ditianon 500 q + Difenokonazol 500 q + Bor 1 l /ha · İNSEKTİSİD YOX', '≈ 15.04', 'faza F', '—', '—']
+      { id: 't1', st: 'approve', grp: 'today', tag: 'plan', title: 'Qış sanitariyası: yarpaq xırdalama + karbamid', block: 'Bütün bağ',
+        what: 'Yarpaq döşənəyini xırdalamaq + Karbamid (doza: aqronom yazacaq)', plan: 'yarpaqların ~95%-i töküləndə', who: '—',
+        actual: 'Sistem təklif edib. Təsdiqləsəniz işçinin bugünkü siyahısına düşəcək.', why: SAN, source: '[KİTAB] Fəsil 45 · düzəldilmiş plan, 0-cı sətir',
+        link: 'Dermanlama.html', linkLabel: 'Planda bax' },
+      { id: 't2', st: 'wait', grp: 'today', tag: 'sys', title: 'Yarpaq tökümünü qeyd et (faizlə)', block: 'Bütün bloklar',
+        what: 'Nişanlı 5 ağacda tökülən yarpaq faizini yaz, şəkil çək', plan: dd(0), who: '[işçi 2]',
+        actual: 'İşçiyə göndərilib ' + dd(0) + ' 08:00. Hələ "Bitirdim" basılmayıb.', why: 'Sanitariyanın vaxtı yarpaqların ~95%-i töküləndə gəlir. Hava modeli bunu bilə bilmir, ona görə bağda baxmaq lazımdır.',
+        source: 'Fenologiya · düzəldilmiş plan', link: 'Fenologiya.html', linkLabel: 'Fenologiyada aç' },
+      { id: 't3', st: 'wait', grp: 'today', tag: 'hand', title: 'Analiz üçün laboratoriya ilə danış', block: 'Bütün bağ',
+        what: 'Torpaq və yarpaq analizi üçün yanvar–fevral tarixini razılaşdır', plan: dd(0), who: 'Sahib',
+        actual: 'Sizin əlavə etdiyiniz iş.', why: 'Gübrə miqdarları hazırda analizsizdir; analiz gələndə plan dəqiqləşəcək (kitab, Fəsil 40).',
+        source: 'Düzəldilmiş plan — "Hər il: torpaq və yarpaq analizi"', link: 'Analizler.html', linkLabel: 'Analizlər' },
+      { id: 't4', st: 'late', grp: 'late', tag: 'plan', title: 'Dəmir sulfat 15 kq + Karbamid 10 kq /ha', block: 'Bütün bağ',
+        what: 'Çiləmə, yığımdan sonra, Borzinc-dən sonra', plan: 'oktyabr (yığımdan sonra)', who: '[işçi 1]',
+        actual: 'Hələ edilməyib — təxminən ' + lateDays + ' gün gecikir.', why: 'Yığımdan sonra yarpaqdan qidalanma (planın gübrələmə bölməsi): əvvəl Borzinc, sonra Dəmir sulfat + Karbamid. 2025-də yalnız Galaya vurulub; planda həssas zonada bütün bağa tövsiyə olunur. Doza etiketlə yoxlanmalıdır.',
+        source: 'Düzəldilmiş plan — gübrələmə, "Yığımdan sonra"', link: 'Dermanlama.html', linkLabel: 'Planda bax' },
+      { id: 't5', st: 'done', grp: 'done', tag: 'plan', title: 'Borzinc 2 kq/ha (yığımdan sonra)', block: 'Bütün bağ',
+        what: 'Çiləmə', plan: 'oktyabr', who: '[işçi 1]', actual: 'Bitdi ' + dd(-16) + ' · su 7 t · foto 1 (nümunə)',
+        why: 'Bor və sink — yığımdan sonra yarpaqdan verilir (planın gübrələmə bölməsi). 2025-də yalnız Galaya vurulmuşdu, planda bütün bağa.', source: 'Düzəldilmiş plan — gübrələmə', link: 'Dermanlama.html', linkLabel: 'Planda bax' },
+      { id: 't6', st: 'done', grp: 'done', tag: 'j26', title: 'Kalsi-bor 4 l /1 t', block: 'Fuji + Roza',
+        what: 'Çiləmə', plan: '12.10.2026', who: '—', actual: 'Jurnalda: 12.10.2026 — mövsümün son qeydi',
+        why: 'Kalsium və bor — meyvə üçün (kalsium çatışmazlığı acı ləkə yaradır, kitab Fəsil 38). Planda iyun–sentyabr, ~2 həftədən bir.', source: '2026 dərmanlama jurnalı', link: 'Dermanlama.html', linkLabel: 'Jurnalda bax' },
+      { id: 't7', st: 'done', grp: 'done', tag: 'j26', title: 'Malatyon 1,5 l + Xlorpirifos-etil 1,5 l /1 t', block: 'Roza + Gala',
+        what: 'Çiləmə (qanlı mənənəyə)', plan: '24.09.2026', who: '—', actual: 'Jurnalda: 24.09.2026 · mənim qiymətim: SƏHV',
+        why: 'Qanlı mənənəyə qarşı vurulub, amma ikisi də eyni qrupdandır (IRAC 1B). Planda: Malatyon TƏK, yalnız tapılan bloklara.', source: '2026 jurnalı · düzəldilmiş plan', link: 'Dermanlama.html', linkLabel: 'Jurnalda bax' },
+      { id: 't8', st: 'cancel', grp: 'skip', tag: 'hand', title: 'Sıra aralarında ot biçimi', block: 'Fuji — Blok 1',
+        what: 'Biçim', plan: dd(-5), who: '[işçi 2]', actual: 'Siz ləğv etdiniz ' + dd(-5) + ': "torpaq yaşdır, traktor girməsin"',
+        why: 'Əl ilə əlavə edilmiş iş.', source: '—', link: 'Xerite.html', linkLabel: 'Bloka bax' },
+      { id: 't9', st: 'planned', grp: 'next', tag: 'plan', title: 'Torpaq və yarpaq nümunəsi götür', block: 'Bütün bloklar',
+        what: 'Laboratoriyaya nümunə', plan: 'yanvar–fevral', who: '—', actual: 'Vaxtı gələndə təklif olunacaq.',
+        why: 'Gübrə proqramını analizə görə dəqiqləşdirmək (kitab, Fəsil 40).', source: 'Düzəldilmiş plan', link: 'Analizler.html', linkLabel: 'Analizlər' },
+      { id: 't10', st: 'planned', grp: 'next', tag: 'plan', title: 'Mövsümün ilk çiləməsi: Bordo 50% 5 kq/ha', block: 'Bütün bağ',
+        what: 'Çiləmə, yağışdan əvvəl', plan: 'mart ortası, B–C fazası', who: '—', actual: 'Faza təsdiqlənəndə təsdiqə düşəcək.',
+        why: 'Mis — kontakt qoruyucu: yazın ilk yağışlarından əvvəl qara ləkəyə qarşı qoruyucu təbəqə yaradır.', source: 'Düzəldilmiş plan, 1-ci sətir', link: 'Dermanlama.html', linkLabel: 'Planda bax' }
     ];
-    var groups = [['today', 'Bu gün', '#16201A'], ['late', 'Gecikən', '#9F1C14'], ['done', 'Tamamlanan', '#17603A'], ['skip', 'Edilməyən / ləğv', '#444C52'], ['next', 'Növbəti 2 həftə', '#284A73']];
-    var titles = { today: 'Bu günün işləri', late: 'Gecikən işlər', done: 'Tamamlanan işlər (bu mövsüm)', skip: 'Edilməyən və ləğv olunan işlər', next: 'Növbəti 2 həftənin planı' };
+    var rowsAll = data.map(function (r) {
+      var o = st.over[r.id];
+      return o ? Object.assign({}, r, o) : r;
+    });
+    function setOver(id, o) { var x = Object.assign({}, st.over); x[id] = o; self.setState({ over: x }); }
+    var groups = [['today', 'Bu gün', '#16201A'], ['late', 'Gecikən', '#9F1C14'], ['done', 'Tamamlanan', '#17603A'], ['skip', 'Edilməyən / ləğv', '#444C52'], ['next', 'Gələcək', '#284A73']];
+    var titles = { today: 'Bu günün işləri', late: 'Gecikən işlər', done: 'Tamamlanan işlər', skip: 'Edilməyən və ləğv olunan işlər', next: 'Gələcək işlər' };
     var summary = groups.map(function (g) {
-      var n = data.filter(function (d) { return d[1] === g[0]; }).length, on = st.f === g[0];
-      return { label: g[1], n: n, color: g[2], on: on, border: on ? '#1F5E3B' : '#E2E6E2', pick: function () { self.setState({ f: g[0] }); } };
+      var n = rowsAll.filter(function (d) { return d.grp === g[0]; }).length, on = st.f === g[0];
+      return { label: g[1], n: n, color: g[2], on: on, border: on ? '#1F5E3B' : '#E2E6E2',
+        pick: function () { var first = rowsAll.filter(function (d) { return d.grp === g[0]; })[0]; self.setState({ f: g[0], sel: first ? first.id : null }); } };
     });
-    var rows = data.filter(function (d) { return d[1] === st.f; }).map(function (d) {
-      var s = S[d[0]], t = T[d[2]];
-      return { status: s[0], sBg: s[1], sFg: s[2], tag: t[0], tBg: t[1], tFg: t[2], tBorder: t[3],
-        title: d[3], block: d[4], detail: d[5], plan: d[6], planNote: d[7], who: d[8], actual: d[9] };
-    });
-    var P = [['B', '≈ 20.03', 'keçib'], ['C', '≈ 24.03', 'keçib'], ['C3', '27.03', 'keçib'], ['D', '31.03', 'keçib'], ['D3', '04.04', 'İNDİ · təsdiq'],
-      ['E–E2', '≈ 10.04', 'gələcək'], ['F', '≈ 15.04', 'gələcək'], ['F2', '≈ 20.04', 'gələcək'], ['G', '≈ 25.04', 'gələcək']];
+    function deco(r) {
+      var s = S[r.st], t = T[r.tag], sel = st.sel === r.id;
+      return Object.assign({}, r, { status: s[0], sBg: s[1], sFg: s[2], tag: t[0], tBg: t[1], tFg: t[2], tBorder: t[3], sel: sel,
+        bg: sel ? '#F3F8F4' : '#FFFFFF', border: sel ? '#1F5E3B' : '#E2E6E2', select: function () { self.setState({ sel: r.id }); } });
+    }
+    var rows = rowsAll.filter(function (d) { return d.grp === st.f; }).map(deco);
+    var selRow = rowsAll.filter(function (d) { return d.id === st.sel; })[0];
+    var G = ['#1F5E3B', '#1F5E3B', '#FFFFFF'], W = ['#CDD4CE', '#FFFFFF', '#16201A'];
+    function act(label, style, fn) { return { label: label, border: style[0], bg: style[1], fg: style[2], run: fn }; }
+    var d = null;
+    if (selRow) {
+      d = deco(selRow); var id = selRow.id, acts = [];
+      if (selRow.st === 'approve') {
+        acts.push(act('Təsdiqlə → işçiyə göndər', G, function () { setOver(id, { st: 'wait', who: '[işçi 1]', actual: 'Siz təsdiqlədiniz ' + dd(0) + ' ' + now + '. İşçinin bugünkü siyahısına düşdü.' }); }));
+        acts.push(act('Rədd et', W, function () { setOver(id, { st: 'cancel', grp: 'skip', actual: 'Siz rədd etdiniz ' + dd(0) + '.' }); }));
+      } else if (selRow.st === 'late') {
+        acts.push(act('Bu gün et → işçiyə göndər', G, function () { setOver(id, { st: 'wait', grp: 'today', plan: dd(0), actual: 'Bu günə köçürüldü, işçiyə göndərildi ' + now + '.' }); }));
+        acts.push(act('Ləğv et', W, function () { setOver(id, { st: 'cancel', grp: 'skip', actual: 'Siz ləğv etdiniz ' + dd(0) + '.' }); }));
+      } else if (selRow.st === 'wait') {
+        acts.push(act('Tamamlandı kimi qeyd et', G, function () { setOver(id, { st: 'done', grp: 'done', actual: 'Bitdi ' + dd(0) + ' ' + now + '.' }); }));
+      } else if (selRow.st === 'cancel') {
+        acts.push(act('Bərpa et', W, function () { setOver(id, null); }));
+      }
+      d.actions = acts;
+    }
+    var P = [['Yığım', 'sentyabr–oktyabr', 'bitdi'], ['Payız-1', dd(-12), 'yarpaq saralır · təsdiq'], ['Payız-2', '~95% töküləndə', 'İNDİ · gözlənilir'], ['Qış', 'dekabr–fevral', 'sükunət'], ['B', 'mart', 'yeni mövsüm']];
     var phases = P.map(function (p) {
-      var now = p[2].indexOf('İNDİ') === 0, past = p[2] === 'keçib';
-      return { code: p[0], date: p[1], state: p[2], bg: now ? '#1F5E3B' : (past ? '#E7EFE9' : '#FFFFFF'), fg: now ? '#FFFFFF' : (past ? '#17603A' : '#33403A'), border: now ? '#1F5E3B' : '#E2E6E2' };
+      var now2 = p[2].indexOf('İNDİ') === 0, past = p[2] === 'bitdi' || p[2].indexOf('təsdiq') > 0;
+      return { code: p[0], date: p[1], state: p[2], bg: now2 ? '#1F5E3B' : (past ? '#E7EFE9' : '#FFFFFF'), fg: now2 ? '#FFFFFF' : (past ? '#17603A' : '#33403A'), border: now2 ? '#1F5E3B' : '#E2E6E2' };
     });
-    return { summary: summary, rows: rows, listTitle: titles[st.f], phases: phases };
+    return { summary: summary, rows: rows, empty: rows.length === 0, listTitle: titles[st.f], hasSel: !!d, d: d || {}, phases: phases,
+      today: dd(0) + '.' + T0.getFullYear() };
   }
 }
 

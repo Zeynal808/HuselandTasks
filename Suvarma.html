@@ -82,14 +82,14 @@ button{font-family:inherit}
             <div style="display: flex; gap: 16px; font-size: 12px; color: #33403A; flex-wrap: wrap">
               <span><span style="display: inline-block; width: 10px; height: 10px; background: #B7791F; border-radius: 2px"></span> ET0, mm (buxarlanma)</span>
               <span><span style="display: inline-block; width: 10px; height: 10px; background: #3B6EA8; border-radius: 2px"></span> yağış, mm</span>
-              <span>7 gündə: ET0 ≈ 14 mm · yağış ≈ 21 mm</span>
+              <span>7 gündə: ET0 ≈ 5,5 mm · yağış ≈ 12 mm</span>
             </div>
           </section>
 
           <section aria-labelledby="log-h" style="flex: 1 1 380px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
             <h2 id="log-h" style="margin: 0; font-size: 18px">Suvarma jurnalı</h2>
             <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px 12px; font-size: 14px">
-              <div style="color: #5A665E">02.04</div><div>Damlama + gübrə (humik + kükürd) · bütün bağ · müddət: [yazılmayıb]</div>
+              <div style="color: #5A665E">—</div><div>Bu payız suvarma qeydi yoxdur — qeyd etsəniz burada görünəcək.</div>
             </div>
             <button type="button" style="align-self: flex-start; min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 14px">+ Suvarma qeyd et</button>
           </section>
@@ -168,8 +168,9 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 class Component extends DCLogic {
   renderVals() {
-    var et = [1.6, 1.9, 2.4, 2.2, 1.8, 2.0, 1.9], rn = [0, 0, 4.0, 9.2, 1.0, 0, 6.8], lb = ['29.03', '30.03', '31.03', '01.04', '02.04', '03.04', '04.04'];
-    var days = lb.map(function (l, i) { return { label: l, etH: Math.round(et[i] * 10) + 'px', rH: Math.round(rn[i] * 10) + 'px' }; });
+    var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    var et = [0.9, 0.8, 1.0, 0.7, 0.6, 0.8, 0.7], rn = [0, 4.0, 6.0, 0, 2.0, 0, 0], lb = [-6, -5, -4, -3, -2, -1, 0].map(dd);
+    var days = lb.map(function (l, i) { return { label: l, etH: Math.round(et[i] * 20) + 'px', rH: Math.round(rn[i] * 10) + 'px' }; });
     var blocks = ['Fuji — Blok 1', 'Gala — Blok 2', 'Granny Smith — Blok 3', 'Story — Blok 4'].map(function (n) { return { n: n }; });
     return { days: days, blocks: blocks };
   }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Preparat kataloqu — ORCHARD AI</title>
+<title>Preparatlar — ORCHARD AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -50,58 +50,71 @@ button,input{font-family:inherit}
       <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
         <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
           <div style="display: flex; flex-direction: column; gap: 4px">
-            <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Preparat kataloqu</h1>
-            <div style="font-size: 14px; color: #33403A">Doza, PHI və REI yalnız təsdiqlənmiş etiketdən göstərilir. Sistem bunları özü yazmır.</div>
+            <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Preparatlar</h1>
+            <div style="font-size: 14px; color: #33403A">İndiyə kimi istifadə etdiyimiz dərmanlar — 2026 jurnalından sayılıb. Hər birinin yanında nəyə qarşı olduğu yazılıb.</div>
           </div>
-          <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 14px; font-weight: 600">+ Etiket yüklə (PDF / şəkil)</button>
+          <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 14px; font-weight: 600">+ Etiket yüklə</button>
         </header>
 
-        <section aria-label="Preparatlar" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; overflow-x: auto">
-          <table style="width: 100%; min-width: 980px; border-collapse: collapse; font-size: 14px">
-            <thead>
-              <tr style="text-align: left; color: #5A665E; font-size: 12px; letter-spacing: 0.03em">
-                <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">PREPARAT</th>
-                <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">AKTİV MADDƏ</th>
-                <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">QRUP</th>
-                <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">QEYDİYYAT</th>
-                <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">DOZA / PHI / REI</th>
-                <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">VƏZİYYƏT</th>
-              </tr>
-            </thead>
-            <tbody>
-              <template data-for="rows" data-as="r">
-                <tr style="vertical-align: top">
-                  <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC"><div style="font-weight: 600">{{r.name}}</div><div style="font-size: 12px; color: #5A665E">{{r.maker}}</div></td>
-                  <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC">{{r.ai}}</td>
-                  <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC">{{r.grp}}</td>
-                  <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC; color: #5A665E">{{r.reg}}</td>
-                  <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC; color: #5A665E">{{r.dose}}</td>
-                  <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: {{r.sBg}}; color: {{r.sFg}}; white-space: nowrap">{{r.status}}</span></td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </section>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px" role="group" aria-label="Bölmələr">
+          <template data-for="tabs" data-as="t">
+            <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="min-height: 44px; padding: 0 14px; border-radius: 99px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{t.label}} · {{t.n}}</button>
+          </template>
+        </div>
 
-        <section aria-labelledby="flow-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
-          <h2 id="flow-h" style="margin: 0; font-size: 18px">Etiketin təsdiqi — Switch 62,5 WG <span style="font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #FDF3D7; color: #7A5300; vertical-align: 3px">QARALAMA</span></h2>
-          <div style="display: flex; flex-wrap: wrap; gap: 16px">
-            <div style="flex: 1 1 320px; min-height: 260px; border-radius: 10px; background: #EEF1EE; display: flex; align-items: center; justify-content: center; color: #5A665E; font-size: 13px">[yüklənmiş etiket — PDF səhifəsi]</div>
-            <div style="flex: 1 1 360px; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 10px 12px; font-size: 14px; align-items: center">
-              <label for="p1" style="color: #5A665E">Qeydiyyat №</label><input id="p1" type="text" placeholder="etiketdən yazın" style="min-height: 40px; padding: 0 10px; border: 1px solid #CDD4CE; border-radius: 8px">
-              <label for="p2" style="color: #5A665E">Etibarlıdır</label><input id="p2" type="text" placeholder="gg.aa.iiii" style="min-height: 40px; padding: 0 10px; border: 1px solid #CDD4CE; border-radius: 8px">
-              <label for="p3" style="color: #5A665E">Alma, qara ləkə — doza</label><input id="p3" type="text" placeholder="etiketdəki kimi" style="min-height: 40px; padding: 0 10px; border: 1px solid #CDD4CE; border-radius: 8px">
-              <label for="p4" style="color: #5A665E">Maks. tətbiq sayı</label><input id="p4" type="text" placeholder="etiketdəki kimi" style="min-height: 40px; padding: 0 10px; border: 1px solid #CDD4CE; border-radius: 8px">
-              <label for="p5" style="color: #5A665E">PHI (gün)</label><input id="p5" type="text" placeholder="etiketdəki kimi" style="min-height: 40px; padding: 0 10px; border: 1px solid #CDD4CE; border-radius: 8px">
-              <label for="p6" style="color: #5A665E">REI (saat)</label><input id="p6" type="text" placeholder="etiketdəki kimi" style="min-height: 40px; padding: 0 10px; border: 1px solid #CDD4CE; border-radius: 8px">
+        <template data-if="showUsed">
+          <section aria-label="İstifadə olunan dərmanlar" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; overflow-x: auto">
+            <table style="width: 100%; min-width: 980px; border-collapse: collapse; font-size: 14px">
+              <thead>
+                <tr style="text-align: left; color: #5A665E; font-size: 12px; letter-spacing: 0.03em">
+                  <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">AKTİV MADDƏ</th>
+                  <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 110px">QRUP</th>
+                  <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 120px">2026-DA</th>
+                  <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 190px">HARADA VAR</th>
+                  <th style="padding: 12px 14px; border-bottom: 1px solid #E2E6E2; font-weight: 600">NƏYƏ QARŞI / NİYƏ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template data-for="rows" data-as="r">
+                  <tr style="vertical-align: top">
+                    <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC; font-weight: 600">{{r.name}}</td>
+                    <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC">{{r.grp}}</td>
+                    <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC"><div style="font-weight: 700; font-size: 16px">{{r.count}}</div><div style="font-size: 12px; color: #5A665E">{{r.last}}</div></td>
+                    <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC">
+                      <div style="display: flex; flex-wrap: wrap; gap: 4px">
+                        <template data-if="r.plan"><span style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: #1F5E3B; color: #FFFFFF">★ PLANDA VAR</span></template>
+                        <template data-if="r.noPlan"><span style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: #FDE8E7; color: #9F1C14">PLANDA YOXDUR</span></template>
+                        <template data-if="r.old"><span style="font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 5px; background: #FFFFFF; color: #5B4A1E; border: 1px solid #8C7A4B">▦ KÖHNƏ EXCEL</span></template>
+                      </div>
+                    </td>
+                    <td style="padding: 12px 14px; border-bottom: 1px solid #ECEFEC; color: #33403A; line-height: 1.45">{{r.why}}</td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </section>
+        </template>
+
+        <template data-if="showCatalog">
+          <section aria-labelledby="cat-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+            <h2 id="cat-h" style="margin: 0; font-size: 18px">Etiket kataloqu</h2>
+            <div style="font-size: 14px; color: #33403A; line-height: 1.5">Doza, PHI (yığıma qədər gözləmə) və REI (bağa giriş qadağası) yalnız təsdiqlənmiş etiketdən göstərilir. Hələ heç bir etiket təsdiqlənməyib.</div>
+            <div style="overflow-x: auto">
+              <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px">
+                <thead><tr style="text-align: left; font-size: 12px; color: #5A665E"><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">TİCARƏT ADI</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">AKTİV MADDƏ</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">QRUP</th><th style="padding: 8px; border-bottom: 1px solid #E2E6E2">VƏZİYYƏT</th></tr></thead>
+                <tbody>
+                  <template data-for="catalog" data-as="c">
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #ECEFEC; font-weight: 600">{{c.n}}</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">{{c.ai}}</td><td style="padding: 8px; border-bottom: 1px solid #ECEFEC">{{c.g}}</td>
+                      <td style="padding: 8px; border-bottom: 1px solid #ECEFEC"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: {{c.bg}}; color: {{c.fg}}">{{c.s}}</span></td></tr>
+                  </template>
+                </tbody>
+              </table>
             </div>
-          </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
-            <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 14px; font-weight: 600">Aqronom kimi təsdiqlə → AKTİV</button>
-            <span style="font-size: 13px; color: #5A665E">Qeydiyyat müddəti bitəndə preparat avtomatik deaktiv olur və xəbərdarlıq gəlir.</span>
-          </div>
-        </section>
-        <div style="font-size: 12px; color: #5A665E; line-height: 1.5; padding-bottom: 24px">Siyahıdakı adlar köhnə Excel-inizin "Dərman qalığı" və "Proqrammlar" vərəqlərindən götürülüb. Azərbaycanın preparat reyestri açıq deyil — qeydiyyat nömrəsini etiketdən və ya satıcıdan yazın.</div>
+            <div style="font-size: 12px; color: #5A665E">Adlar köhnə Excel-inizin "Dərman qalığı" və "Proqrammlar" vərəqlərindəndir. Azərbaycanın preparat reyestri açıq deyil — qeydiyyat nömrəsini etiketdən və ya satıcıdan yazın.</div>
+          </section>
+        </template>
+
+        <div style="font-size: 12px; color: #5A665E; line-height: 1.5; padding-bottom: 24px">"2026-da" sütunu 2026 dərmanlama jurnalındakı qeydlərin sayıdır (71 qeyd, yazışma və dəftərdən). "Geri təsir" — yoluxmadan sonra neçə saat ərzində vurulsa hələ təsir edir (kitab, Fəsil 45, UC IPM cədvəli); dəqiq müddət etiketdə yoxlanmalıdır.</div>
       </div>
     </main>
   </div>
@@ -160,24 +173,69 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 
 class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 'fung' }; }
   renderVals() {
-    var S = { none: ['ETİKET YOXDUR', '#ECEEEF', '#444C52'], draft: ['QARALAMA', '#FDF3D7', '#7A5300'] };
-    var d = [
-      ['Switch 62,5 WG', 'Syngenta', 'Siprodinil + Fludioksonil (Excel-də: 37,5 + 250 q/kq — etiketlə yoxlanmalı)', 'FRAC 9 + 12', 'draft'],
-      ['Delan', 'BASF', 'Ditianon 700 q/kq', 'M', 'none'],
-      ['Dikotan M-45', 'Koruma', 'Mankozeb 800 q/kq', 'M', 'none'],
-      ['Bellis', 'BASF', 'Piraklostrobin 128 q/kq + Boskalid 252 q/kq', 'FRAC 11 + 7', 'none'],
-      ['Strobi', 'BASF', 'Krezoksim-metil 500 q/kq', 'FRAC 11', 'none'],
-      ['Skor / Difend EC', 'Syngenta / DVA', 'Difenokonazol 250 q/l', 'FRAC 3', 'none'],
-      ['Fullpas 100 EC', '—', 'Penkonazol 100 q/l', 'FRAC 3', 'none'],
-      ['İnseqar', 'Syngenta', 'Fenoksikarb 250 q/kq', 'IRAC 7B', 'none']
+    var self = this, st = this.state;
+    var U = [
+      ['fung', 'Mankozeb', 'M', 8, '04.05', 1, 1, 'Qara ləkə. Kontakt qoruyucu, çox nöqtəli — davamlılıq riski aşağı, geri təsiri yoxdur.'],
+      ['fung', 'Kaptan', 'M', 13, '13.09', 1, 1, 'Qara ləkə (yay və meyvə). Kontakt qoruyucu, geri təsiri yoxdur. Hava isinəndə istifadə olunur.'],
+      ['fung', 'Ditianon', 'M', 4, '15.05', 1, 1, 'Qara ləkə. Kontakt qoruyucu.'],
+      ['fung', 'Bordo (mis)', 'M', 1, '24.03', 1, 1, 'Qara ləkə — erkən yaz. Kontakt qoruyucu, ilk yağışlardan əvvəl.'],
+      ['fung', 'Kükürd', 'M', 2, '10.05', 1, 1, 'Un şehi və qara ləkə. Kontakt.'],
+      ['fung', 'Difenokonazol', 'FRAC 3 (DMI)', 17, '03.09', 1, 1, 'Qara ləkə, un şehi. Sistemik. 2026-da 17 dəfə — DMI-lər ildə məhdud sayda vurulmalıdır (davamlılıq).'],
+      ['fung', 'Penkonazol', 'FRAC 3 (DMI)', 7, '12.05', 1, 1, 'Qara ləkə, un şehi. Sistemik, DMI.'],
+      ['fung', 'Tebukonazol', 'FRAC 3 (DMI)', 1, '09.05', 1, 0, 'Qara ləkə. Sistemik, DMI.'],
+      ['fung', 'Siprodinil', 'FRAC 9', 4, '22.04', 1, 1, 'Qara ləkə. Yoluxmadan ~48 saat sonraya qədər geri təsir (kitab).'],
+      ['fung', 'Pirimetanil', 'FRAC 9', 2, '15.04', 1, 0, 'Qara ləkə. Siprodinilin əvəzi (eyni qrup).'],
+      ['fung', 'Kresoksim-metil', 'FRAC 11 (QoI)', 3, '19.05', 1, 1, 'Qara ləkə, un şehi. ~96 saat geri təsir (kitab). Kontaktsız vurulmur.'],
+      ['fung', 'Trifloksistrobin', 'FRAC 11 (QoI)', 1, '03.06', 1, 0, 'Qara ləkə. ~100 saat geri təsir (kitab).'],
+      ['fung', 'Tiofanat-metil', 'FRAC 1', 8, '16.08', 1, 0, 'Qara ləkə, müalicəvi: 36–48 saat geri təsir (kitab). Planda ildə bir dəfə və yalnız kontaktla — 2026-da 8 dəfə.'],
+      ['fung', 'Bupirimat', 'FRAC 8', 1, '13.05', 1, 1, 'Un şehi.'],
+      ['fung', 'Dodin', 'U12', 0, '—', 1, 0, 'Qara ləkə. Planda DMI-nin əvəzi kimi.'],
+      ['fung', 'Swec (siprodinil + fludioksonil)', 'FRAC 9 + 12', 0, '—', 1, 1, 'Qara ləkə; çürümələrə də təsir edir.'],
+      ['fung', 'Miklobutanil', 'FRAC 3 (DMI)', 0, '—', 0, 1, 'Qara ləkə. ~96 saat geri təsir (kitab). Yalnız köhnə Excel-də.'],
+      ['ins', 'Asetamiprid', 'IRAC 4A', 5, '13.09', 1, 1, 'Alma meyvəyeyəni. Planda: çiçəkləmədə insektisid vurulmur.'],
+      ['ins', 'Fenoksikarb', 'IRAC 7B', 2, '10.05', 1, 1, 'Alma meyvəyeyəni. Faydalı həşərata yumşaqdır.'],
+      ['ins', 'Malatyon', 'IRAC 1B', 5, '24.09', 1, 0, 'Qanlı mənənə. Planda TƏK və yalnız tapılan bloklara; çiçəkdə yox.'],
+      ['ins', 'Piriproksifen', 'IRAC 7C', 2, '01.04', 1, 1, 'Qışlayan gənə və mənənə yumurtaları. D fazasına keçibsə vurulmur.'],
+      ['ins', 'Yağ (yazlıq / qışlıq)', '—', 2, '01.04', 1, 1, 'Qışlayan yumurtaları örtüb məhv edir. Piriproksifenlə birlikdə.'],
+      ['ins', 'Lambda-sihalotrin', 'IRAC 3A', 4, '07.05', 0, 1, 'Piretroid: faydalı həşəratı da öldürür, qanlı mənənəni artıra bilər — düzəldilmiş planda yoxdur.'],
+      ['ins', 'Deltametrin', 'IRAC 3A', 2, '24.06', 0, 1, 'Piretroid — düzəldilmiş planda yoxdur (əvəzi: fenoksikarb, piriproksifen).'],
+      ['ins', 'Xlorpirifos-etil', 'IRAC 1B', 4, '24.09', 0, 0, 'Malatyonla eyni qrup (1B) — birlikdə vurmağın faydası yoxdur. Planda yoxdur.'],
+      ['ins', 'Dimetoat', 'IRAC 1B', 2, '24.06', 0, 0, 'Eyni qrup (1B) — planda yoxdur.'],
+      ['ins', 'Tiakloprid', 'IRAC 4A', 1, '03.06', 0, 1, 'Neonikotinoid. Planda yoxdur (meyvəyeyənə asetamiprid və ya fenoksikarb).'],
+      ['ins', 'Tiametoksam', 'IRAC 4A', 1, '14.07', 0, 1, 'Neonikotinoid. Planda yoxdur.'],
+      ['ins', 'Emamektin benzoat', 'IRAC 6', 1, '03.09', 0, 0, 'Planda yoxdur.'],
+      ['aka', 'Abamektin', 'IRAC 6', 8, '16.08', 1, 0, 'Qırmızı hörümçək gənəsi. Planda: yalnız lupa ilə sayandan sonra, ildə bir dəfə, növbə ilə.'],
+      ['aka', 'Etoksazol', 'IRAC 10', 7, '16.08', 0, 0, 'Gənə. Heksitiazoksla eyni qrup — planda ayrıca yoxdur.'],
+      ['aka', 'Spirodiklofen', 'IRAC 23', 2, '15.08', 1, 0, 'Gənə. Planda növbənin 2-ci addımı.'],
+      ['aka', 'Piridaben', 'IRAC 21', 1, '04.08', 1, 0, 'Gənə. Planda növbənin 3-cü addımı.'],
+      ['aka', 'Heksitiazoks', 'IRAC 10', 1, '04.08', 1, 0, 'Gənə yumurtaları. Planda növbənin 4-cü addımı.'],
+      ['aka', 'Nospider (siheksatin)', 'IRAC 12B', 0, '—', 0, 1, 'Gənə. Köhnə Excel-də "ehtiyac olsa".'],
+      ['qida', 'Mikroelement', 'qida', 35, '13.09', 1, 0, 'Yarpaqdan qidalanma. 2026-da alış planı aşıb (artıq xərc vərəqi).'],
+      ['qida', 'Kalsi-bor', 'qida', 10, '12.10', 1, 0, 'Kalsium — acı ləkəyə qarşı (kitab, Fəsil 38). Planda iyun–sentyabr, ~2 həftədən bir.'],
+      ['qida', 'Aminogal / aminoturşu', 'qida', 10, '24.07', 1, 0, 'Yarpaqdan qidalanma.'],
+      ['qida', 'Bor', 'qida', 7, '22.04', 1, 1, 'Çiçəkləmə və tozlanma.'],
+      ['qida', 'Kalium oksid (0-0-20)', 'qida', 2, '16.09', 1, 0, 'Meyvə rəngi — yığımdan 3–4 həftə əvvəl.'],
+      ['qida', 'Sink', 'qida', 1, '03.04', 1, 1, 'Mikroelement (Fujiyə bor ilə birlikdə).'],
+      ['qida', 'Dəniz yosunu', 'qida', 2, '08.06', 0, 0, 'Biostimulyator. Planda yoxdur.'],
+      ['qida', 'İzabion', 'qida', 1, '19.05', 0, 0, 'Biostimulyator. Planda yoxdur.'],
+      ['qida', 'pH düzəldici (azot / fosfor turşusu)', '—', 35, '13.09', 0, 0, 'Çiləmə suyunun pH-nı düzəldir.'],
+      ['boy', 'Gibberellin', 'boy tənzimləyici', 4, '11.08', 0, 1, 'Planda "məqsəd aydınlaşana qədər yox": yay çiləməsi çiçək tumurcuğuna mənfi təsir edə bilər.']
     ];
-    var rows = d.map(function (x) {
-      var s = S[x[4]];
-      return { name: x[0], maker: x[1], ai: x[2], grp: x[3], reg: x[4] === 'draft' ? 'yazılır…' : '—',
-        dose: x[4] === 'draft' ? 'təsdiq gözləyir' : 'etiket yüklənməyib', status: s[0], sBg: s[1], sFg: s[2] };
+    var TABS = [['fung', 'Fungisidlər'], ['ins', 'İnsektisidlər'], ['aka', 'Akarisidlər (gənə)'], ['qida', 'Qida və gübrə'], ['boy', 'Boy tənzimləyici'], ['cat', 'Etiket kataloqu']];
+    var CAT = [['Switch 62,5 WG', 'siprodinil + fludioksonil', 'FRAC 9 + 12', 1], ['Delan', 'ditianon 700 q/kq', 'M', 0], ['Dikotan M-45', 'mankozeb 800 q/kq', 'M', 0],
+      ['Bellis', 'piraklostrobin + boskalid', 'FRAC 11 + 7', 0], ['Strobi', 'kresoksim-metil 500 q/kq', 'FRAC 11', 0], ['Skor / Difend EC', 'difenokonazol 250 q/l', 'FRAC 3', 0],
+      ['Fullpas 100 EC', 'penkonazol 100 q/l', 'FRAC 3', 0], ['İnseqar', 'fenoksikarb 250 q/kq', 'IRAC 7B', 0]];
+    var tabs = TABS.map(function (t) {
+      var on = st.tab === t[0], n = t[0] === 'cat' ? CAT.length : U.filter(function (u) { return u[0] === t[0]; }).length;
+      return { label: t[1], n: n, on: on, bg: on ? '#16201A' : '#FFFFFF', fg: on ? '#FFFFFF' : '#16201A', border: on ? '#16201A' : '#CDD4CE', pick: function () { self.setState({ tab: t[0] }); } };
     });
-    return { rows: rows };
+    var rows = U.filter(function (u) { return u[0] === st.tab; }).map(function (u) {
+      return { name: u[1], grp: u[2], count: u[3] ? u[3] + ' dəfə' : 'istifadə olunmayıb', last: u[3] ? 'son: ' + u[4] + '.2026' : '', plan: !!u[5], noPlan: !u[5], old: !!u[6], why: u[7] };
+    });
+    var catalog = CAT.map(function (c) { return { n: c[0], ai: c[1], g: c[2], s: c[3] ? 'QARALAMA' : 'ETİKET YOXDUR', bg: c[3] ? '#FDF3D7' : '#ECEEEF', fg: c[3] ? '#7A5300' : '#444C52' }; });
+    return { tabs: tabs, rows: rows, catalog: catalog, showUsed: st.tab !== 'cat', showCatalog: st.tab === 'cat' };
   }
 }
 
