@@ -164,6 +164,47 @@ class Component extends DCLogic {
   }
   renderVals() {
     var self = this;
+    var PHASES = [['B', 'Tumurcuq şişir'], ['C', 'Yaşıl uc görünür'], ['C3', 'Yaşıl uc açılır'], ['D', 'Yaşıl salxım'], ['D3', 'Salxımda tumurcuqlar ayrılır'],
+      ['E', 'Kasa yarpaqları görünür'], ['E2', 'Çəhrayı tumurcuq'], ['F', 'İlk çiçəklər'], ['F2', 'Tam çiçəkləmə'], ['G', 'Ləçəklər tökülür'], ['H', 'Meyvə bağlayır'],
+      ['I', 'Meyvə böyüyür (I)'], ['J', 'Meyvə böyüyür (J)'], ['Payız-1', 'Yarpaqlar saralır'], ['Payız-2', 'Yarpaqların ~95%-i töküldü']];
+    var SANW = 'Qara ləkə göbələyi tökülmüş yarpaqlarda qışlayır və yazda askospor buraxır. Yarpaqların xırdalanması riski 80–90%, karbamid askosporları 50–66% azaldıb (kitab, Fəsil 45).';
+    var BORDO = { k: 'spray', title: 'Çiləmə: Bordo 50% 5 kq/ha', what: 'Bordo 50% 5 kq/ha, yağışdan əvvəl', alt: 'Mis 50% 5 kq/ha və ya Mis 20% 10 kq/ha', why: 'Hədəf: qara ləkə. Mis — kontakt qoruyucu: yazın ilk yağışlarından əvvəl yarpaqda qoruyucu təbəqə yaradır.' };
+    var EE2 = { k: 'spray', title: 'Çiləmə: Mankozeb + Dodin + Bor + Aminogal', what: 'Mankozeb 2 kq + Dodin (doza etiketə görə) + Bor 1 kq + Aminogal 1 l /ha', alt: 'Bellis (FRAC 7 + 11)', why: 'Hədəf: qara ləkə. Mankozeb — kontakt; Dodin (U12) — DMI-nin əvəzi, davamlılığı azaldır.' };
+    var PP = {
+      'B': [{ k: 'work', title: 'Sanitariya: xırdalanmamış yerlərdə xırdalama + karbamid', what: 'Xırdalama + Karbamid (doza: aqronom)', why: 'Tumurcuq açılmadan. ' + SANW },
+            BORDO,
+            { k: 'fert', title: 'Damlama: Humik-fulvik + Kükürd', what: 'Humik-fulvik turşu 20 l + Kükürd 10 kq /ha, damlama', why: 'Torpaq və kök üçün; ikisi birlikdə, yağış dayanandan sonra (plan).' }],
+      'C': [{ k: 'spray', title: 'Bordo 50% 5 kq/ha — B–C-də edilməyibsə', what: BORDO.what, alt: BORDO.alt, why: BORDO.why }],
+      'C3': [{ k: 'spray', title: 'Çiləmə: Mankozeb 2 kq/ha', what: 'Mankozeb 2 kq/ha', alt: 'Ditianon 500 q', why: 'Hədəf: qara ləkə. Yaşıl uc açılıb — qoruyucu təbəqə kəsilməsin. Mankozeb — kontakt qoruyucu, davamlılıq riski aşağı.' },
+             { k: 'spray', title: 'Çiləmə: Yağ + Piriproksifen (quru gündə)', what: 'Yağ 20 l + Piriproksifen 0,5 l /ha', why: 'Hədəf: qışlayan gənə və mənənə yumurtaları. Yağ yumurtaları örtür, piriproksifen yumurtalara təsir edir. D fazasına keçibsə VURMAYIN.', cancelFrom: 'D', cancelNote: 'D fazasına keçibsə vurmayın' }],
+      'D': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Penkonazol + Bor və Sink', what: 'Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha', alt: 'Penkonazol yerinə Difenokonazol 500 q', why: 'Hədəf: qara ləkə, un şehi. Mankozeb — kontakt; penkonazol — sistemik (mövsümün 1-ci DMI-si); bor və sink — çiçəkləməyə hazırlıq.' }],
+      'D3': [{ k: 'spray', title: 'Çiləmə: Ditianon + Siprodinil', what: 'Ditianon 500 q + Siprodinil 400 q /ha', alt: 'Siprodinil yerinə Pirimetanil', why: 'Hədəf: qara ləkə. Ditianon — kontakt qoruyucu; siprodinil — yoluxmadan ~48 saat sonraya qədər geri təsir (kitab).' },
+             { k: 'fert', title: 'Damlama: Dəmir (EDDHA 6%)', what: 'Dəmir (EDDHA 6%) 25 kq/ha, damlama', why: 'Yarpaq saralmasına qarşı; yarpaq analizinə görə dəyişə bilər (plan).' }],
+      'E': [EE2],
+      'E2': [EE2, { k: 'fert', title: 'Damlama: MAP 12-61-0', what: 'MAP 12-61-0 25 kq/ha, damlama', why: 'Əsasən fosfor, azotu azdır (plan).' }],
+      'F': [{ k: 'spray', title: 'Çiləmə: Ditianon + Difenokonazol + Bor', what: 'Ditianon 500 q + Difenokonazol 500 q + Bor 1 l /ha', alt: 'Embrelia (doza etiketə görə)', why: 'Hədəf: qara ləkə, tozlanma. Difenokonazol — sistemik (2-ci DMI); bor — tozlanma. Çiçəkdə İNSEKTİSİD YOX (arılar).' }],
+      'F2': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Swec + Bor', what: 'Mankozeb 2 kq + Swec 0,5 + Bor 1 l /ha', alt: 'Ditianon 500 q + Dodin', why: 'Hədəf: qara ləkə. Swec (siprodinil + fludioksonil) çürümələrə də təsir edir; FRAC 9-un sonuncusu. İNSEKTİSİD YOX.' }],
+      'G': [{ k: 'spray', title: 'Çiləmə: Ditianon + Bupirimat + Aminogal', what: 'Ditianon 500 q + Bupirimat 500 q + Aminogal 1 l /ha', alt: 'Bupirimat yerinə Kükürd', why: 'Hədəf: qara ləkə, un şehi. Bupirimat — un şehinə qarşı. İNSEKTİSİD YOX; kaptan hava isinənə kimi yox.' },
+            { k: 'fert', title: 'Damlama: MAP 12-61-0 (ikinci)', what: 'MAP 12-61-0 25 kq/ha, damlama', why: 'İkinci MAP, cəmi 50 kq (plan).' }],
+      'H': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Kresoksim-metil + Mikroelement', what: 'Mankozeb 2 kq + Kresoksim-metil 300 q + Mikroelement /ha · tələdə kəpənək varsa + Fenoksikarb 600 q', alt: 'Trifloksistrobin 200 q', why: 'Hədəf: qara ləkə, meyvəyeyən. Kresoksim — QoI, ~96 saat geri təsir (kitab), kontaktsız vurulmur. Fenoksikarb — meyvəyeyənə, faydalı həşərata yumşaq.' },
+            { k: 'fert', title: 'Damlama: NPK 3-20', what: 'NPK 3-20 25 kq/ha, damlama', why: 'Yazda azotu artırmayın: yumşaq, uzun zoğ qara ləkəyə açıq qalır (plan).' }],
+      'I': [{ k: 'spray', title: 'Çiləmə: Kaptan + Tebukonazol', what: 'Kaptan 2 kq (80%) + Tebukonazol 600 q /ha', alt: 'Mankozeb 2 kq', why: 'Hədəf: qara ləkə. Kaptan — kontakt; tebukonazol — 3-cü DMI. Hava isinibsə kaptan olar.' }],
+      'J': [{ k: 'spray', title: 'Çiləmə: Kaptan + Kükürd', what: 'Kaptan 3 kq (50%) + Kükürd 4 kq /1 t', alt: 'Ditianon 500 q', why: 'Hədəf: qara ləkə, un şehi. Sistemik yoxdur — fasilə, davamlılığın qarşısını alır.' },
+            { k: 'fert', title: 'Damlama: Kalium nitrat', what: 'Kalium nitrat 13-0-46 25 kq/ha, damlama', why: 'Əsas azot mənbəyi burada olsun, əlavə azot verməyin (plan).' }],
+      'Payız-1': [{ k: 'fert', title: 'Çiləmə: Borzinc (yığımdan sonra)', what: 'Borzinc 2 kq/ha', why: 'Yığımdan sonra yarpaqdan qidalanma; 2025-də yalnız Galaya vurulub, planda bütün bağa.' },
+                  { k: 'fert', title: 'Çiləmə: Dəmir sulfat + Karbamid (Borzinc-dən sonra)', what: 'Dəmir sulfat 15 kq + Karbamid 10 kq /ha', why: 'Planın gübrələmə bölməsi — yığımdan sonra, Borzinc-dən sonra.' }],
+      'Payız-2': [{ k: 'work', title: 'Qış sanitariyası: yarpaq xırdalama + karbamid', what: 'Yarpaq döşənəyini xırdalamaq + Karbamid (doza: aqronom)', why: SANW }]
+    };
+    function phIdx(c) { for (var i = 0; i < PHASES.length; i++) { if (PHASES[i][0] === c) return i; } return -1; }
+    function phName(c) { var i = phIdx(c); return i < 0 ? c : PHASES[i][1]; }
+    function itemsFor(c) { return PP[c] || []; }
+    function nextPhase(c) { var i = phIdx(c); return i >= 0 && i < PHASES.length - 1 ? PHASES[i + 1][0] : null; }
+    function getPhase() { try { var v = JSON.parse(window.localStorage.getItem('orchard_phase')); if (v && v.code && phIdx(v.code) >= 0) return v; } catch (e) {} return { code: 'Payız-1', date: null }; }
+    function setPhase(c) { try { window.localStorage.setItem('orchard_phase', JSON.stringify({ code: c, date: new Date().toISOString() })); } catch (e) {} }
+    function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
+    function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+
     var daysSince = Math.round((new Date() - new Date(2026, 9, 12)) / 864e5);
     var A = {
       risk: { q: 'Fuji blokunda qara ləkə riski varmı?', parts: [
@@ -197,6 +238,20 @@ class Component extends DCLogic {
         ['Son dərman', '24.09.2026: Malatyon + Xlorpirifos-etil (Roza + Gala) — mənim qiymətim: SƏHV, ikisi də eyni qrupdandır (IRAC 1B).']],
         src: ['2026 dərmanlama jurnalı'] }
     };
+    var ph = getPhase(), cur = itemsFor(ph.code), nx = nextPhase(ph.code), ci = phIdx(ph.code);
+    A.today.parts = [['Cari faza:', phLine(ph) + '.']].concat(cur.map(function (it, i) { return [(i + 1) + '. ' + it.title + '.', 'Niyə: ' + it.why]; })).concat([['Fazanı yoxlayın:', 'nişanlı 5 ağacda şəkil çəkin — faza dəyişəndə işlər də dəyişir.']]);
+    A.today.src = ['Düzəldilmiş plan · faza ' + ph.code, 'Fenologiya', 'Tapşırıqlar'];
+    A.next.parts = [['İndi (faza ' + ph.code + '):', cur.map(function (i) { return i.title; }).join('; ') || 'bu fazada plan işi yoxdur.']]
+      .concat(nx ? [['Sonra (faza ' + nx + ' — ' + phName(nx) + '):', itemsFor(nx).map(function (i) { return i.title + '. Niyə: ' + i.why; }).join(' ') || 'planda iş yoxdur.']] : [])
+      .concat([['Xatırlatma:', 'dozalar etiketlə yoxlanmalıdır.']]);
+    A.next.src = ['Düzəldilmiş plan', 'Fenologiya: ' + ph.code];
+    if (ci >= 1 && ci <= 12) {
+      A.risk.parts = [['Vəziyyət.', 'Faza ' + ph.code + ': qara ləkənin ilkin infeksiya dövrüdür — hər yağışda islanma Mills cədvəli ilə hesablanır.'],
+        ['Məlumat.', 'Sensor yoxdur: hava Open-Meteo-dan, islanma rütubət və yağışdan TƏXMİNİ.'],
+        ['Tövsiyə.', 'Plandakı qoruyucu çiləmə yağışdan əvvəl olsun: ' + (cur[0] ? cur[0].title + '. Niyə: ' + cur[0].why : '—')],
+        ['Elmi əsas.', 'Mills cədvəli — kitab, Fəsil 45.3, səh. 362.']];
+      A.risk.src = ['[KİTAB] Fəsil 45.3, səh. 362', 'Düzəldilmiş plan · faza ' + ph.code];
+    }
     var msgs = this.state.msgs.map(function (k) {
       if (typeof k === 'object') return { q: k.q, parts: [{ b: 'DEMO:', t: 'Bu nümunə saytda AI qoşulmayıb, ona görə öz sualınıza cavab verə bilmirəm. Real sistemdə (Mərhələ 5) AI bağın məlumatlarına və kitaba baxıb cavab verəcək. Hələlik yuxarıdakı hazır suallardan birini seçin.' }], hasSrc: false, src: [] };
       var a = A[k];

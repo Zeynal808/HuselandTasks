@@ -62,7 +62,7 @@ button{font-family:inherit}
         <section aria-labelledby="ntf-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
           <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline">
             <h2 id="ntf-h" style="margin: 0; font-size: 18px">Bildirişlər</h2>
-            <span style="font-size: 12px; color: #5A665E">{{todayLine}} · mövsüm: yarpaq tökümü</span>
+            <span style="font-size: 12px; color: #5A665E">{{todayLine}} · cari faza: <a href="Fenologiya.html">{{phaseLine}}</a></span>
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
             <template data-for="ntf" data-as="n">
@@ -104,7 +104,7 @@ button{font-family:inherit}
                 <template data-for="rows" data-as="r">
                   <tr style="vertical-align: top">
                     <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><span style="display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: {{r.tagBg}}; color: {{r.tagFg}}; border: 1px solid {{r.tagBorder}}; white-space: nowrap">{{r.tag}}</span></td>
-                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><div style="font-weight: 600">{{r.phase}}</div><div style="font-size: 12px; color: #5A665E">{{r.when}}</div></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><template data-if="r.cur"><span style="display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: #F4C542; color: #16201A; margin-bottom: 4px">İNDİKİ FAZA</span></template><div style="font-weight: 600">{{r.phase}}</div><div style="font-size: 12px; color: #5A665E">{{r.when}}</div></td>
                     <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; line-height: 1.45">{{r.what}}</td>
                     <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; font-size: 13px; color: #33403A">{{r.group}}</td>
                     <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; font-size: 13px; color: #33403A; line-height: 1.45">
@@ -178,6 +178,48 @@ class Component extends DCLogic {
   constructor(p) { super(p); this.state = { src: 'all', kind: 'all' }; }
   renderVals() {
     var self = this, st = this.state;
+    var PHASES = [['B', 'Tumurcuq şişir'], ['C', 'Yaşıl uc görünür'], ['C3', 'Yaşıl uc açılır'], ['D', 'Yaşıl salxım'], ['D3', 'Salxımda tumurcuqlar ayrılır'],
+      ['E', 'Kasa yarpaqları görünür'], ['E2', 'Çəhrayı tumurcuq'], ['F', 'İlk çiçəklər'], ['F2', 'Tam çiçəkləmə'], ['G', 'Ləçəklər tökülür'], ['H', 'Meyvə bağlayır'],
+      ['I', 'Meyvə böyüyür (I)'], ['J', 'Meyvə böyüyür (J)'], ['Payız-1', 'Yarpaqlar saralır'], ['Payız-2', 'Yarpaqların ~95%-i töküldü']];
+    var SANW = 'Qara ləkə göbələyi tökülmüş yarpaqlarda qışlayır və yazda askospor buraxır. Yarpaqların xırdalanması riski 80–90%, karbamid askosporları 50–66% azaldıb (kitab, Fəsil 45).';
+    var BORDO = { k: 'spray', title: 'Çiləmə: Bordo 50% 5 kq/ha', what: 'Bordo 50% 5 kq/ha, yağışdan əvvəl', alt: 'Mis 50% 5 kq/ha və ya Mis 20% 10 kq/ha', why: 'Hədəf: qara ləkə. Mis — kontakt qoruyucu: yazın ilk yağışlarından əvvəl yarpaqda qoruyucu təbəqə yaradır.' };
+    var EE2 = { k: 'spray', title: 'Çiləmə: Mankozeb + Dodin + Bor + Aminogal', what: 'Mankozeb 2 kq + Dodin (doza etiketə görə) + Bor 1 kq + Aminogal 1 l /ha', alt: 'Bellis (FRAC 7 + 11)', why: 'Hədəf: qara ləkə. Mankozeb — kontakt; Dodin (U12) — DMI-nin əvəzi, davamlılığı azaldır.' };
+    var PP = {
+      'B': [{ k: 'work', title: 'Sanitariya: xırdalanmamış yerlərdə xırdalama + karbamid', what: 'Xırdalama + Karbamid (doza: aqronom)', why: 'Tumurcuq açılmadan. ' + SANW },
+            BORDO,
+            { k: 'fert', title: 'Damlama: Humik-fulvik + Kükürd', what: 'Humik-fulvik turşu 20 l + Kükürd 10 kq /ha, damlama', why: 'Torpaq və kök üçün; ikisi birlikdə, yağış dayanandan sonra (plan).' }],
+      'C': [{ k: 'spray', title: 'Bordo 50% 5 kq/ha — B–C-də edilməyibsə', what: BORDO.what, alt: BORDO.alt, why: BORDO.why }],
+      'C3': [{ k: 'spray', title: 'Çiləmə: Mankozeb 2 kq/ha', what: 'Mankozeb 2 kq/ha', alt: 'Ditianon 500 q', why: 'Hədəf: qara ləkə. Yaşıl uc açılıb — qoruyucu təbəqə kəsilməsin. Mankozeb — kontakt qoruyucu, davamlılıq riski aşağı.' },
+             { k: 'spray', title: 'Çiləmə: Yağ + Piriproksifen (quru gündə)', what: 'Yağ 20 l + Piriproksifen 0,5 l /ha', why: 'Hədəf: qışlayan gənə və mənənə yumurtaları. Yağ yumurtaları örtür, piriproksifen yumurtalara təsir edir. D fazasına keçibsə VURMAYIN.', cancelFrom: 'D', cancelNote: 'D fazasına keçibsə vurmayın' }],
+      'D': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Penkonazol + Bor və Sink', what: 'Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha', alt: 'Penkonazol yerinə Difenokonazol 500 q', why: 'Hədəf: qara ləkə, un şehi. Mankozeb — kontakt; penkonazol — sistemik (mövsümün 1-ci DMI-si); bor və sink — çiçəkləməyə hazırlıq.' }],
+      'D3': [{ k: 'spray', title: 'Çiləmə: Ditianon + Siprodinil', what: 'Ditianon 500 q + Siprodinil 400 q /ha', alt: 'Siprodinil yerinə Pirimetanil', why: 'Hədəf: qara ləkə. Ditianon — kontakt qoruyucu; siprodinil — yoluxmadan ~48 saat sonraya qədər geri təsir (kitab).' },
+             { k: 'fert', title: 'Damlama: Dəmir (EDDHA 6%)', what: 'Dəmir (EDDHA 6%) 25 kq/ha, damlama', why: 'Yarpaq saralmasına qarşı; yarpaq analizinə görə dəyişə bilər (plan).' }],
+      'E': [EE2],
+      'E2': [EE2, { k: 'fert', title: 'Damlama: MAP 12-61-0', what: 'MAP 12-61-0 25 kq/ha, damlama', why: 'Əsasən fosfor, azotu azdır (plan).' }],
+      'F': [{ k: 'spray', title: 'Çiləmə: Ditianon + Difenokonazol + Bor', what: 'Ditianon 500 q + Difenokonazol 500 q + Bor 1 l /ha', alt: 'Embrelia (doza etiketə görə)', why: 'Hədəf: qara ləkə, tozlanma. Difenokonazol — sistemik (2-ci DMI); bor — tozlanma. Çiçəkdə İNSEKTİSİD YOX (arılar).' }],
+      'F2': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Swec + Bor', what: 'Mankozeb 2 kq + Swec 0,5 + Bor 1 l /ha', alt: 'Ditianon 500 q + Dodin', why: 'Hədəf: qara ləkə. Swec (siprodinil + fludioksonil) çürümələrə də təsir edir; FRAC 9-un sonuncusu. İNSEKTİSİD YOX.' }],
+      'G': [{ k: 'spray', title: 'Çiləmə: Ditianon + Bupirimat + Aminogal', what: 'Ditianon 500 q + Bupirimat 500 q + Aminogal 1 l /ha', alt: 'Bupirimat yerinə Kükürd', why: 'Hədəf: qara ləkə, un şehi. Bupirimat — un şehinə qarşı. İNSEKTİSİD YOX; kaptan hava isinənə kimi yox.' },
+            { k: 'fert', title: 'Damlama: MAP 12-61-0 (ikinci)', what: 'MAP 12-61-0 25 kq/ha, damlama', why: 'İkinci MAP, cəmi 50 kq (plan).' }],
+      'H': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Kresoksim-metil + Mikroelement', what: 'Mankozeb 2 kq + Kresoksim-metil 300 q + Mikroelement /ha · tələdə kəpənək varsa + Fenoksikarb 600 q', alt: 'Trifloksistrobin 200 q', why: 'Hədəf: qara ləkə, meyvəyeyən. Kresoksim — QoI, ~96 saat geri təsir (kitab), kontaktsız vurulmur. Fenoksikarb — meyvəyeyənə, faydalı həşərata yumşaq.' },
+            { k: 'fert', title: 'Damlama: NPK 3-20', what: 'NPK 3-20 25 kq/ha, damlama', why: 'Yazda azotu artırmayın: yumşaq, uzun zoğ qara ləkəyə açıq qalır (plan).' }],
+      'I': [{ k: 'spray', title: 'Çiləmə: Kaptan + Tebukonazol', what: 'Kaptan 2 kq (80%) + Tebukonazol 600 q /ha', alt: 'Mankozeb 2 kq', why: 'Hədəf: qara ləkə. Kaptan — kontakt; tebukonazol — 3-cü DMI. Hava isinibsə kaptan olar.' }],
+      'J': [{ k: 'spray', title: 'Çiləmə: Kaptan + Kükürd', what: 'Kaptan 3 kq (50%) + Kükürd 4 kq /1 t', alt: 'Ditianon 500 q', why: 'Hədəf: qara ləkə, un şehi. Sistemik yoxdur — fasilə, davamlılığın qarşısını alır.' },
+            { k: 'fert', title: 'Damlama: Kalium nitrat', what: 'Kalium nitrat 13-0-46 25 kq/ha, damlama', why: 'Əsas azot mənbəyi burada olsun, əlavə azot verməyin (plan).' }],
+      'Payız-1': [{ k: 'fert', title: 'Çiləmə: Borzinc (yığımdan sonra)', what: 'Borzinc 2 kq/ha', why: 'Yığımdan sonra yarpaqdan qidalanma; 2025-də yalnız Galaya vurulub, planda bütün bağa.' },
+                  { k: 'fert', title: 'Çiləmə: Dəmir sulfat + Karbamid (Borzinc-dən sonra)', what: 'Dəmir sulfat 15 kq + Karbamid 10 kq /ha', why: 'Planın gübrələmə bölməsi — yığımdan sonra, Borzinc-dən sonra.' }],
+      'Payız-2': [{ k: 'work', title: 'Qış sanitariyası: yarpaq xırdalama + karbamid', what: 'Yarpaq döşənəyini xırdalamaq + Karbamid (doza: aqronom)', why: SANW }]
+    };
+    function phIdx(c) { for (var i = 0; i < PHASES.length; i++) { if (PHASES[i][0] === c) return i; } return -1; }
+    function phName(c) { var i = phIdx(c); return i < 0 ? c : PHASES[i][1]; }
+    function itemsFor(c) { return PP[c] || []; }
+    function nextPhase(c) { var i = phIdx(c); return i >= 0 && i < PHASES.length - 1 ? PHASES[i + 1][0] : null; }
+    function getPhase() { try { var v = JSON.parse(window.localStorage.getItem('orchard_phase')); if (v && v.code && phIdx(v.code) >= 0) return v; } catch (e) {} return { code: 'Payız-1', date: null }; }
+    function setPhase(c) { try { window.localStorage.setItem('orchard_phase', JSON.stringify({ code: c, date: new Date().toISOString() })); } catch (e) {} }
+    function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
+    function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+
+    var PHC = getPhase();
     var PLAN = [
       ["Yarpaqların ~95%-i töküləndə", "Noyabr", "Yarpaq döşənəyini xırdalamaq + Karbamid (dozanı aqronomla dəqiqləşdirin)", "—", "Ən vacib iş: yazın yoluxma mənbəyini azaldır. Bütün bağda. Mənbə: kitab, fəsil 45."],
       ["Tumurcuq açılmadan", "Mart əvvəli", "Xırdalanmamış yerlərdə təkrar xırdalama + Karbamid (dozanı aqronomla)", "—", "Aprel karbamidi də askosporları azaldıb."],
@@ -329,7 +371,7 @@ class Component extends DCLogic {
     function mk(src, kind, phase, when, what, group, note, grade, target) {
       var t = TAG[src], g = grade ? GR[grade] : null;
       return { src: src, kind: kind, phase: phase, when: when, what: what, group: group, note: note,
-        tag: t[0], tagBg: t[1], tagFg: t[2], tagBorder: t[3], why: why(what, target), hasWhy: !!why(what, target),
+        tag: t[0], tagBg: t[1], tagFg: t[2], tagBorder: t[3], cur: phaseMatch(phase, PHC.code), why: why(what, target), hasWhy: !!why(what, target),
         hasGrade: !!grade, grade: grade ? 'Qiymət: ' + grade : '', gBg: g ? g[0] : '', gFg: g ? g[1] : '' };
     }
     var all = [];
@@ -341,12 +383,14 @@ class Component extends DCLogic {
 var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     var TG = { plan: ['★ TÖVSİYƏ', '#1F5E3B', '#FFFFFF', '#1F5E3B'], old: ['▦ KÖHNƏ EXCEL', '#FFFFFF', '#5B4A1E', '#8C7A4B'], j26: ['● 2026 JURNAL', '#E6E9F4', '#2E3A6B', '#E6E9F4'] };
     var PR = { ORTA: ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'], 'GECİKİB': ['#FDE8E7', '#9F1C14'], 'MƏLUMAT': ['#E8EEF6', '#284A73'] };
-    var ntf = [
-      ['plan', 'ORTA', 'Qış sanitariyası yaxınlaşır', 'Yarpaq döşənəyini xırdalamaq + Karbamid — yarpaqların ~95%-i töküləndə. Təsdiq gözləyir.', why('xırdala karbamid', 'qara ləkə mənbəyi (qışlayan yarpaqlar)'), 'Tapsiriqlar.html', 'Təsdiqə bax'],
-      ['plan', 'GECİKİB', 'Gübrə gecikir: Dəmir sulfat + Karbamid', 'Planda yığımdan sonra (oktyabr), Borzinc-dən sonra. 15 kq + 10 kq /ha.', 'yığımdan sonra yarpaqdan qidalanma (planın gübrələmə bölməsi).', 'Tapsiriqlar.html', 'Tapşırıqda aç'],
-      ['j26', 'MƏLUMAT', '2026-nın son qeydi: 12.10', 'Kalsi-bor 4 l /1 t (Fuji + Roza). Bu payız sanitariya hələ qeyd olunmayıb.', 'jurnal sanitariyanın edilib-edilmədiyini göstərməlidir — yoxsa yazda risk yüksək qalır.', 'Tapsiriqlar.html', 'Tapşırıqlara bax'],
-      ['old', 'AŞAĞI', 'Köhnə proqramda payız işi yoxdur', 'Köhnə Excel-də alma üçün payız sanitariyası yazılmayıb (Karbomid və Mis yalnız "10 gün sonra" sırasında).', 'düzəldilmiş planda sanitariya ən vacib iş kimi əlavə olunub (kitab, Fəsil 45).', 'Dermanlama.html', 'Cədvəldə bax']
-    ].map(function (x) { var g = TG[x[0]], p = PR[x[1]];
+    var curI = itemsFor(PHC.code), nxP = nextPhase(PHC.code);
+    var ntfRaw = curI.map(function (it) { return ['plan', it.k === 'fert' ? 'AŞAĞI' : 'ORTA', 'Faza ' + PHC.code + ': ' + it.title, it.what + (it.alt ? ' · Əvəzi: ' + it.alt : ''), it.why, 'Tapsiriqlar.html', 'Təsdiqə bax']; });
+    var jHit = J.filter(function (x) { return phaseMatch(x[2], PHC.code); })[0];
+    if (jHit) ntfRaw.push(['j26', 'MƏLUMAT', 'Keçən il bu fazada (' + jHit[0] + '.2026)', jHit[1] + ': ' + jHit[3], 'mənim qiymətim: ' + jHit[5] + (jHit[5] === 'Səhv' || jHit[5] === 'Artıq' ? ' — bunu təkrarlamayın.' : '.'), 'Dermanlama.html', 'Cədvəldə bax']);
+    var oHit = OLD.filter(function (x) { return phaseMatch(x[0], PHC.code); })[0];
+    if (oHit) ntfRaw.push(['old', 'MƏLUMAT', 'Köhnə proqramda bu fazada', oHit[1] + ', ' + oHit[0] + ': ' + oHit[2], why(oHit[2]) || '—', 'Dermanlama.html', 'Cədvəldə bax']);
+    if (nxP) ntfRaw.push(['plan', 'AŞAĞI', 'Növbəti faza: ' + nxP + ' — ' + phName(nxP), itemsFor(nxP).map(function (i) { return i.title; }).join('; ') || 'planda iş yoxdur', 'faza təsdiqlənəndə bu işlər təsdiqə düşəcək.', 'Fenologiya.html', 'Fenologiya']);
+    var ntf = ntfRaw.map(function (x) { var g = TG[x[0]], p = PR[x[1]];
       return { tag: g[0], tBg: g[1], tFg: g[2], tBorder: g[3], prio: x[1], pBg: p[0], pFg: p[1], title: x[2], text: x[3], why: x[4], link: x[5], linkLabel: x[6] }; });
     var bySrc = all.filter(function (r) { return st.src === 'all' || r.src === st.src; });
     var rows = bySrc.filter(function (r) { return st.kind === 'all' || r.kind === st.kind; });
@@ -361,7 +405,7 @@ var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime()
       return { label: x[1], on: on, bg: on ? '#E7EFE9' : '#FFFFFF', fg: on ? '#123D26' : '#33403A', border: on ? '#1F5E3B' : '#CDD4CE',
         pick: function () { self.setState({ kind: x[0] }); } };
     });
-    return { rows: rows, srcTabs: srcTabs, kindTabs: kindTabs, ntf: ntf, todayLine: dd(0) + '.' + T0.getFullYear() };
+    return { rows: rows, srcTabs: srcTabs, kindTabs: kindTabs, ntf: ntf, phaseLine: phLine(PHC), todayLine: dd(0) + '.' + T0.getFullYear() };
   }
 }
 

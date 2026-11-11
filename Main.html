@@ -57,7 +57,7 @@ button{font-family:inherit}
         <header style="display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between">
           <div style="display: flex; flex-direction: column; gap: 4px">
             <div style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em">İsmayıllı Alma Bağı</div>
-            <div style="font-size: 14px; color: #5A665E">{{dateLine}} · 7,7 ha · 4 blok · mövsüm: yarpaq tökümü</div>
+            <div style="font-size: 14px; color: #5A665E">{{dateLine}} · 7,7 ha · 4 blok · faza: <a href="Fenologiya.html">{{phaseLine}}</a></div>
           </div>
           <div style="display: flex; flex-wrap: wrap; gap: 8px">
             <div style="display: flex; align-items: center; gap: 8px; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 10px; padding: 8px 12px; font-size: 14px">
@@ -122,17 +122,17 @@ button{font-family:inherit}
             <div style="font-size: 12px; color: #5A665E">sensor yoxdur</div>
           </div>
           <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px">
-            <div style="font-size: 13px; color: #5A665E">Gecikən işlər</div>
-            <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: #9F1C14">1</div>
-            <div style="font-size: 12px; color: #5A665E"><a href="Tapsiriqlar.html">Tapşırıqlara bax</a></div>
+            <div style="font-size: 13px; color: #5A665E">Cari faza</div>
+            <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.02em">{{phaseCode}}</div>
+            <div style="font-size: 12px; color: #5A665E">{{phaseName}} · <a href="Fenologiya.html">dəyiş</a></div>
           </div>
         </section>
 
         <div style="display: flex; flex-wrap: wrap; gap: 20px">
           <section aria-labelledby="blk-h" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
             <h2 id="blk-h" style="margin: 0; font-size: 18px">Qara ləkə — indi</h2>
-            <div style="display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: center"><b style="font-weight: 600">İsmayıllı bağı</b><span style="font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #E3F1E8; color: #17603A">İLKİN İNFEKSİYA MÖVSÜMÜ DEYİL</span></div>
-            <div style="font-size: 14px; color: #33403A; line-height: 1.55">Yarpaqlar tökülür. İlkin infeksiya dövrü yazda, yaşıl ucdan sonra başlayır. Göbələk indi tökülən yarpaqlarda qışlayır — ona görə <b>payız sanitariyası</b> yazın riskini ən çox azaldan işdir.</div>
+            <div style="display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: center"><b style="font-weight: 600">İsmayıllı bağı · faza {{phaseCode}}</b><span style="font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: {{scabBg}}; color: {{scabFg}}">{{scabChip}}</span></div>
+            <div style="font-size: 14px; color: #33403A; line-height: 1.55">{{scabText}}</div>
             <div style="font-size: 13px; color: #5A665E">Mənbə: kitab, Fəsil 45 · <a href="Qara_leke.html">2026 yazının hadisələri (arxiv) →</a></div>
           </section>
 
@@ -214,31 +214,65 @@ class Component extends DCLogic {
   constructor(p) { super(p); this.state = { open: 'a', done: {} }; }
   renderVals() {
     var T0 = new Date(), DAY = 864e5;
+    var PHASES = [['B', 'Tumurcuq şişir'], ['C', 'Yaşıl uc görünür'], ['C3', 'Yaşıl uc açılır'], ['D', 'Yaşıl salxım'], ['D3', 'Salxımda tumurcuqlar ayrılır'],
+      ['E', 'Kasa yarpaqları görünür'], ['E2', 'Çəhrayı tumurcuq'], ['F', 'İlk çiçəklər'], ['F2', 'Tam çiçəkləmə'], ['G', 'Ləçəklər tökülür'], ['H', 'Meyvə bağlayır'],
+      ['I', 'Meyvə böyüyür (I)'], ['J', 'Meyvə böyüyür (J)'], ['Payız-1', 'Yarpaqlar saralır'], ['Payız-2', 'Yarpaqların ~95%-i töküldü']];
+    var SANW = 'Qara ləkə göbələyi tökülmüş yarpaqlarda qışlayır və yazda askospor buraxır. Yarpaqların xırdalanması riski 80–90%, karbamid askosporları 50–66% azaldıb (kitab, Fəsil 45).';
+    var BORDO = { k: 'spray', title: 'Çiləmə: Bordo 50% 5 kq/ha', what: 'Bordo 50% 5 kq/ha, yağışdan əvvəl', alt: 'Mis 50% 5 kq/ha və ya Mis 20% 10 kq/ha', why: 'Hədəf: qara ləkə. Mis — kontakt qoruyucu: yazın ilk yağışlarından əvvəl yarpaqda qoruyucu təbəqə yaradır.' };
+    var EE2 = { k: 'spray', title: 'Çiləmə: Mankozeb + Dodin + Bor + Aminogal', what: 'Mankozeb 2 kq + Dodin (doza etiketə görə) + Bor 1 kq + Aminogal 1 l /ha', alt: 'Bellis (FRAC 7 + 11)', why: 'Hədəf: qara ləkə. Mankozeb — kontakt; Dodin (U12) — DMI-nin əvəzi, davamlılığı azaldır.' };
+    var PP = {
+      'B': [{ k: 'work', title: 'Sanitariya: xırdalanmamış yerlərdə xırdalama + karbamid', what: 'Xırdalama + Karbamid (doza: aqronom)', why: 'Tumurcuq açılmadan. ' + SANW },
+            BORDO,
+            { k: 'fert', title: 'Damlama: Humik-fulvik + Kükürd', what: 'Humik-fulvik turşu 20 l + Kükürd 10 kq /ha, damlama', why: 'Torpaq və kök üçün; ikisi birlikdə, yağış dayanandan sonra (plan).' }],
+      'C': [{ k: 'spray', title: 'Bordo 50% 5 kq/ha — B–C-də edilməyibsə', what: BORDO.what, alt: BORDO.alt, why: BORDO.why }],
+      'C3': [{ k: 'spray', title: 'Çiləmə: Mankozeb 2 kq/ha', what: 'Mankozeb 2 kq/ha', alt: 'Ditianon 500 q', why: 'Hədəf: qara ləkə. Yaşıl uc açılıb — qoruyucu təbəqə kəsilməsin. Mankozeb — kontakt qoruyucu, davamlılıq riski aşağı.' },
+             { k: 'spray', title: 'Çiləmə: Yağ + Piriproksifen (quru gündə)', what: 'Yağ 20 l + Piriproksifen 0,5 l /ha', why: 'Hədəf: qışlayan gənə və mənənə yumurtaları. Yağ yumurtaları örtür, piriproksifen yumurtalara təsir edir. D fazasına keçibsə VURMAYIN.', cancelFrom: 'D', cancelNote: 'D fazasına keçibsə vurmayın' }],
+      'D': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Penkonazol + Bor və Sink', what: 'Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha', alt: 'Penkonazol yerinə Difenokonazol 500 q', why: 'Hədəf: qara ləkə, un şehi. Mankozeb — kontakt; penkonazol — sistemik (mövsümün 1-ci DMI-si); bor və sink — çiçəkləməyə hazırlıq.' }],
+      'D3': [{ k: 'spray', title: 'Çiləmə: Ditianon + Siprodinil', what: 'Ditianon 500 q + Siprodinil 400 q /ha', alt: 'Siprodinil yerinə Pirimetanil', why: 'Hədəf: qara ləkə. Ditianon — kontakt qoruyucu; siprodinil — yoluxmadan ~48 saat sonraya qədər geri təsir (kitab).' },
+             { k: 'fert', title: 'Damlama: Dəmir (EDDHA 6%)', what: 'Dəmir (EDDHA 6%) 25 kq/ha, damlama', why: 'Yarpaq saralmasına qarşı; yarpaq analizinə görə dəyişə bilər (plan).' }],
+      'E': [EE2],
+      'E2': [EE2, { k: 'fert', title: 'Damlama: MAP 12-61-0', what: 'MAP 12-61-0 25 kq/ha, damlama', why: 'Əsasən fosfor, azotu azdır (plan).' }],
+      'F': [{ k: 'spray', title: 'Çiləmə: Ditianon + Difenokonazol + Bor', what: 'Ditianon 500 q + Difenokonazol 500 q + Bor 1 l /ha', alt: 'Embrelia (doza etiketə görə)', why: 'Hədəf: qara ləkə, tozlanma. Difenokonazol — sistemik (2-ci DMI); bor — tozlanma. Çiçəkdə İNSEKTİSİD YOX (arılar).' }],
+      'F2': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Swec + Bor', what: 'Mankozeb 2 kq + Swec 0,5 + Bor 1 l /ha', alt: 'Ditianon 500 q + Dodin', why: 'Hədəf: qara ləkə. Swec (siprodinil + fludioksonil) çürümələrə də təsir edir; FRAC 9-un sonuncusu. İNSEKTİSİD YOX.' }],
+      'G': [{ k: 'spray', title: 'Çiləmə: Ditianon + Bupirimat + Aminogal', what: 'Ditianon 500 q + Bupirimat 500 q + Aminogal 1 l /ha', alt: 'Bupirimat yerinə Kükürd', why: 'Hədəf: qara ləkə, un şehi. Bupirimat — un şehinə qarşı. İNSEKTİSİD YOX; kaptan hava isinənə kimi yox.' },
+            { k: 'fert', title: 'Damlama: MAP 12-61-0 (ikinci)', what: 'MAP 12-61-0 25 kq/ha, damlama', why: 'İkinci MAP, cəmi 50 kq (plan).' }],
+      'H': [{ k: 'spray', title: 'Çiləmə: Mankozeb + Kresoksim-metil + Mikroelement', what: 'Mankozeb 2 kq + Kresoksim-metil 300 q + Mikroelement /ha · tələdə kəpənək varsa + Fenoksikarb 600 q', alt: 'Trifloksistrobin 200 q', why: 'Hədəf: qara ləkə, meyvəyeyən. Kresoksim — QoI, ~96 saat geri təsir (kitab), kontaktsız vurulmur. Fenoksikarb — meyvəyeyənə, faydalı həşərata yumşaq.' },
+            { k: 'fert', title: 'Damlama: NPK 3-20', what: 'NPK 3-20 25 kq/ha, damlama', why: 'Yazda azotu artırmayın: yumşaq, uzun zoğ qara ləkəyə açıq qalır (plan).' }],
+      'I': [{ k: 'spray', title: 'Çiləmə: Kaptan + Tebukonazol', what: 'Kaptan 2 kq (80%) + Tebukonazol 600 q /ha', alt: 'Mankozeb 2 kq', why: 'Hədəf: qara ləkə. Kaptan — kontakt; tebukonazol — 3-cü DMI. Hava isinibsə kaptan olar.' }],
+      'J': [{ k: 'spray', title: 'Çiləmə: Kaptan + Kükürd', what: 'Kaptan 3 kq (50%) + Kükürd 4 kq /1 t', alt: 'Ditianon 500 q', why: 'Hədəf: qara ləkə, un şehi. Sistemik yoxdur — fasilə, davamlılığın qarşısını alır.' },
+            { k: 'fert', title: 'Damlama: Kalium nitrat', what: 'Kalium nitrat 13-0-46 25 kq/ha, damlama', why: 'Əsas azot mənbəyi burada olsun, əlavə azot verməyin (plan).' }],
+      'Payız-1': [{ k: 'fert', title: 'Çiləmə: Borzinc (yığımdan sonra)', what: 'Borzinc 2 kq/ha', why: 'Yığımdan sonra yarpaqdan qidalanma; 2025-də yalnız Galaya vurulub, planda bütün bağa.' },
+                  { k: 'fert', title: 'Çiləmə: Dəmir sulfat + Karbamid (Borzinc-dən sonra)', what: 'Dəmir sulfat 15 kq + Karbamid 10 kq /ha', why: 'Planın gübrələmə bölməsi — yığımdan sonra, Borzinc-dən sonra.' }],
+      'Payız-2': [{ k: 'work', title: 'Qış sanitariyası: yarpaq xırdalama + karbamid', what: 'Yarpaq döşənəyini xırdalamaq + Karbamid (doza: aqronom)', why: SANW }]
+    };
+    function phIdx(c) { for (var i = 0; i < PHASES.length; i++) { if (PHASES[i][0] === c) return i; } return -1; }
+    function phName(c) { var i = phIdx(c); return i < 0 ? c : PHASES[i][1]; }
+    function itemsFor(c) { return PP[c] || []; }
+    function nextPhase(c) { var i = phIdx(c); return i >= 0 && i < PHASES.length - 1 ? PHASES[i + 1][0] : null; }
+    function getPhase() { try { var v = JSON.parse(window.localStorage.getItem('orchard_phase')); if (v && v.code && phIdx(v.code) >= 0) return v; } catch (e) {} return { code: 'Payız-1', date: null }; }
+    function setPhase(c) { try { window.localStorage.setItem('orchard_phase', JSON.stringify({ code: c, date: new Date().toISOString() })); } catch (e) {} }
+    function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
+    function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
+    function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+
     function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     var DOW = ['Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə'];
     var DOWS = ['Baz', 'B.e', 'Ç.a', 'Çər', 'C.a', 'Cüm', 'Şən'];
     var chips = { 'YÜKSƏK': ['#FDEBDD', '#9A3412'], 'ORTA': ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'] };
     var TAGS = { plan: ['★ TÖVSİYƏ · düzəldilmiş plan', '#1F5E3B', '#FFFFFF'], sys: ['⚙ SİSTEM', '#ECEEEF', '#444C52'] };
-    var raw = [
-      { id: 'a', prio: 'ORTA', tag: 'plan', title: 'Qış sanitariyası: yarpaq döşənəyini xırdala + karbamid', block: 'Bütün bağ',
-        reason: 'Yarpaqların təxminən 95%-i töküləndə edilir. Aqronomun təsdiqi və karbamid dozası gözlənilir.',
-        when: 'yarpaqların ~95%-i töküləndə, quru gündə', link: 'Tapsiriqlar.html', linkLabel: 'Təsdiqə bax',
-        basis: 'Qara ləkə göbələyi tökülmüş yarpaqlarda qışlayır və yazda askospor buraxır. Yarpaqların xırdalanması riski 80–90%, payızda verilən karbamid isə askosporları təxminən 50% azaldıb. Bu, yazda lazım olan çiləmələrin sayını azaldır.',
-        source: '[KİTAB] Fəsil 45 (sanitariya) · düzəldilmiş plan, 0-cı sətir' },
-      { id: 'b', prio: 'ORTA', tag: 'plan', title: 'Gecikən gübrə: Dəmir sulfat 15 kq + Karbamid 10 kq /ha', block: 'Bütün bağ',
-        reason: 'Planda yığımdan sonra, oktyabrda, Borzinc-dən sonra idi. Hələ edilməyib.',
-        when: 'bu həftə, quru gündə', link: 'Tapsiriqlar.html', linkLabel: 'Tapşırıqda aç',
-        basis: 'Yığımdan sonra yarpaqdan qidalanma (planın gübrələmə bölməsi). Planın qeydi: 2025-də yalnız Galaya vurulub, həssas zonada bütün bağa tövsiyə olunur. Doza etiketlə yoxlanmalıdır.',
-        source: 'Düzəldilmiş plan — gübrələmə, "Yığımdan sonra" sətri' },
-      { id: 'c', prio: 'ORTA', tag: 'sys', title: 'Yarpaq tökümünü qeyd et (faizlə)', block: 'Bütün bloklar',
-        reason: 'Sanitariyanın vaxtını yarpaqların neçə faizinin töküldüyü müəyyən edir. Hava modeli bunu bilə bilmir.',
-        when: 'bu gün', link: 'Fenologiya.html', linkLabel: 'Fenologiyada qeyd et',
-        basis: 'Nişanlı 5 ağaca baxın, təxmini faizi yazın və şəkil çəkin. 95%-ə çatanda sanitariya tapşırığı işçiyə düşəcək.', source: 'Fenologiya · düzəldilmiş plan' },
-      { id: 'd', prio: 'AŞAĞI', tag: 'plan', title: 'Torpaq və yarpaq analizini planla', block: 'Bütün bağ',
-        reason: 'Planda hər il yanvar–fevral. Laboratoriya ilə indidən razılaşmaq olar.',
-        when: 'bu ay', link: 'Analizler.html', linkLabel: 'Analizlər',
-        basis: 'Gübrə miqdarları hazırda analizsizdir. Analiz gələndə plan dəqiqləşəcək.', source: '[KİTAB] Fəsil 40 · düzəldilmiş plan' }
-    ];
+    var ph = getPhase(), cur = itemsFor(ph.code), nx = nextPhase(ph.code), ci = phIdx(ph.code);
+    var raw = cur.map(function (it, i) {
+      return { id: 'p' + i, prio: it.k === 'fert' ? 'AŞAĞI' : 'ORTA', tag: 'plan', title: it.title, block: 'Bütün bağ',
+        reason: it.what + (it.alt ? ' · Əvəzi: ' + it.alt : '') + ' · Aqronomun təsdiqi gözlənilir.',
+        when: 'faza ' + ph.code + (it.k === 'spray' ? ' — yağışdan əvvəl, quru gündə' : ' ərzində'),
+        link: 'Tapsiriqlar.html', linkLabel: 'Təsdiqə bax', basis: it.why, source: 'Düzəldilmiş plan · faza ' + ph.code + ' — ' + phName(ph.code) };
+    });
+    raw.push({ id: 'ph', prio: 'ORTA', tag: 'sys', title: 'Fazanı yoxla (nişanlı 5 ağacda şəkil)', block: 'Bütün bloklar',
+      reason: 'Cari faza: ' + phLine(ph) + '. Faza dəyişibsə Fenologiyada təsdiqləyin — bütün plan ona görə yenilənəcək.',
+      when: 'bu gün', link: 'Fenologiya.html', linkLabel: 'Fenologiya', basis: 'Plandakı işlər tarixə yox, fazaya bağlıdır.', source: 'Fenologiya' });
+    if (nx) raw.push({ id: 'nx', prio: 'AŞAĞI', tag: 'sys', title: 'Növbəti faza: ' + nx + ' — ' + phName(nx), block: 'Bütün bağ',
+      reason: 'Onda gələcək işlər: ' + (itemsFor(nx).map(function (i) { return i.title; }).join('; ') || 'planda iş yoxdur') + '.',
+      when: 'faza dəyişəndə', link: 'Dermanlama.html', linkLabel: 'Plana bax', basis: 'Hazırlıq: preparatları və işçiləri əvvəlcədən planlayın.', source: 'Düzəldilmiş plan' });
     var self = this, st = this.state, doneN = 0;
     var items = raw.map(function (r) {
       var done = !!st.done[r.id]; if (done) doneN++;
@@ -257,7 +291,13 @@ class Component extends DCLogic {
       var d = new Date(T0.getTime() + i * DAY), dry = mm === 0;
       return { dow: i === 0 ? 'Bu gün' : DOWS[d.getDay()], date: dd(i), bg: dry ? '#E3F1E8' : '#E8EEF6', fg: dry ? '#17603A' : '#284A73', label: dry ? 'QURU' : 'YAĞIŞ', rain: mm + ' mm' };
     });
-    return { items: items, days: days, doneCount: doneN, totalCount: raw.length, hour: ('0' + T0.getHours()).slice(-2) + ':00',
+    var spring = ci >= 1 && ci <= 12;
+    return { phaseLine: phLine(ph), phaseCode: ph.code, phaseName: phName(ph.code),
+      scabChip: spring ? 'İLKİN İNFEKSİYA DÖVRÜ' : (ci === 0 ? 'MÖVSÜM YAXINLAŞIR' : 'İLKİN İNFEKSİYA MÖVSÜMÜ DEYİL'),
+      scabBg: spring ? '#FDF3D7' : '#E3F1E8', scabFg: spring ? '#7A5300' : '#17603A',
+      scabText: spring ? 'Yaşıl ucdan sonra hər yağışda islanma Mills cədvəli ilə hesablanır (TƏXMİNİ, sensor yoxdur). Qoruyucu çiləmə yağışdan əvvəl olsun.'
+        : (ci === 0 ? 'Yaşıl uc yaxınlaşır: ilk qoruyucu çiləmə (Bordo) yazın ilk yağışlarından əvvəl.' : 'İlkin infeksiya dövrü yazda, yaşıl ucdan sonra başlayır. Göbələk tökülən yarpaqlarda qışlayır — payız sanitariyası yazın riskini ən çox azaldır.'),
+      items: items, days: days, doneCount: doneN, totalCount: raw.length, hour: ('0' + T0.getHours()).slice(-2) + ':00',
       dateLine: DOW[T0.getDay()] + ', ' + dd(0) + '.' + T0.getFullYear() + ' · ' + ('0' + T0.getHours()).slice(-2) + ':' + ('0' + T0.getMinutes()).slice(-2) + ' (Bakı vaxtı)' };
   }
 }
