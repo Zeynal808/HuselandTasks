@@ -52,44 +52,46 @@ button{font-family:inherit}
         <header style="display: flex; flex-direction: column; gap: 8px">
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
             <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; padding: 4px 8px; border-radius: 6px; background: {{millsBg}}; color: {{millsFg}}">{{millsChip}}</span>
-            <span style="font-size: 13px; color: #5A665E">SCAB_MILLS_VIC · versiya 1.0 · çıxarıldı 11.11.2026</span>
+            <span style="font-size: 13px; color: #5A665E">SCAB_MG_STENSVAND · versiya 1.0 · Michigan Universiteti · 11.11.2026</span>
           </div>
-          <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Mills cədvəli — kitab ilə müqayisə</h1>
-          <div style="font-size: 14px; color: #33403A">Hər sətri soldakı orijinal səhifə ilə yoxlayın. Təsdiqdən sonra qayda AKTİV olur və mühərrik ondan istifadə edir.</div>
+          <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Qara ləkə cədvəli — Michigan (MacHardy–Gadoury, sərt)</h1>
+          <div style="font-size: 14px; color: #33403A">Hər sətri soldakı orijinal mənbə ilə yoxlayın. Təsdiqdən sonra qayda AKTİV olur və qara ləkə yalnız bu cədvəllə hesablanır. Kitabın köhnə cədvəli (Cədvəl 45.1) köhnəlmiş sayılır.</div>
         </header>
 
         <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
           <section aria-label="Kitabın orijinal səhifəsi" style="flex: 1 1 440px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
             <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: #33403A">
-              <span><b>[KİTAB]</b> Fəsil 45.3 · Cədvəl 45.1 · səh. 362</span>
+              <span><b>[ELMİ]</b> MSU — Apple Scab Infection Chart, Table 1 · kitab Fəsil 45.3 [S467]</span>
               <div style="display: flex; gap: 6px">
                 <button type="button" aria-label="Əvvəlki səhifə" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A">‹</button>
                 <button type="button" aria-label="Növbəti səhifə" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A">›</button>
               </div>
             </div>
-            <img src="kitab_sehife_362.png" alt="Kitabın 362-ci səhifəsi: Mills cədvəli 45.1 və qrafik" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #ECEFEC">
+            <img src="img/msu_cedvel.png" alt="Michigan Dövlət Universitetinin qara ləkə infeksiya cədvəli (Table 1)" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #ECEFEC">
           </section>
 
           <section aria-labelledby="ext-h" style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
             <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
               <div style="display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline">
                 <h2 id="ext-h" style="margin: 0; font-size: 18px">Çıxarılmış cədvəl</h2>
-                <span style="font-size: 13px; color: #5A665E">{{checked}} / 10 sətir yoxlanıb</span>
+                <span style="font-size: 13px; color: #5A665E">{{checked}} / {{total}} sətir yoxlanıb</span>
               </div>
               <div style="overflow-x: auto">
                 <table style="width: 100%; min-width: 380px; border-collapse: collapse; font-size: 14px">
                   <thead><tr style="text-align: left; font-size: 12px; color: #5A665E">
-                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">ORTA T, °C</th>
-                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">İSLANMA, SAAT</th>
-                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">LƏKƏ, GÜN</th>
+                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">°F (MƏNBƏ)</th>
+                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">°C</th>
+                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">SƏRT, SAAT</th>
+                    <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">MILLS (JONES)</th>
                     <th style="padding: 8px; border-bottom: 1px solid #E2E6E2; font-weight: 600">YOXLANDI</th>
                   </tr></thead>
                   <tbody>
                     <template data-for="rows" data-as="r">
                       <tr style="background: {{r.bg}}">
+                        <td style="padding: 8px; border-bottom: 1px solid #ECEFEC">{{r.f}}</td>
                         <td style="padding: 8px; border-bottom: 1px solid #ECEFEC">{{r.t}}</td>
                         <td style="padding: 8px; border-bottom: 1px solid #ECEFEC; font-weight: 600">{{r.h}}</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #ECEFEC">{{r.d}}</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #ECEFEC; color: #5A665E">{{r.d}}</td>
                         <td style="padding: 4px 8px; border-bottom: 1px solid #ECEFEC">
                           <button type="button" onClick="{{r.toggle}}" aria-pressed="{{r.ok}}" aria-label="Sətri yoxlanmış kimi işarələ" style="width: 44px; height: 36px; border-radius: 8px; border: 1px solid {{r.btnBorder}}; background: {{r.btnBg}}; color: {{r.btnFg}}; font-size: 16px; font-weight: 700; cursor: pointer">{{r.mark}}</button>
                         </td>
@@ -102,18 +104,18 @@ button{font-family:inherit}
 
             <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5">
               <h2 style="margin: 0; font-size: 16px">Qaydanın məlumatları</h2>
-              <div><span style="color: #5A665E">Versiya:</span> orijinal Mills (1944), "yüngül infeksiya" sütunu, °C — <b>ehtimal</b></div>
-              <div><span style="color: #5A665E">İlkin mənbə:</span> [ELMİ] S361 Agriculture Victoria</div>
-              <div><span style="color: #5A665E">Temperatur:</span> islanma dövründə saatlıq ölçmələrin ortası</div>
-              <div><span style="color: #5A665E">Diapazondan kənar:</span> &lt; 5,5 °C və &gt; 25 °C → məlumat kifayət deyil</div>
-              <div style="color: #7A5300"><b>Kitabda yoxdur:</b> orta və ağır infeksiya sütunları</div>
+              <div><span style="color: #5A665E">Versiya:</span> MacHardy və Gadoury (1989), Stensvand və həmk. (1997) düzəlişi ilə — askospor üçün Mills-dən ~3 saat az</div>
+              <div><span style="color: #5A665E">Mənbə:</span> Michigan Dövlət Universiteti, Apple Scab Infection Chart (2003); MacHardy & Gadoury 1989, Phytopathology 79:304 — hər ikisi oxunub</div>
+              <div><span style="color: #5A665E">Temperatur:</span> islanma dövründə orta hava temperaturu; infeksiya yağışın başlanğıcından sayılır; askospor və konidi üçün eyni cədvəl</div>
+              <div><span style="color: #5A665E">Diapazondan kənar:</span> &lt; 1,1 °C və &gt; 25 °C → məlumat kifayət deyil</div>
+              <div style="color: #7A5300"><b>Qeyd:</b> cədvəldə orta/ağır dərəcə sütunları yoxdur. Ləkələr ~15,6 °C-də ~9 gün, 10 °C-dən aşağı 16+ gün sonra görünür (MSU).</div>
               <label for="note" style="font-weight: 600; margin-top: 4px">Aqronomun qeydi</label>
-              <textarea id="note" rows="3" placeholder="Məsələn: səh. 362 ilə tutuşduruldu, fərq yoxdur" style="font: inherit; padding: 10px; border: 1px solid #CDD4CE; border-radius: 8px; resize: vertical"></textarea>
+              <textarea id="note" rows="3" placeholder="Məsələn: MSU cədvəli ilə tutuşduruldu, fərq yoxdur" style="font: inherit; padding: 10px; border: 1px solid #CDD4CE; border-radius: 8px; resize: vertical"></textarea>
               <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px">
                 <button type="button" onClick="{{approve}}" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid {{approveBorder}}; background: {{approveBg}}; color: {{approveFg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{approveLabel}}</button>
                 <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 14px">Rədd et</button>
               </div>
-              <div style="font-size: 12px; color: #5A665E">Təsdiq düyməsi bütün 10 sətir yoxlananda aktivləşir. Kim və nə vaxt təsdiqlədiyi audit jurnalına yazılır.</div>
+              <div style="font-size: 12px; color: #5A665E">Təsdiq düyməsi bütün sətirlər yoxlananda aktivləşir. Kim və nə vaxt təsdiqlədiyi audit jurnalına yazılır.</div>
             </div>
           </section>
         </div>
@@ -187,29 +189,30 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { ok: { 0: true, 1: true, 2: true } }; }
+  constructor(p) { super(p); this.state = { ok: {} }; }
   renderVals() {
     var self = this, st = this.state;
-    var data = [['5,5', '30', '—'], ['7', '20', '17-dən çox'], ['10', '14', '16'], ['13', '11', '14'], ['14–15', '10', '12'],
-      ['15,5', '9,5', '11'], ['16–16,5', '9', '10'], ['17–24', '9', '9'], ['24,5', '9,5', '—'], ['25', '11', '—']];
+    var data = [['34', '1,1', '41', '48'], ['36', '2,2', '35', '48'], ['37', '2,8', '30', '41'], ['39', '3,9', '28', '33'], ['41', '5,0', '21', '26'], ['43', '6,1', '18', '21'],
+      ['45', '7,2', '15', '17'], ['46', '7,8', '13', '16'], ['48', '8,9', '12', '15'], ['50', '10,0', '11', '14'], ['52', '11,1', '9', '12'], ['54', '12,2', '8', '11,5'],
+      ['55', '12,8', '8', '11'], ['57', '13,9', '7', '10'], ['59', '15,0', '7', '10'], ['61–75', '16,1–23,9', '6', '9'], ['77', '25,0', '8', '11']];
     var n = 0;
     var rows = data.map(function (d, i) {
       var ok = !!st.ok[i]; if (ok) n++;
-      return { t: d[0], h: d[1], d: d[2], ok: ok, mark: ok ? '✓' : '', bg: ok ? '#F3F8F4' : '#FFFFFF',
+      return { f: d[0], t: d[1], h: d[2], d: d[3], ok: ok, mark: ok ? '✓' : '', bg: ok ? '#F3F8F4' : '#FFFFFF',
         btnBg: ok ? '#1F5E3B' : '#FFFFFF', btnFg: '#FFFFFF', btnBorder: ok ? '#1F5E3B' : '#CDD4CE',
         toggle: function () { var o = Object.assign({}, st.ok); o[i] = !o[i]; self.setState({ ok: o }); } };
     });
     var all = n === data.length;
     var live = !!(window.ORCHARD && window.ORCHARD.server), R = live ? window.ORCHARD.rules : {};
-    var mAct = live ? R.SCAB_MILLS_VIC.status === 'AKTİV' : !!st.demoMills, wAct = live ? R.WET_RH_EST.status === 'AKTİV' : !!st.demoWet;
+    var mAct = live ? R.SCAB_MG_STENSVAND.status === 'AKTİV' : !!st.demoMills, wAct = live ? R.WET_RH_EST.status === 'AKTİV' : !!st.demoWet;
     var post = function (code) { fetch('api/rules/' + code + '/approve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ by: 'Sahib' }) }).then(function (r) { return r.json(); }).then(function (s) { window.ORCHARD = s; if (window.__dcRender) window.__dcRender(); }); };
     return { millsChip: mAct ? 'AKTİV' : 'QARALAMA', millsBg: mAct ? '#E3F1E8' : '#FDF3D7', millsFg: mAct ? '#17603A' : '#7A5300',
       wetChip: wAct ? 'AKTİV' : 'QARALAMA', wetBg: wAct ? '#E3F1E8' : '#FDF3D7', wetFg: wAct ? '#17603A' : '#7A5300',
       approveLabel: mAct ? 'Təsdiqlənib ✓' : 'Təsdiqlə → AKTİV', wetLabel: wAct ? 'Təsdiqlənib ✓' : 'Təsdiqlə → AKTİV',
       liveNote: live ? 'Təsdiq serverdə audit jurnalına yazılır.' : 'Nümunə rejimi: təsdiq yalnız bu ekranda görünür.',
-      approve: function () { if (!all || mAct) return; if (live) post('SCAB_MILLS_VIC'); else self.setState({ demoMills: true }); },
+      approve: function () { if (!all || mAct) return; if (live) post('SCAB_MG_STENSVAND'); else self.setState({ demoMills: true }); },
       approveWet: function () { if (wAct) return; if (live) post('WET_RH_EST'); else self.setState({ demoWet: true }); },
-      rows: rows, checked: n,
+      rows: rows, checked: n, total: data.length,
       approveBg: all ? '#1F5E3B' : '#ECEEEF', approveFg: all ? '#FFFFFF' : '#5F676D', approveBorder: all ? '#1F5E3B' : '#CDD4CE' };
   }
 }

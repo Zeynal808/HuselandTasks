@@ -318,7 +318,7 @@ class Component extends DCLogic {
       wxT: W && W.now ? wxf(W.now.t, ' °C') : '8,1 °C', wxRH: W && W.now ? wxf(W.now.rh, '%') : '78%', wxRain: W ? wxf(W.rain24, '') + ' / ' + wxf(W.rain7d, ' mm') : '0 / 12 mm',
       scabChip: liveScab ? SC.label + ' · TƏXMİNİ' : spring ? 'İLKİN İNFEKSİYA DÖVRÜ' : (ci === 0 ? 'MÖVSÜM YAXINLAŞIR' : 'İLKİN İNFEKSİYA MÖVSÜMÜ DEYİL'),
       scabBg: liveScab ? (SCC[SC.status] || SCC['MƏLUMAT KİFAYƏT DEYİL'])[0] : (spring ? '#FDF3D7' : '#E3F1E8'), scabFg: liveScab ? (SCC[SC.status] || SCC['MƏLUMAT KİFAYƏT DEYİL'])[1] : (spring ? '#7A5300' : '#17603A'),
-      scabText: liveScab ? SC.reason + (SC.forecast ? ' ' + SC.forecast.text + '.' : '') + ' Qayda: ' + SC.rule + '.' : spring ? 'Yaşıl ucdan sonra hər yağışda islanma Mills cədvəli ilə hesablanır (TƏXMİNİ, sensor yoxdur). Qoruyucu çiləmə yağışdan əvvəl olsun.'
+      scabText: liveScab ? SC.reason + (SC.forecast ? ' ' + SC.forecast.text + '.' : '') + ' Qayda: ' + SC.rule + '.' : spring ? 'Yaşıl ucdan sonra hər yağışda islanma Michigan (sərt) cədvəli ilə hesablanır (TƏXMİNİ, sensor yoxdur). Qoruyucu çiləmə yağışdan əvvəl olsun.'
         : (ci === 0 ? 'Yaşıl uc yaxınlaşır: ilk qoruyucu çiləmə (Bordo) yazın ilk yağışlarından əvvəl.' : 'İlkin infeksiya dövrü yazda, yaşıl ucdan sonra başlayır. Göbələk tökülən yarpaqlarda qışlayır — payız sanitariyası yazın riskini ən çox azaldır.'),
       items: items, days: days, doneCount: doneN, totalCount: raw.length, hour: W && W.fetched_at ? W.fetched_at.slice(11, 16) : ('0' + T0.getHours()).slice(-2) + ':00',
       dateLine: DOW[T0.getDay()] + ', ' + dd(0) + '.' + T0.getFullYear() + ' · ' + ('0' + T0.getHours()).slice(-2) + ':' + ('0' + T0.getMinutes()).slice(-2) + ' (Bakı vaxtı)' };
