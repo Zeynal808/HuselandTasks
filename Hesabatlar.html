@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Hesabatlar — ORCHARD AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F5F2}
+a{color:#1F5E3B}a:hover{color:#123D26}
+button,input{font-family:inherit}
+</style>
+
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:10;background:#123D26;color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#fff">← Bütün ekranlar</a><span style="opacity:.85">ORCHARD AI — dizayn nümunəsi (DEMO, real məlumat deyil)</span></div>
+<template id="dc-template">
+
+<div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
+  <div style="display: flex; flex-wrap: wrap; align-items: stretch">
+    <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 4px 10px 10px">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F5E3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7c-3.5-2-8 0-8 5s3 9 6 9c1 0 1.5-.5 2-.5s1 .5 2 .5c3 0 6-4 6-9s-4.5-7-8-5z"></path><path d="M12 7c0-2 1-4 3-5"></path></svg>
+        <div style="font-weight: 700; font-size: 17px">ORCHARD AI</div>
+      </div>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #5A665E; padding: 14px 12px 4px">BU GÜN</div>
+      <a href="Main.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Ana səhifə</a>
+      <a href="Tapsiriqlar.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Tapşırıqlar</a>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #5A665E; padding: 14px 12px 4px">BAĞ</div>
+      <a href="Xerite.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Xəritə və bloklar</a>
+      <a href="Fenologiya.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Fenologiya (faza)</a>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #5A665E; padding: 14px 12px 4px">RİSK VƏ QƏRAR</div>
+      <a href="Qara_leke.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Risklər</a>
+      <a href="Dermanlama.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Dərmanlama və gübrə</a>
+      <a href="Preparatlar.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Preparat kataloqu</a>
+      <a href="Suvarma.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Suvarma</a>
+      <a href="Analizler.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Analizlər</a>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #5A665E; padding: 14px 12px 4px">BİLİK</div>
+      <a href="AI_aqronom.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">AI Aqronom</a>
+      <a href="Qayda_tesdiqi.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Qaydalar və kitab</a>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #5A665E; padding: 14px 12px 4px">SİSTEM</div>
+      <a href="Hesabatlar.html" style="padding: 9px 12px; border-radius: 8px; background: #E7EFE9; color: #123D26; font-weight: 600; text-decoration: none; font-size: 15px">Hesabatlar</a>
+      <a href="Sensorlar.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Məlumat mənbələri</a>
+      <a href="Ayarlar.html" style="padding: 9px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Ayarlar</a>
+      <div style="margin-top: auto; padding: 16px 12px 4px; font-size: 12px; line-height: 1.5; color: #5A665E">Sistem qərar dəstəyidir. Yekun qərar bağ sahibi və aqronomdadır.</div>
+    </nav>
+    <main style="flex: 999 1 560px; min-width: 0; padding: 24px; box-sizing: border-box">
+      <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+        <header style="display: flex; flex-direction: column; gap: 4px">
+          <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Hesabatlar</h1>
+          <div style="font-size: 14px; color: #33403A">Hər hesabat Excel və PDF kimi yüklənir.</div>
+        </header>
+
+        <section aria-label="Hesabat növləri" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+          <template data-for="types" data-as="t">
+            <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+              <div style="font-weight: 700; font-size: 16px">{{t.n}}</div>
+              <div style="font-size: 13px; color: #5A665E; line-height: 1.45">{{t.d}}</div>
+              <div style="display: flex; gap: 6px; margin-top: auto">
+                <button type="button" style="flex: 1; min-height: 40px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 13px; font-weight: 600">Excel</button>
+                <button type="button" style="flex: 1; min-height: 40px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 13px; font-weight: 600">PDF</button>
+              </div>
+            </div>
+          </template>
+        </section>
+
+        <section aria-labelledby="s26-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline">
+            <h2 id="s26-h" style="margin: 0; font-size: 18px">Mövsüm 2026 — dərmanlama xülasəsi</h2>
+            <span style="font-size: 12px; color: #5A665E">Mənbə: 2026 dərmanlama jurnalı (71 qeyd)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px">
+            <div style="border: 1px solid #E2E6E2; border-radius: 10px; padding: 12px"><div style="font-size: 13px; color: #5A665E">Cəmi qeyd</div><div style="font-size: 26px; font-weight: 700">71</div><div style="font-size: 12px; color: #5A665E">12-si qida çiləməsi</div></div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 10px; padding: 12px"><div style="font-size: 13px; color: #5A665E">Yaxşı</div><div style="font-size: 26px; font-weight: 700; color: #17603A">13</div></div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 10px; padding: 12px"><div style="font-size: 13px; color: #5A665E">Normal</div><div style="font-size: 26px; font-weight: 700">23</div></div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 10px; padding: 12px"><div style="font-size: 13px; color: #5A665E">Artıq</div><div style="font-size: 26px; font-weight: 700; color: #7A5300">13</div></div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 10px; padding: 12px"><div style="font-size: 13px; color: #5A665E">Səhv</div><div style="font-size: 26px; font-weight: 700; color: #9F1C14">13</div></div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 10px; padding: 12px"><div style="font-size: 13px; color: #5A665E">Yoxlanmalı</div><div style="font-size: 26px; font-weight: 700; color: #284A73">9</div></div>
+          </div>
+          <div style="font-size: 13px; color: #5A665E; line-height: 1.5">Qiymətlər keçən il apardığım təhlildəndir. Artıq xərcin təfərrüatı "2027 planı" faylının "Artıq xərc 2026" vərəqindədir.</div>
+        </section>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 20px">
+          <section aria-labelledby="cost-h" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+            <h2 id="cost-h" style="margin: 0; font-size: 18px">Xərc və məhsul</h2>
+            <div style="font-size: 14px; color: #33403A; line-height: 1.5">Xərclər Maliyyə Excel-indən (WhatsApp qrupları) avtomatik götürüləcək. Yığım (kq, blok üzrə) daxil edilsə, 1 ha və 1 kq-ın maya dəyəri hesablanacaq.</div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; font-size: 14px">
+              <span style="color: #5A665E">Xərclər</span><span>[Maliyyə Excel-indən]</span>
+              <span style="color: #5A665E">Yığım</span><span>[daxil edilməyib]</span>
+              <span style="color: #5A665E">1 kq maya dəyəri</span><span>—</span>
+            </div>
+          </section>
+          <section aria-labelledby="tm-h" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+            <h2 id="tm-h" style="margin: 0; font-size: 18px">Zaman maşını</h2>
+            <div style="font-size: 14px; color: #33403A; line-height: 1.5">İstənilən keçmiş günü seçin: o gün sistem nə göstərirdi, hansı tövsiyəni verirdi və hansı qayda versiyası ilə.</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <label for="tmd" style="position: absolute; left: -9999px">Tarix</label>
+              <input id="tmd" type="text" value="04.04.2026" style="min-height: 44px; padding: 0 12px; border: 1px solid #CDD4CE; border-radius: 8px; font-size: 15px; width: 150px">
+              <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 14px; font-weight: 600">Göstər</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script>
+class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
+  setState(p){ this.state = Object.assign({}, this.state, p); window.__dcRender(); } forceUpdate(){ window.__dcRender(); } }
+(function(){
+  function get(path, scopes){
+    path = path.trim();
+    if (path === 'true') return true; if (path === 'false') return false;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.');
+    for (var i = 0; i < scopes.length; i++) {
+      if (scopes[i] && Object.prototype.hasOwnProperty.call(scopes[i], parts[0])) {
+        var v = scopes[i]; for (var j = 0; j < parts.length; j++) { v = v == null ? undefined : v[parts[j]]; } return v; } }
+    return undefined;
+  }
+  var whole = /^\s*\{\{([^}]+)\}\}\s*$/;
+  function interp(s, scopes){ return s.replace(/\{\{([^}]+)\}\}/g, function(_, p){ var v = get(p, scopes); return v == null ? '' : String(v); }); }
+  function build(node, scopes, out){
+    if (node.nodeType === 3) { out.appendChild(document.createTextNode(interp(node.nodeValue, scopes))); return; }
+    if (node.nodeType !== 1) return;
+    var tag = node.tagName.toLowerCase();
+    if (tag === 'template' && node.hasAttribute('data-for')) {
+      var list = get(node.getAttribute('data-for'), scopes) || [], as = node.getAttribute('data-as') || 'item';
+      list.forEach(function(item, idx){ var sc = {}; sc[as] = item; sc.$index = idx;
+        kids(node.content, [sc].concat(scopes), out); });
+      return; }
+    if (tag === 'template' && node.hasAttribute('data-if')) {
+      if (get(node.getAttribute('data-if'), scopes)) kids(node.content, scopes, out); return; }
+    var el = node.cloneNode(false);
+    Array.prototype.slice.call(el.attributes).forEach(function(a){
+      var m = a.value.match(whole);
+      if (/^on/i.test(a.name)) { el.removeAttribute(a.name);
+        if (m) { var fn = get(m[1], scopes); if (typeof fn === 'function') el.addEventListener(a.name.slice(2).toLowerCase(), fn); } return; }
+      if (m && /^(checked|disabled|selected)$/i.test(a.name)) { var bv = !!get(m[1], scopes); el.removeAttribute(a.name); if (bv) el.setAttribute(a.name, ''); return; }
+      if (a.value.indexOf('{{') >= 0) el.setAttribute(a.name, interp(a.value, scopes));
+    });
+    kids(node, scopes, el); out.appendChild(el);
+  }
+  function kids(parent, scopes, out){ Array.prototype.forEach.call(parent.childNodes, function(c){ build(c, scopes, out); }); }
+  var comp = null, tpl = null, root = null;
+  window.__dcRender = function(){
+    var vals = comp.renderVals ? comp.renderVals() : {};
+    var frag = document.createDocumentFragment(); kids(tpl.content, [vals], frag);
+    root.replaceChildren(frag);
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    tpl = document.getElementById('dc-template'); root = document.getElementById('dc-root');
+    comp = new Component({}); window.__dcRender();
+  });
+})();
+
+
+class Component extends DCLogic {
+  renderVals() {
+    var t = [['Gündəlik', 'Hava, risklər, görülən işlər'], ['Həftəlik', 'Tapşırıqlar: edilən / edilməyən, çiləmələr'], ['Aylıq', 'Xərclər, dərman və gübrə sərfi'],
+      ['Mövsümlük', 'İnfeksiya hadisələri, FRAC qrupları, PHI'], ['İllik', 'Məhsul, maya dəyəri, plan ilə fakt']];
+    return { types: t.map(function (x) { return { n: x[0], d: x[1] }; }) };
+  }
+}
+
+</script>
+</body>
+</html>

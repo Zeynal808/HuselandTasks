@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Giriş — ORCHARD AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+button,input{font-family:inherit}
+</style>
+
+<style>body{background:#DDE2DD}#dc-root{display:flex;justify-content:center;padding:24px 0;min-height:100vh;box-sizing:border-box}#dc-root>div{box-shadow:0 8px 30px rgba(0,0,0,.18);border-radius:24px}</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:10;background:#123D26;color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#fff">← Bütün ekranlar</a><span style="opacity:.85">ORCHARD AI — dizayn nümunəsi (DEMO, real məlumat deyil)</span></div>
+<template id="dc-template">
+
+<div style="width: 390px; height: 844px; box-sizing: border-box; font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; display: flex; flex-direction: column; padding: 48px 24px 24px; gap: 24px">
+  <div style="display: flex; align-items: center; gap: 10px">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1F5E3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7c-3.5-2-8 0-8 5s3 9 6 9c1 0 1.5-.5 2-.5s1 .5 2 .5c3 0 6-4 6-9s-4.5-7-8-5z"></path><path d="M12 7c0-2 1-4 3-5"></path></svg>
+    <span style="font-weight: 700; font-size: 22px">ORCHARD AI</span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Daxil olun</h1>
+    <div style="font-size: 15px; color: #33403A">Telefon nömrənizə birdəfəlik kod gələcək.</div>
+  </div>
+  <template data-if="askPhone">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <label for="ph" style="font-size: 14px; font-weight: 600">Telefon nömrəsi</label>
+      <input id="ph" type="tel" placeholder="+994 __ ___ __ __" style="min-height: 56px; padding: 0 16px; border: 1px solid #CDD4CE; border-radius: 12px; font-size: 18px; background: #FFFFFF">
+      <button type="button" onClick="{{next}}" style="min-height: 56px; border-radius: 12px; border: 0; background: #1F5E3B; color: #FFFFFF; font-size: 17px; font-weight: 700">Kod göndər</button>
+    </div>
+  </template>
+  <template data-if="askCode">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <label for="cd" style="font-size: 14px; font-weight: 600">SMS və ya Telegram ilə gələn 6 rəqəmli kod</label>
+      <input id="cd" type="text" inputmode="numeric" placeholder="______" style="min-height: 56px; padding: 0 16px; border: 1px solid #CDD4CE; border-radius: 12px; font-size: 24px; letter-spacing: 0.4em; background: #FFFFFF">
+      <button type="button" style="min-height: 56px; border-radius: 12px; border: 0; background: #1F5E3B; color: #FFFFFF; font-size: 17px; font-weight: 700">Daxil ol</button>
+      <button type="button" onClick="{{back}}" style="min-height: 44px; border: 0; background: transparent; color: #1F5E3B; font-size: 15px; text-decoration: underline">Nömrəni dəyiş</button>
+    </div>
+  </template>
+  <div style="margin-top: auto; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 12px; padding: 14px; font-size: 13px; color: #33403A; line-height: 1.5">
+    <b>Vacib:</b> ORCHARD AI qərar dəstəyi vasitəsidir. Dərmanlama və digər aqronomik qərarlara görə yekun məsuliyyət bağ sahibi və aqronomdadır.
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script>
+class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
+  setState(p){ this.state = Object.assign({}, this.state, p); window.__dcRender(); } forceUpdate(){ window.__dcRender(); } }
+(function(){
+  function get(path, scopes){
+    path = path.trim();
+    if (path === 'true') return true; if (path === 'false') return false;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.');
+    for (var i = 0; i < scopes.length; i++) {
+      if (scopes[i] && Object.prototype.hasOwnProperty.call(scopes[i], parts[0])) {
+        var v = scopes[i]; for (var j = 0; j < parts.length; j++) { v = v == null ? undefined : v[parts[j]]; } return v; } }
+    return undefined;
+  }
+  var whole = /^\s*\{\{([^}]+)\}\}\s*$/;
+  function interp(s, scopes){ return s.replace(/\{\{([^}]+)\}\}/g, function(_, p){ var v = get(p, scopes); return v == null ? '' : String(v); }); }
+  function build(node, scopes, out){
+    if (node.nodeType === 3) { out.appendChild(document.createTextNode(interp(node.nodeValue, scopes))); return; }
+    if (node.nodeType !== 1) return;
+    var tag = node.tagName.toLowerCase();
+    if (tag === 'template' && node.hasAttribute('data-for')) {
+      var list = get(node.getAttribute('data-for'), scopes) || [], as = node.getAttribute('data-as') || 'item';
+      list.forEach(function(item, idx){ var sc = {}; sc[as] = item; sc.$index = idx;
+        kids(node.content, [sc].concat(scopes), out); });
+      return; }
+    if (tag === 'template' && node.hasAttribute('data-if')) {
+      if (get(node.getAttribute('data-if'), scopes)) kids(node.content, scopes, out); return; }
+    var el = node.cloneNode(false);
+    Array.prototype.slice.call(el.attributes).forEach(function(a){
+      var m = a.value.match(whole);
+      if (/^on/i.test(a.name)) { el.removeAttribute(a.name);
+        if (m) { var fn = get(m[1], scopes); if (typeof fn === 'function') el.addEventListener(a.name.slice(2).toLowerCase(), fn); } return; }
+      if (m && /^(checked|disabled|selected)$/i.test(a.name)) { var bv = !!get(m[1], scopes); el.removeAttribute(a.name); if (bv) el.setAttribute(a.name, ''); return; }
+      if (a.value.indexOf('{{') >= 0) el.setAttribute(a.name, interp(a.value, scopes));
+    });
+    kids(node, scopes, el); out.appendChild(el);
+  }
+  function kids(parent, scopes, out){ Array.prototype.forEach.call(parent.childNodes, function(c){ build(c, scopes, out); }); }
+  var comp = null, tpl = null, root = null;
+  window.__dcRender = function(){
+    var vals = comp.renderVals ? comp.renderVals() : {};
+    var frag = document.createDocumentFragment(); kids(tpl.content, [vals], frag);
+    root.replaceChildren(frag);
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    tpl = document.getElementById('dc-template'); root = document.getElementById('dc-root');
+    comp = new Component({}); window.__dcRender();
+  });
+})();
+
+
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { step: 0 }; }
+  renderVals() {
+    var self = this;
+    return { askPhone: this.state.step === 0, askCode: this.state.step === 1,
+      next: function () { self.setState({ step: 1 }); }, back: function () { self.setState({ step: 0 }); } };
+  }
+}
+
+</script>
+</body>
+</html>

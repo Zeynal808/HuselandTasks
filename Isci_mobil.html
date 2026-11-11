@@ -111,6 +111,7 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
       var m = a.value.match(whole);
       if (/^on/i.test(a.name)) { el.removeAttribute(a.name);
         if (m) { var fn = get(m[1], scopes); if (typeof fn === 'function') el.addEventListener(a.name.slice(2).toLowerCase(), fn); } return; }
+      if (m && /^(checked|disabled|selected)$/i.test(a.name)) { var bv = !!get(m[1], scopes); el.removeAttribute(a.name); if (bv) el.setAttribute(a.name, ''); return; }
       if (a.value.indexOf('{{') >= 0) el.setAttribute(a.name, interp(a.value, scopes));
     });
     kids(node, scopes, el); out.appendChild(el);
@@ -143,7 +144,7 @@ class Component extends DCLogic {
       { id: 2, kind: 'fert', kindLabel: 'Gübrələmə', block: 'Bütün bağ', prio: 'AŞAĞI', tag: '★ TÖVSİYƏ · düzəldilmiş plan',
         title: 'Damlama ilə gübrə — E2', note: 'Suvarma ilə birlikdə verin.',
         mix: [{ name: 'MAP 12-61-0', dose: '25 kq /ha' }], mixNote: 'Plandan · təxminən 09.04, faza təsdiqlənəndə' },
-      { id: 3, kind: 'other', kindLabel: 'Sensor', block: 'Story — Blok 4', prio: 'ORTA', title: 'LW-04 sensorunu yoxla', note: 'Batareyanı və kabeli yoxla. Şəkil çək.' },
+      { id: 3, kind: 'other', kindLabel: 'Faza', block: 'Bütün bloklar', prio: 'ORTA', title: 'Faza şəkli çək', note: 'Nişanlı 5 ağacda tumurcuqları yaxından çək. Aqronom fazanı təsdiqləyəcək.' },
       { id: 4, kind: 'other', kindLabel: 'Sayım', block: 'Gala — Blok 2', prio: 'ORTA', title: 'Qırmızı gənə sayımı', note: '10 ağac, hər ağacdan 10 yarpaq. Sayı formaya yaz.' }
     ];
     var tasks = raw.map(function (r) {
