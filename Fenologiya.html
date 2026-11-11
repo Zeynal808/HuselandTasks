@@ -21,7 +21,7 @@ button{font-family:inherit}
 <div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
   <div style="background: #16201A; color: #F4F5F2; padding: 8px 24px; font-size: 13px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
     <span style="background: #F4C542; color: #16201A; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em">DEMO</span>
-    <span>Nümunə. Şəkil yerləri boşdur — real versiyada kitabın 7-ci fəslindəki şəkillər və sizin şəkilləriniz olacaq.</span>
+    <span>Nümunə. Faza fotoları kitabdandır (Wikimedia Commons, açıq lisenziya). Sizin şəkil yerləriniz boşdur.</span>
   </div>
   <div style="display: flex; flex-wrap: wrap; align-items: stretch">
     <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
@@ -88,12 +88,15 @@ button{font-family:inherit}
           <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px">
             <template data-for="stages" data-as="s">
               <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.on}}" style="text-align: left; cursor: pointer; font: inherit; color: #16201A; background: {{s.bg}}; border: 2px solid {{s.border}}; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px">
-                <span style="aspect-ratio: 4 / 3; border-radius: 8px; background: #EEF1EE; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #5A665E">[nümunə şəkil]</span>
+                <template data-if="s.hasImg"><img src="{{s.img}}" alt="{{s.alt}}" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block"></template>
+                <template data-if="s.noImg"><span style="aspect-ratio: 4 / 3; border-radius: 8px; background: #EEF1EE; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #5A665E; text-align: center; padding: 4px">bu faza üçün foto hələ yoxdur</span></template>
                 <span style="font-weight: 700; font-size: 16px">{{s.code}}</span>
                 <span style="font-size: 13px; color: #33403A; line-height: 1.35">{{s.name}}</span>
+                <span style="font-size: 11px; color: #5A665E; line-height: 1.3">{{s.cap}}</span>
               </button>
             </template>
           </div>
+          <div style="font-size: 12px; color: #5A665E; line-height: 1.5">Fotolar: Wikimedia Commons — AnRo0002 (CC0), Norbert Nagel (CC BY-SA 3.0), Dietmar Rabich (CC BY-SA 4.0), W.carter (CC BY-SA 4.0); kitabın 1 və 7-ci fəsillərindən. Hərf (Fleckinger) ilə BBCH kodunun uyğunluğu təxminidir.</div>
           <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border-top: 1px solid #ECEFEC; padding-top: 14px">
             <button type="button" onClick="{{confirm}}" style="min-height: 48px; padding: 0 20px; border-radius: 10px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 15px; font-weight: 700; cursor: pointer">Təsdiqlə: {{picked}}</button>
             <span style="font-size: 14px; color: {{msgColor}}; font-weight: 600">{{msg}}</span>
@@ -175,11 +178,13 @@ class Component extends DCLogic {
   constructor(p) { super(p); this.state = { picked: 'D3', done: false }; }
   renderVals() {
     var self = this, st = this.state;
-    var list = [['B', 'Tumurcuq şişir'], ['C', 'Yaşıl uc görünür'], ['C3', 'Yaşıl uc açılır'], ['D', 'Yaşıl salxım'], ['D3', 'Salxımda tumurcuqlar ayrılır'],
-      ['E', 'Kasa yarpaqları görünür'], ['E2', 'Çəhrayı tumurcuq'], ['F', 'İlk çiçəklər'], ['F2', 'Tam çiçəkləmə'], ['G', 'Ləçəklər tökülür'], ['H', 'Meyvə bağlayır']];
+    var list = [['B', 'Tumurcuq şişir', '', ''], ['C', 'Yaşıl uc görünür', 'faza_yasil_uc', 'yaşıl uc (BBCH 07–09 / 53)'], ['C3', 'Yaşıl uc açılır', '', ''],
+      ['D', 'Yaşıl salxım', 'faza_bbch55', 'BBCH 55–56: qönçələr görünür, yarpaqlar açılır'], ['D3', 'Salxımda tumurcuqlar ayrılır', 'faza_bbch56', 'BBCH 56: sıx qrup, qönçələr yaşıl'],
+      ['E', 'Kasa yarpaqları görünür', '', ''], ['E2', 'Çəhrayı tumurcuq', 'faza_bbch57', 'BBCH 57: çəhrayı qönçə'], ['F', 'İlk çiçəklər', 'faza_bbch60', 'BBCH 60–61: kral çiçək açılıb'],
+      ['F2', 'Tam çiçəkləmə', 'faza_cicek', 'açılmış çiçəklər'], ['G', 'Ləçəklər tökülür', 'faza_bbch69', 'BBCH 69–71: çiçəkləmənin sonu'], ['H', 'Meyvə bağlayır', '', '']];
     var stages = list.map(function (x) {
       var on = st.picked === x[0];
-      return { code: x[0], name: x[1], on: on, bg: on ? '#E7EFE9' : '#FFFFFF', border: on ? '#1F5E3B' : '#E2E6E2',
+      return { code: x[0], name: x[1], on: on, hasImg: !!x[2], noImg: !x[2], img: x[2] ? 'img/' + x[2] + '.jpg' : '', alt: x[0] + ' fazası — ' + x[1], cap: x[3] || 'kitab Fəsil 7', bg: on ? '#E7EFE9' : '#FFFFFF', border: on ? '#1F5E3B' : '#E2E6E2',
         pick: function () { self.setState({ picked: x[0], done: false }); } };
     });
     return { stages: stages, picked: st.picked,

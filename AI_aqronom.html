@@ -21,7 +21,7 @@ button,input{font-family:inherit}
 <div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
   <div style="background: #16201A; color: #F4F5F2; padding: 8px 24px; font-size: 13px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
     <span style="background: #F4C542; color: #16201A; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em">DEMO</span>
-    <span>Nümunə söhbət. AI hələ qoşulmayıb.</span>
+    <span>Bu, nümunə saytdır: AI hələ qoşulmayıb. Aşağıdakı hazır suallara nümunə cavablar verilir; öz sualınız real sistemdə (Mərhələ 5) cavablanacaq.</span>
   </div>
   <div style="display: flex; flex-wrap: wrap; align-items: stretch">
     <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
@@ -56,50 +56,45 @@ button,input{font-family:inherit}
           <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">AI Aqronom</h1>
           <div style="font-size: 14px; color: #33403A; line-height: 1.5">AI rəqəm hesablamır. Hesablamanı mühərrik edir, AI yalnız izah edir və hər rəqəmin mənbəyini göstərir.</div>
 
-          <div style="align-self: flex-end; max-width: 80%; background: #1F5E3B; color: #FFFFFF; border-radius: 14px 14px 4px 14px; padding: 12px 14px; font-size: 15px">Fuji blokunda qara ləkə riski varmı?</div>
-
-          <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px 14px 14px 4px; padding: 16px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.55">
-            <div><b>Vəziyyət.</b> 03.04 21:40-dan yarpaqlar təxminən 12 s 40 dəq islaq qalıb, orta temperatur 12,4 °C.</div>
-            <div><b>Problem.</b> Mills cədvəlinə görə bu temperaturda infeksiya üçün 11 saat kifayətdir — şərtlər ödənib.</div>
-            <div><b>Məlumat və keyfiyyəti.</b> <span style="font-weight: 700; color: #7A5300">TƏXMİNİ</span>: sensor yoxdur, hava Open-Meteo-dan, islanma rütubət və yağışdan təxmin edilib. Ona görə nəticə KRİTİK sayılmır.</div>
-            <div><b>Elmi əsas.</b> Mills cədvəli, kitab Fəsil 45.3, səh. 362 (ilkin mənbə: Agriculture Victoria).</div>
-            <div><b>Tövsiyə.</b> Qorunma vəziyyətini qiymətləndirin: son çiləmə 31.03, ondan sonra təxminən 18 mm yağış. Qərarı aqronom preparatın etiketinə görə verir.</div>
-            <div><b>Prioritet.</b> Yüksək, bu gün.</div>
-            <div><b>Qeyri-müəyyənlik.</b> Bağda yağış və islanma ölçülmür; model bağınızda yoxlanmayıb. 14–16 gün sonra yarpaqlara baxıb nəticəni qeyd etsəniz, model yoxlanmış olacaq.</div>
-            <div><b>Növbəti addım.</b> <a href="Qara_leke.html">Hadisənin kartını açın</a> və ya tapşırıq yaradın.</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid #ECEFEC; padding-top: 10px">
-              <span style="font-size: 12px; padding: 3px 8px; border-radius: 99px; background: #F4F5F2; color: #33403A">[KİTAB] Fəsil 45.3, səh. 362</span>
-              <span style="font-size: 12px; padding: 3px 8px; border-radius: 99px; background: #F4F5F2; color: #33403A">[MODEL] SCAB_MILLS_VIC v1.0</span>
-              <span style="font-size: 12px; padding: 3px 8px; border-radius: 99px; background: #F4F5F2; color: #33403A">Open-Meteo · 10:00</span>
-              <span style="font-size: 12px; padding: 3px 8px; border-radius: 99px; background: #F4F5F2; color: #33403A">Jurnal: çiləmə 31.03</span>
+          <template data-for="msgs" data-as="m">
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <div style="align-self: flex-end; max-width: 80%; background: #1F5E3B; color: #FFFFFF; border-radius: 14px 14px 4px 14px; padding: 12px 14px; font-size: 15px">{{m.q}}</div>
+              <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px 14px 14px 4px; padding: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.55">
+                <template data-for="m.parts" data-as="p">
+                  <div><b>{{p.b}}</b> {{p.t}}</div>
+                </template>
+                <template data-if="m.hasSrc">
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid #ECEFEC; padding-top: 10px">
+                    <template data-for="m.src" data-as="s">
+                      <span style="font-size: 12px; padding: 3px 8px; border-radius: 99px; background: #F4F5F2; color: #33403A">{{s.t}}</span>
+                    </template>
+                  </div>
+                </template>
+              </div>
             </div>
-          </div>
+          </template>
 
-          <div style="align-self: flex-end; max-width: 80%; background: #1F5E3B; color: #FFFFFF; border-radius: 14px 14px 4px 14px; padding: 12px 14px; font-size: 15px">Son dərmanlamadan neçə gün keçib?</div>
-          <div style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px 14px 14px 4px; padding: 16px; font-size: 14px; line-height: 1.55; display: flex; flex-direction: column; gap: 8px">
-            <div><b>4 gün.</b> Son çiləmə 31.03, D fazası: Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha, bütün bağ. İşçi bitirib, 8 t su, 2 foto.</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; padding: 3px 8px; border-radius: 99px; background: #F4F5F2; color: #33403A">Jurnal: tapşırıq 31.03</span></div>
-          </div>
-
+          <div style="font-size: 13px; color: #5A665E">Nümunə suallar — basın:</div>
           <div style="display: flex; flex-wrap: wrap; gap: 8px">
-            <button type="button" style="min-height: 40px; padding: 0 12px; border-radius: 99px; border: 1px solid #CDD4CE; background: #FFFFFF; font-size: 13px; color: #16201A">Bu gün bağda nə etməliyəm?</button>
-            <button type="button" style="min-height: 40px; padding: 0 12px; border-radius: 99px; border: 1px solid #CDD4CE; background: #FFFFFF; font-size: 13px; color: #16201A">Son yağış Mills hesablamasına necə təsir etdi?</button>
-            <button type="button" style="min-height: 40px; padding: 0 12px; border-radius: 99px; border: 1px solid #CDD4CE; background: #FFFFFF; font-size: 13px; color: #16201A">Növbəti çiləmə nə vaxtdır?</button>
+            <template data-for="chips" data-as="c">
+              <button type="button" onClick="{{c.ask}}" style="min-height: 44px; padding: 0 14px; border-radius: 99px; border: 1px solid #1F5E3B; background: #FFFFFF; font-size: 14px; color: #1F5E3B; cursor: pointer">{{c.q}}</button>
+            </template>
           </div>
           <div style="display: flex; gap: 8px">
             <label for="q" style="position: absolute; left: -9999px">Sual</label>
-            <input id="q" type="text" placeholder="Sualınızı yazın…" style="flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid #CDD4CE; border-radius: 10px; font-size: 15px; background: #FFFFFF">
-            <button type="button" style="min-height: 48px; padding: 0 18px; border-radius: 10px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 15px; font-weight: 600">Göndər</button>
+            <input id="q" type="text" placeholder="Öz sualınızı yazın…" onInput="{{onInput}}" onKeyDown="{{onKey}}" style="flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid #CDD4CE; border-radius: 10px; font-size: 15px; background: #FFFFFF">
+            <button type="button" onClick="{{send}}" style="min-height: 48px; padding: 0 18px; border-radius: 10px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">Göndər</button>
           </div>
         </section>
 
         <aside aria-labelledby="tools-h" style="flex: 1 1 280px; min-width: 0; background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 14px">
-          <h2 id="tools-h" style="margin: 0; font-size: 16px">Bu cavab üçün baxılanlar</h2>
+          <h2 id="tools-h" style="margin: 0; font-size: 16px">AI cavab verməzdən əvvəl baxır</h2>
           <div style="display: flex; flex-direction: column; gap: 8px; color: #33403A">
-            <div>✓ Hava (Open-Meteo, son 24 s)</div>
+            <div>✓ Hava (Open-Meteo)</div>
             <div>✓ Qara ləkə mühərriki — cari status</div>
-            <div>✓ Dərmanlama jurnalı — son çiləmə</div>
-            <div>✓ Kitab axtarışı — Fəsil 45</div>
+            <div>✓ Tapşırıqlar və dərmanlama jurnalı</div>
+            <div>✓ Düzəldilmiş plan və köhnə Excel</div>
+            <div>✓ Kitab axtarışı (fəsil və səhifə ilə)</div>
             <div style="color: #5A665E">— Sensorlar: yoxdur</div>
           </div>
           <div style="font-size: 12px; color: #5A665E; line-height: 1.5; border-top: 1px solid #ECEFEC; padding-top: 10px">AI preparat dozası, PHI və REI uydurmur — yalnız kataloqda təsdiqlənmiş etiketdən göstərir. Hər cavab mənbələri ilə birlikdə yadda saxlanır.</div>
@@ -162,7 +157,62 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 
 
 class Component extends DCLogic {
-  renderVals() { return {}; }
+  constructor(p) {
+    super(p);
+    this.draft = '';
+    this.state = { msgs: ['risk'] };
+  }
+  renderVals() {
+    var self = this;
+    var A = {
+      risk: { q: 'Fuji blokunda qara ləkə riski varmı?', parts: [
+        ['Vəziyyət.', '03.04 21:40-dan yarpaqlar təxminən 12 s 40 dəq islaq qalıb, orta temperatur 12,4 °C.'],
+        ['Problem.', 'Mills cədvəlinə görə bu temperaturda infeksiya üçün 11 saat kifayətdir — şərtlər ödənib.'],
+        ['Məlumat və keyfiyyəti.', 'TƏXMİNİ: sensor yoxdur, hava Open-Meteo-dan, islanma rütubət və yağışdan təxmin edilib. Ona görə nəticə KRİTİK sayılmır.'],
+        ['Elmi əsas.', 'Mills cədvəli, kitab Fəsil 45.3, səh. 362 (ilkin mənbə: Agriculture Victoria).'],
+        ['Tövsiyə.', 'Qorunma vəziyyətini qiymətləndirin: son çiləmə 31.03, ondan sonra təxminən 18 mm yağış. Qərarı aqronom preparatın etiketinə görə verir.'],
+        ['Qeyri-müəyyənlik.', 'Bağda yağış və islanma ölçülmür; model bağınızda yoxlanmayıb. 14–16 gün sonra yarpaqlara baxıb nəticəni qeyd edin.']],
+        src: ['[KİTAB] Fəsil 45.3, səh. 362', '[MODEL] SCAB_MILLS_VIC v1.0', 'Open-Meteo · 10:00', 'Jurnal: çiləmə 31.03'] },
+      today: { q: 'Bu gün bağda nə etməliyəm?', parts: [
+        ['1. Yüksək:', 'qara ləkə şərtləri ödənib — qorunma vəziyyətini qiymətləndirin (bütün bağ).'],
+        ['2. Orta:', 'D3 çiləməsi (Ditianon 500 q + Siprodinil 400 q /ha) — sabahkı yağışdan əvvəl bitirin. Aqronom təsdiqləyib, işçinin siyahısındadır.'],
+        ['3. Orta:', 'qırmızı gənə sayımı (Gala) — 1 gün gecikib.'],
+        ['4. Aşağı:', 'fazanı şəkillə təsdiqləyin — sistem D3 təxmin edir.']],
+        src: ['Tapşırıqlar', 'Düzəldilmiş plan', 'Open-Meteo proqnozu'] },
+      rain: { q: 'Son yağış Mills hesablamasına necə təsir etdi?', parts: [
+        ['Yağış', '03.04 21:40-da başladı və islanma epizodu o andan sayıldı (kitab: islanma yağışın başlanğıcından sayılır).'],
+        ['Fasilə.', 'Arada 6 saatlıq quruluq olmadığı üçün epizod kəsilmədi (UC IPM qaydası).'],
+        ['Nəticə.', '04.04 08:40-da 11 saat dolub — şərtlər ödənib. Ləkələr təxminən 18–20.04-də görünə bilər (cədvəl: 14–16 gün).'],
+        ['Qeyd.', 'Rəqəmlər TƏXMİNİ-dir: bağda yağış ölçülmür.']],
+        src: ['[KİTAB] Fəsil 45.3', '[ELMİ] S362 UC IPM', 'Open-Meteo'] },
+      next: { q: 'Növbəti çiləmə nə vaxtdır?', parts: [
+        ['İndi:', 'D3 fazası — Ditianon 500 q + Siprodinil 400 q /ha (düzəldilmiş plan). Əvəzi: Siprodinil yerinə Pirimetanil.'],
+        ['Sonra:', 'E–E2 fazası, təxminən 10.04 — Mankozeb 2 kq + Dodin + Bor 1 kq + Aminogal 1 l /ha.'],
+        ['Xatırlatma:', 'F fazasında (çiçək) insektisid vurulmur. Dozalar etiketlə yoxlanmalıdır.']],
+        src: ['Düzəldilmiş plan (2027_dermanlama_gubreleme_plani.xlsx)', 'Fenologiya: D3 (təxmini)'] },
+      last: { q: 'Son dərmanlamadan neçə gün keçib?', parts: [
+        ['4 gün.', 'Son çiləmə 31.03, D fazası: Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha, bütün bağ. İşçi bitirib: 8 t su, 2 foto.'],
+        ['Ondan sonra', 'təxminən 18 mm yağış yağıb (Open-Meteo, təxmini).']],
+        src: ['Tapşırıqlar: 31.03', 'Open-Meteo'] }
+    };
+    var msgs = this.state.msgs.map(function (k) {
+      if (typeof k === 'object') return { q: k.q, parts: [{ b: 'DEMO:', t: 'Bu nümunə saytda AI qoşulmayıb, ona görə öz sualınıza cavab verə bilmirəm. Real sistemdə (Mərhələ 5) AI bağın məlumatlarına və kitaba baxıb cavab verəcək. Hələlik yuxarıdakı hazır suallardan birini seçin.' }], hasSrc: false, src: [] };
+      var a = A[k];
+      return { q: a.q, parts: a.parts.map(function (p) { return { b: p[0], t: p[1] }; }), hasSrc: true, src: a.src.map(function (s) { return { t: s }; }) };
+    });
+    var add = function (k) { self.setState({ msgs: self.state.msgs.concat([k]) }); };
+    var chips = ['today', 'risk', 'rain', 'next', 'last'].map(function (k) { return { q: A[k].q, ask: function () { add(k); } }; });
+    var send = function () {
+      var q = (self.draft || '').trim();
+      if (!q) return;
+      self.draft = '';
+      var box = document.getElementById('q'); if (box) box.value = '';
+      add({ q: q });
+    };
+    return { msgs: msgs, chips: chips, send: send,
+      onInput: function (e) { self.draft = e.target.value; },
+      onKey: function (e) { if (e.key === 'Enter') { self.draft = e.target.value; send(); } } };
+  }
 }
 
 </script>
