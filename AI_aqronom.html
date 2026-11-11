@@ -204,6 +204,10 @@ class Component extends DCLogic {
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function itemKey(c, it) { return c + '|' + it.title; }
+    function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     var daysSince = Math.round((new Date() - new Date(2026, 9, 12)) / 864e5);
     var A = {

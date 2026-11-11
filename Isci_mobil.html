@@ -175,27 +175,31 @@ class Component extends DCLogic {
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function itemKey(c, it) { return c + '|' + it.title; }
+    function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     var C = { 'YÜKSƏK': ['#FDEBDD', '#9A3412'], 'ORTA': ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'] };
-    var ph = getPhase(), raw = [];
+    var ph = getPhase(), raw = [], MARKS = getMarks();
     itemsFor(ph.code).forEach(function (it, i) {
-      raw.push({ id: i + 1, kind: it.k === 'work' ? 'other' : it.k, kindLabel: it.k === 'spray' ? 'Dərmanlama' : (it.k === 'fert' ? 'Gübrə' : 'Sanitariya'), block: 'Bütün bağ', prio: 'ORTA',
+      raw.push({ key: itemKey(ph.code, it), id: i + 1, kind: it.k === 'work' ? 'other' : it.k, kindLabel: it.k === 'spray' ? 'Dərmanlama' : (it.k === 'fert' ? 'Gübrə' : 'Sanitariya'), block: 'Bütün bağ', prio: 'ORTA',
         tag: '★ TÖVSİYƏ · faza ' + ph.code, title: it.title, note: 'Aqronom təsdiqləyib (nümunə). Quru gündə edin.', why: it.why,
         mix: [{ name: it.what, dose: '' }], mixNote: 'Doza plandan · çənə görə miqdarı aqronom yazır · etiketlə yoxlanmalıdır',
         safety: it.k === 'spray' ? 'Qoruyucu geyim, maska, əlcək. Çilədikdən sonra bağa giriş etiketdə yazıldığı qədər qadağandır.' : (it.k === 'fert' ? 'Əlcək taxın.' : null) });
     });
     raw.push({ id: 99, kind: 'other', kindLabel: 'Faza', block: 'Bütün bloklar', prio: 'ORTA', title: 'Faza şəkli çək', note: 'Nişanlı 5 ağacda tumurcuq və yarpaqları yaxından çək.', why: 'faza dəyişəndə plan da dəyişir.' });
     var tasks = raw.map(function (r) {
-      var s = st.step[r.id] || 0, isChem = r.kind !== 'other';
+      var isChem = r.kind !== 'other', mk = r.key ? (MARKS[r.key] || {}) : {}; var s = mk.st === 'done' ? (isChem ? 2 : 1) : (st.step[r.id] || 0);
       var done = isChem ? s === 2 : s >= 1;
       if (done) { n++; if (st.offline) pending++; }
-      var label = done ? 'Bitdi ✓' : (isChem && s === 1 ? 'Qeyd et' : 'Bitirdim');
+      var label = done ? 'Bitdi ✓ ' + (mk.date || '') : (isChem && s === 1 ? 'Qeyd et' : 'Bitirdim');
       return Object.assign({}, r, {
         chipBg: C[r.prio][0], chipFg: C[r.prio][1], hasTag: !!r.tag, tag: r.tag || '',
         hasWhy: !!r.why, why: r.why || '', hasMix: !!r.mix, mix: r.mix || [], mixNote: r.mixNote || '', hasSafety: !!r.safety, safety: r.safety || '',
         showForm: isChem && s === 1, opacity: done ? '0.6' : '1', strike: done ? 'line-through' : 'none',
         btnLabel: label, btnBg: done ? '#FFFFFF' : '#1F5E3B', btnFg: done ? '#1F5E3B' : '#FFFFFF',
-        toggle: function () { var o = Object.assign({}, st.step); var max = isChem ? 2 : 1; o[r.id] = s >= max ? 0 : s + 1; self.setState({ step: o }); } });
+        toggle: function () { var o = Object.assign({}, st.step); var max = isChem ? 2 : 1; var ns = s >= max ? 0 : s + 1; o[r.id] = ns; if (r.key) { setMark(r.key, ns === max ? { st: 'done', date: todayStr(), by: '[işçi 1]' } : null); } self.setState({ step: o }); } });
     });
     var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     return { tasks: tasks, doneN: n, total: raw.length, today: dd(0), phaseCode: ph.code,

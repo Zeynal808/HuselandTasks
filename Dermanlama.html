@@ -218,6 +218,10 @@ class Component extends DCLogic {
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function itemKey(c, it) { return c + '|' + it.title; }
+    function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     var PHC = getPhase();
     var PLAN = [
@@ -382,9 +386,10 @@ class Component extends DCLogic {
     J.forEach(function (x) { all.push(mk('j26', x[4] === 'Qida' ? 'fert' : 'spray', x[2], x[0] + '.2026 · ' + x[1], x[3], x[4], '', x[5])); });
 var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     var TG = { plan: ['★ TÖVSİYƏ', '#1F5E3B', '#FFFFFF', '#1F5E3B'], old: ['▦ KÖHNƏ EXCEL', '#FFFFFF', '#5B4A1E', '#8C7A4B'], j26: ['● 2026 JURNAL', '#E6E9F4', '#2E3A6B', '#E6E9F4'] };
-    var PR = { ORTA: ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'], 'GECİKİB': ['#FDE8E7', '#9F1C14'], 'MƏLUMAT': ['#E8EEF6', '#284A73'] };
+    var PR = { 'EDİLDİ': ['#E3F1E8', '#17603A'], ORTA: ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'], 'GECİKİB': ['#FDE8E7', '#9F1C14'], 'MƏLUMAT': ['#E8EEF6', '#284A73'] };
     var curI = itemsFor(PHC.code), nxP = nextPhase(PHC.code);
-    var ntfRaw = curI.map(function (it) { return ['plan', it.k === 'fert' ? 'AŞAĞI' : 'ORTA', 'Faza ' + PHC.code + ': ' + it.title, it.what + (it.alt ? ' · Əvəzi: ' + it.alt : ''), it.why, 'Tapsiriqlar.html', 'Təsdiqə bax']; });
+    var MK = getMarks();
+    var ntfRaw = curI.map(function (it) { var m = MK[itemKey(PHC.code, it)] || {}; return ['plan', m.st === 'done' ? 'EDİLDİ' : (it.k === 'fert' ? 'AŞAĞI' : 'ORTA'), (m.st === 'done' ? '✓ Edildi ' + m.date + ' — ' : 'Faza ' + PHC.code + ': ') + it.title, it.what + (it.alt ? ' · Əvəzi: ' + it.alt : ''), it.why, 'Tapsiriqlar.html', 'Təsdiqə bax']; });
     var jHit = J.filter(function (x) { return phaseMatch(x[2], PHC.code); })[0];
     if (jHit) ntfRaw.push(['j26', 'MƏLUMAT', 'Keçən il bu fazada (' + jHit[0] + '.2026)', jHit[1] + ': ' + jHit[3], 'mənim qiymətim: ' + jHit[5] + (jHit[5] === 'Səhv' || jHit[5] === 'Artıq' ? ' — bunu təkrarlamayın.' : '.'), 'Dermanlama.html', 'Cədvəldə bax']);
     var oHit = OLD.filter(function (x) { return phaseMatch(x[0], PHC.code); })[0];

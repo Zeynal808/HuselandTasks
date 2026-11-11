@@ -254,16 +254,21 @@ class Component extends DCLogic {
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function itemKey(c, it) { return c + '|' + it.title; }
+    function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     var DOW = ['Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə'];
     var DOWS = ['Baz', 'B.e', 'Ç.a', 'Çər', 'C.a', 'Cüm', 'Şən'];
     var chips = { 'YÜKSƏK': ['#FDEBDD', '#9A3412'], 'ORTA': ['#FDF3D7', '#7A5300'], 'AŞAĞI': ['#E8EEF6', '#284A73'] };
     var TAGS = { plan: ['★ TÖVSİYƏ · düzəldilmiş plan', '#1F5E3B', '#FFFFFF'], sys: ['⚙ SİSTEM', '#ECEEEF', '#444C52'] };
-    var ph = getPhase(), cur = itemsFor(ph.code), nx = nextPhase(ph.code), ci = phIdx(ph.code);
+    var ph = getPhase(), cur = itemsFor(ph.code), nx = nextPhase(ph.code), ci = phIdx(ph.code), MARKS = getMarks();
     var raw = cur.map(function (it, i) {
-      return { id: 'p' + i, prio: it.k === 'fert' ? 'AŞAĞI' : 'ORTA', tag: 'plan', title: it.title, block: 'Bütün bağ',
-        reason: it.what + (it.alt ? ' · Əvəzi: ' + it.alt : '') + ' · Aqronomun təsdiqi gözlənilir.',
+      var m0 = MARKS[itemKey(ph.code, it)] || {};
+      return { key: itemKey(ph.code, it), id: 'p' + i, prio: it.k === 'fert' ? 'AŞAĞI' : 'ORTA', tag: 'plan', title: it.title, block: 'Bütün bağ',
+        reason: it.what + (it.alt ? ' · Əvəzi: ' + it.alt : '') + (m0.st === 'done' ? ' · Edildi ' + m0.date + ' (' + m0.by + ') — bu fazada təkrar təklif olunmur.' : (m0.st === 'approved' ? ' · Təsdiqləndi ' + m0.date + ', işçinin siyahısındadır.' : ' · Aqronomun təsdiqi gözlənilir.')),
         when: 'faza ' + ph.code + (it.k === 'spray' ? ' — yağışdan əvvəl, quru gündə' : ' ərzində'),
         link: 'Tapsiriqlar.html', linkLabel: 'Təsdiqə bax', basis: it.why, source: 'Düzəldilmiş plan · faza ' + ph.code + ' — ' + phName(ph.code) };
     });
@@ -275,15 +280,15 @@ class Component extends DCLogic {
       when: 'faza dəyişəndə', link: 'Dermanlama.html', linkLabel: 'Plana bax', basis: 'Hazırlıq: preparatları və işçiləri əvvəlcədən planlayın.', source: 'Düzəldilmiş plan' });
     var self = this, st = this.state, doneN = 0;
     var items = raw.map(function (r) {
-      var done = !!st.done[r.id]; if (done) doneN++;
+      var mk = r.key ? (MARKS[r.key] || {}) : {}; var done = r.key ? mk.st === 'done' : !!st.done[r.id]; if (done) doneN++;
       var c = chips[r.prio], t = TAGS[r.tag];
       return Object.assign({}, r, {
         chipBg: c[0], chipFg: c[1], tag: t[0], tagBg: t[1], tagFg: t[2], open: st.open === r.id,
         opacity: done ? '0.55' : '1', strike: done ? 'line-through' : 'none',
-        doneLabel: done ? 'Tamamlandı ✓' : 'Tamamlandı',
+        doneLabel: done ? 'Edildi ✓ ' + (mk.date || '') : 'Edildi',
         doneBg: done ? '#1F5E3B' : '#FFFFFF', doneFg: done ? '#FFFFFF' : '#1F5E3B',
         toggleBasis: function () { self.setState({ open: st.open === r.id ? null : r.id }); },
-        toggleDone: function () { var d = Object.assign({}, st.done); d[r.id] = !d[r.id]; self.setState({ done: d }); }
+        toggleDone: function () { if (r.key) { setMark(r.key, done ? null : { st: 'done', date: todayStr(), by: 'Sahib' }); self.forceUpdate(); } else { var d = Object.assign({}, st.done); d[r.id] = !d[r.id]; self.setState({ done: d }); } }
       });
     });
     var rain = [0, 0, 3, 7, 1, 0, 0];

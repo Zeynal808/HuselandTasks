@@ -227,6 +227,10 @@ class Component extends DCLogic {
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function itemKey(c, it) { return c + '|' + it.title; }
+    function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     var cur0 = getPhase(), picked = st.picked || cur0.code; var T0 = new Date(), DAY = 864e5; function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     var list = [['B', 'Tumurcuq şişir', 'faza_b', 'tumurcuq şişib (kitab, Fəsil 4)'], ['C', 'Yaşıl uc görünür', 'faza_yasil_uc', 'yaşıl uc (BBCH 07–09 / 53)'],
@@ -243,7 +247,7 @@ class Component extends DCLogic {
       return { code: x[0], name: x[1], on: on, hasImg: !!x[2], noImg: !x[2], img: x[2] ? 'img/' + x[2] + '.jpg' : '', alt: x[0] + ' fazası — ' + x[1], cap: x[3] || 'kitab Fəsil 7', bg: on ? '#E7EFE9' : '#FFFFFF', border: on ? '#1F5E3B' : '#E2E6E2',
         pick: function () { self.setState({ picked: x[0], done: false }); } };
     });
-    return { stages: stages, picked: picked, p1: dd(-12), curLine: phLine(cur0), curCode: cur0.code, previewTitle: 'Faza ' + picked + ' üçün plan (düzəldilmiş plan):', preview: itemsFor(picked).map(function (it) { return { t: it.title, w: it.why }; }), noPreview: itemsFor(picked).length === 0,
+    return { stages: stages, picked: picked, p1: dd(-12), curLine: phLine(cur0), curCode: cur0.code, previewTitle: 'Faza ' + picked + ' üçün plan (düzəldilmiş plan):', preview: itemsFor(picked).map(function (it) { var m = getMarks()[itemKey(picked, it)] || {}; return { t: (m.st === 'done' ? '✓ Edildi ' + m.date + ' — ' : '') + it.title, w: it.why }; }), noPreview: itemsFor(picked).length === 0,
       msg: st.done ? 'Təsdiqləndi: ' + picked + ' (' + dd(0) + '). Plan yeniləndi — bu fazada ' + itemsFor(picked).length + ' iş təsdiqə düşdü. Ana səhifə, Tapşırıqlar, Dərmanlama və işçi ekranı artıq bu fazaya görədir.' : 'Seçilən: ' + picked + ' — ' + phName(picked) + '. Təsdiqləyəndə bütün plan bu fazaya görə yenilənəcək.',
       msgColor: st.done ? '#17603A' : '#5A665E',
       confirm: function () { setPhase(picked); self.setState({ done: true, picked: picked }); } };

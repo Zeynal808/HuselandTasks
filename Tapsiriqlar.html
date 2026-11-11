@@ -234,6 +234,10 @@ class Component extends DCLogic {
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
+    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function itemKey(c, it) { return c + '|' + it.title; }
+    function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
     function dd(o) { var d = new Date(T0.getTime() + o * DAY); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     var now = ('0' + T0.getHours()).slice(-2) + ':' + ('0' + T0.getMinutes()).slice(-2);
@@ -247,10 +251,11 @@ class Component extends DCLogic {
       hand: ['✎ ƏL İLƏ', '#FFFFFF', '#33403A', '#CDD4CE'], sys: ['⚙ SİSTEM', '#ECEEEF', '#444C52', '#ECEEEF']
     };
     var SAN = 'Qara ləkə göbələyi tökülmüş yarpaqlarda qışlayır və yazda askospor buraxır. Yarpaqların xırdalanması riski 80–90%, payızda verilən karbamid askosporları təxminən 50% azaldıb — yazda lazım olan çiləmələr azalır.';
-    var ph = getPhase(), ci = phIdx(ph.code), nx = nextPhase(ph.code), data = [];
+    var ph = getPhase(), ci = phIdx(ph.code), nx = nextPhase(ph.code), data = [], MARKS = getMarks();
     itemsFor(ph.code).forEach(function (it, i) {
-      data.push({ id: 'c' + i, st: 'approve', grp: 'today', tag: 'plan', title: it.title, block: 'Bütün bağ', what: it.what + (it.alt ? ' · Əvəzi: ' + it.alt : ''),
-        plan: 'faza ' + ph.code + ' — ' + phName(ph.code), who: '—', actual: 'Faza ' + ph.code + ' təsdiqlənəndə sistem təklif edib. Təsdiqləsəniz işçinin siyahısına düşəcək.',
+      var mk = MARKS[itemKey(ph.code, it)] || {};
+      data.push({ key: itemKey(ph.code, it), id: 'c' + i, st: mk.st === 'done' ? 'done' : (mk.st === 'approved' ? 'wait' : (mk.st === 'cancel' ? 'cancel' : 'approve')), grp: mk.st === 'done' ? 'done' : (mk.st === 'cancel' ? 'skip' : 'today'), tag: 'plan', title: it.title, block: 'Bütün bağ', what: it.what + (it.alt ? ' · Əvəzi: ' + it.alt : ''),
+        plan: 'faza ' + ph.code + ' — ' + phName(ph.code), who: mk.by || '—', actual: mk.st === 'done' ? 'Edildi ' + mk.date + ' (' + mk.by + '). Bu fazada təkrar təklif olunmayacaq.' : (mk.st === 'approved' ? 'Təsdiqləndi ' + mk.date + ', işçinin siyahısındadır.' : (mk.st === 'cancel' ? 'Ləğv edildi ' + mk.date + '.' : 'Faza ' + ph.code + ' təsdiqlənəndə sistem təklif edib. Təsdiqləsəniz işçinin siyahısına düşəcək.')),
         why: it.why, source: 'Düzəldilmiş plan · faza ' + ph.code, link: 'Dermanlama.html', linkLabel: 'Planda bax' });
     });
     data.push({ id: 'f0', st: 'wait', grp: 'today', tag: 'sys', title: 'Faza şəklini çək (nişanlı 5 ağac)', block: 'Bütün bloklar', what: 'Tumurcuq və yarpaqları yaxından çək',
@@ -262,8 +267,9 @@ class Component extends DCLogic {
             data.push({ id: 'x' + pc + i, st: 'cancel', grp: 'skip', tag: 'plan', title: it.title, block: 'Bütün bağ', what: it.what, plan: 'faza ' + pc, who: '—',
               actual: 'Avtomatik ləğv: faza ' + ph.code + '-yə keçdi. Plan qaydası: "' + it.cancelNote + '".', why: it.why, source: 'Düzəldilmiş plan', link: 'Dermanlama.html', linkLabel: 'Planda bax' });
           } else if (isPrev) {
-            data.push({ id: 'l' + pc + i, st: 'late', grp: 'late', tag: 'plan', title: it.title, block: 'Bütün bağ', what: it.what, plan: 'faza ' + pc + ' (əvvəlki)', who: '[işçi 1]',
-              actual: 'Əvvəlki fazanın işi — tamamlandı kimi qeyd edilməyib. Edilibsə "Edilib" basın.', why: it.why, source: 'Düzəldilmiş plan · faza ' + pc, link: 'Dermanlama.html', linkLabel: 'Planda bax' });
+            var mkl = MARKS[itemKey(pc, it)] || {};
+            data.push({ key: itemKey(pc, it), id: 'l' + pc + i, st: mkl.st === 'done' ? 'done' : (mkl.st === 'approved' ? 'wait' : (mkl.st === 'cancel' ? 'cancel' : 'late')), grp: mkl.st === 'done' ? 'done' : (mkl.st === 'approved' ? 'today' : (mkl.st === 'cancel' ? 'skip' : 'late')), tag: 'plan', title: it.title, block: 'Bütün bağ', what: it.what, plan: 'faza ' + pc + ' (əvvəlki)', who: '[işçi 1]',
+              actual: mkl.st === 'done' ? 'Edildi ' + mkl.date + ' (' + mkl.by + ').' : (mkl.st ? 'Qeyd: ' + mkl.st + ' ' + mkl.date : 'Əvvəlki fazanın işi — tamamlandı kimi qeyd edilməyib. Edilibsə "Edilib" basın.'), why: it.why, source: 'Düzəldilmiş plan · faza ' + pc, link: 'Dermanlama.html', linkLabel: 'Planda bax' });
           }
         });
       })(PHASES[k][0], k === ci - 1);
@@ -280,7 +286,7 @@ class Component extends DCLogic {
       var o = st.over[r.id];
       return o ? Object.assign({}, r, o) : r;
     });
-    function setOver(id, o) { var x = Object.assign({}, st.over); x[id] = o; self.setState({ over: x }); }
+    function setOver(id, o) { var row = data.filter(function (d) { return d.id === id; })[0]; if (row && row.key) { setMark(row.key, o ? { st: o.st === 'wait' ? 'approved' : o.st, date: todayStr(), by: o.st === 'done' ? 'Sahib' : (row.who && row.who !== '—' ? row.who : '[işçi 1]') } : null); self.setState({ sel: id }); return; } var x = Object.assign({}, st.over); x[id] = o; self.setState({ over: x }); }
     var groups = [['today', 'Bu gün', '#16201A'], ['late', 'Gecikən', '#9F1C14'], ['done', 'Tamamlanan', '#17603A'], ['skip', 'Edilməyən / ləğv', '#444C52'], ['next', 'Gələcək', '#284A73']];
     var titles = { today: 'Bu günün işləri', late: 'Gecikən işlər', done: 'Tamamlanan işlər', skip: 'Edilməyən və ləğv olunan işlər', next: 'Gələcək işlər' };
     var summary = groups.map(function (g) {
