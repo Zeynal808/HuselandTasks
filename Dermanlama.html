@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Dərmanlama və gübrələmə — ORCHARD AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F5F2}
+a{color:#1F5E3B}a:hover{color:#123D26}
+button{font-family:inherit}
+</style>
+
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:10;background:#123D26;color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#fff">← Bütün ekranlar</a><span style="opacity:.85">ORCHARD AI — dizayn nümunəsi (DEMO, real məlumat deyil)</span></div>
+<template id="dc-template">
+
+<div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
+  <div style="display: flex; flex-wrap: wrap; align-items: stretch">
+    <nav aria-label="Əsas menyu" style="flex: 1 1 220px; max-width: 260px; min-width: 200px; background: #FFFFFF; border-right: 1px solid #E2E6E2; padding: 20px 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 4px 10px 18px">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F5E3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7c-3.5-2-8 0-8 5s3 9 6 9c1 0 1.5-.5 2-.5s1 .5 2 .5c3 0 6-4 6-9s-4.5-7-8-5z"></path><path d="M12 7c0-2 1-4 3-5"></path></svg>
+        <div style="font-weight: 700; font-size: 17px">ORCHARD AI</div>
+      </div>
+      <a href="Main.html" style="padding: 10px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Ana səhifə</a>
+      <a href="Xerite.html" style="padding: 10px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Xəritə və bloklar</a>
+      <a href="Qara_leke.html" style="padding: 10px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Risklər</a>
+      <a href="Dermanlama.html" style="padding: 10px 12px; border-radius: 8px; background: #E7EFE9; color: #123D26; font-weight: 600; text-decoration: none; font-size: 15px">Dərmanlama və gübrə</a>
+      <a href="Isci_mobil.html" style="padding: 10px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Tapşırıqlar</a>
+      <a href="Sensorlar.html" style="padding: 10px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Sensorlar</a>
+      <a href="Qayda_tesdiqi.html" style="padding: 10px 12px; border-radius: 8px; color: #33403A; text-decoration: none; font-size: 15px">Qaydalar və kitab</a>
+    </nav>
+
+    <main style="flex: 999 1 560px; min-width: 0; padding: 24px; box-sizing: border-box">
+      <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+        <header style="display: flex; flex-direction: column; gap: 10px">
+          <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Dərmanlama və gübrələmə</h1>
+          <div style="font-size: 14px; color: #33403A; line-height: 1.5">Alma bağı üzrə üç mənbə bir yerdədir. Hər sətirdə hansı mənbədən gəldiyi yazılıb:</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 13px; align-items: center">
+            <span style="display: inline-flex; gap: 8px; align-items: center"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: #1F5E3B; color: #FFFFFF">★ TÖVSİYƏ</span>düzəldilmiş plan (Claude, 2027_dermanlama_gubreleme_plani.xlsx)</span>
+            <span style="display: inline-flex; gap: 8px; align-items: center"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 6px; background: #FFFFFF; color: #5B4A1E; border: 1px solid #8C7A4B">▦ KÖHNƏ EXCEL</span>sizin köhnə proqramınız (Ismayilli 012025.xlsx, "Proqrammlar")</span>
+            <span style="display: inline-flex; gap: 8px; align-items: center"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: #E6E9F4; color: #2E3A6B">● 2026 JURNAL</span>2026-da faktiki vurulanlar (yazışma və dəftər)</span>
+          </div>
+        </header>
+
+        <section aria-labelledby="ntf-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: baseline">
+            <h2 id="ntf-h" style="margin: 0; font-size: 18px">Bildirişlər</h2>
+            <span style="font-size: 12px; color: #5A665E">DEMO · faza: D3 (təxmini) · 04.04</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: #1F5E3B; color: #FFFFFF">★ TÖVSİYƏ</span><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #FDF3D7; color: #7A5300">ORTA</span></div>
+              <div style="font-weight: 600; font-size: 15px">Növbəti çiləmə — D3 fazası</div>
+              <div style="font-size: 14px; color: #33403A; line-height: 1.45">Ditianon 500 q + Siprodinil 400 q /ha. Əvəzi: Siprodinil yerinə Pirimetanil.</div>
+              <div style="font-size: 12px; color: #5A665E">Planda təxminən 05.04</div>
+              <div style="display: flex; gap: 6px; align-items: center; font-size: 12px; color: #17603A; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Aqronom təsdiqlədi → <a href="Isci_mobil.html">işçinin bugünkü siyahısında</a></div>
+            </div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 6px; background: #FFFFFF; color: #5B4A1E; border: 1px solid #8C7A4B">▦ KÖHNƏ EXCEL</span><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #E8EEF6; color: #284A73">MÜQAYİSƏ</span></div>
+              <div style="font-weight: 600; font-size: 15px">Köhnə proqramda bu fazada</div>
+              <div style="font-size: 14px; color: #33403A; line-height: 1.45">Həftə 2, D3: Mankozeb 80% 2 kq + Kukurd 80% 10 kq /ha.</div>
+              <div style="font-size: 12px; color: #5A665E">Fərq: düzəldilmiş planda sistemik (FRAC 9) əlavə olunub</div>
+            </div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: #E6E9F4; color: #2E3A6B">● 2026 JURNAL</span><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #FDEBDD; color: #9A3412">XƏBƏRDARLIQ</span></div>
+              <div style="font-weight: 600; font-size: 15px">Keçən il bu vaxt səhv olub</div>
+              <div style="font-size: 14px; color: #33403A; line-height: 1.45">01.04.2026 Fuji: yağ + piriproksifen D fazasına keçəndən sonra vurulub.</div>
+              <div style="font-size: 12px; color: #5A665E">Tövsiyə: D fazasına keçibsə yağ + piriproksifen VURMAYIN</div>
+            </div>
+            <div style="border: 1px solid #E2E6E2; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: #1F5E3B; color: #FFFFFF">★ TÖVSİYƏ</span><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #E8EEF6; color: #284A73">AŞAĞI</span></div>
+              <div style="font-weight: 600; font-size: 15px">Gübrə — E2 fazası yaxınlaşır</div>
+              <div style="font-size: 14px; color: #33403A; line-height: 1.45">Damlama: MAP 12-61-0 25 kq/ha.</div>
+              <div style="font-size: 12px; color: #5A665E">Planda təxminən 09.04</div>
+              <div style="display: flex; gap: 6px; align-items: center; font-size: 12px; color: #17603A; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Təsdiqləndi → <a href="Isci_mobil.html">işçinin siyahısında</a></div>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="tbl-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <h2 id="tbl-h" style="margin: 0; font-size: 18px">Proqram və jurnal</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px" role="group" aria-label="Mənbəyə görə süz">
+            <template data-for="srcTabs" data-as="t">
+              <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="min-height: 44px; padding: 0 14px; border-radius: 99px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{t.label}} · {{t.n}}</button>
+            </template>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px" role="group" aria-label="Növə görə süz">
+            <template data-for="kindTabs" data-as="t">
+              <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 13px; cursor: pointer">{{t.label}}</button>
+            </template>
+          </div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; min-width: 900px; border-collapse: collapse; font-size: 14px">
+              <thead>
+                <tr style="text-align: left; color: #5A665E; font-size: 12px; letter-spacing: 0.03em">
+                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 130px">MƏNBƏ</th>
+                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 130px">FAZA / VAXT</th>
+                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600">DƏRMAN / GÜBRƏ VƏ DOZA</th>
+                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 130px">QRUP</th>
+                  <th style="padding: 10px; border-bottom: 1px solid #E2E6E2; font-weight: 600; width: 260px">QEYD</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template data-for="rows" data-as="r">
+                  <tr style="vertical-align: top">
+                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><span style="display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 6px; background: {{r.tagBg}}; color: {{r.tagFg}}; border: 1px solid {{r.tagBorder}}; white-space: nowrap">{{r.tag}}</span></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC"><div style="font-weight: 600">{{r.phase}}</div><div style="font-size: 12px; color: #5A665E">{{r.when}}</div></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; line-height: 1.45">{{r.what}}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; font-size: 13px; color: #33403A">{{r.group}}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ECEFEC; font-size: 13px; color: #33403A; line-height: 1.45">
+                      <template data-if="r.hasGrade"><span style="display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; background: {{r.gBg}}; color: {{r.gFg}}; margin-bottom: 4px">{{r.grade}}</span><br></template>{{r.note}}</td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size: 12px; color: #5A665E; line-height: 1.5">Dozalar mənbədə yazıldığı kimidir (bəziləri /ha, bəziləri /1 t su). Sistem dozanı özü yaratmır. Hər preparat kataloqda etiketi ilə təsdiqlənməlidir. 2026 jurnalındakı qiymətlər (Yaxşı, Artıq, Səhv) mənim keçən il apardığım təhlildəndir.</div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script>
+class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
+  setState(p){ this.state = Object.assign({}, this.state, p); window.__dcRender(); } forceUpdate(){ window.__dcRender(); } }
+(function(){
+  function get(path, scopes){
+    path = path.trim();
+    if (path === 'true') return true; if (path === 'false') return false;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return Number(path);
+    var parts = path.split('.');
+    for (var i = 0; i < scopes.length; i++) {
+      if (scopes[i] && Object.prototype.hasOwnProperty.call(scopes[i], parts[0])) {
+        var v = scopes[i]; for (var j = 0; j < parts.length; j++) { v = v == null ? undefined : v[parts[j]]; } return v; } }
+    return undefined;
+  }
+  var whole = /^\s*\{\{([^}]+)\}\}\s*$/;
+  function interp(s, scopes){ return s.replace(/\{\{([^}]+)\}\}/g, function(_, p){ var v = get(p, scopes); return v == null ? '' : String(v); }); }
+  function build(node, scopes, out){
+    if (node.nodeType === 3) { out.appendChild(document.createTextNode(interp(node.nodeValue, scopes))); return; }
+    if (node.nodeType !== 1) return;
+    var tag = node.tagName.toLowerCase();
+    if (tag === 'template' && node.hasAttribute('data-for')) {
+      var list = get(node.getAttribute('data-for'), scopes) || [], as = node.getAttribute('data-as') || 'item';
+      list.forEach(function(item, idx){ var sc = {}; sc[as] = item; sc.$index = idx;
+        kids(node.content, [sc].concat(scopes), out); });
+      return; }
+    if (tag === 'template' && node.hasAttribute('data-if')) {
+      if (get(node.getAttribute('data-if'), scopes)) kids(node.content, scopes, out); return; }
+    var el = node.cloneNode(false);
+    Array.prototype.slice.call(el.attributes).forEach(function(a){
+      var m = a.value.match(whole);
+      if (/^on/i.test(a.name)) { el.removeAttribute(a.name);
+        if (m) { var fn = get(m[1], scopes); if (typeof fn === 'function') el.addEventListener(a.name.slice(2).toLowerCase(), fn); } return; }
+      if (a.value.indexOf('{{') >= 0) el.setAttribute(a.name, interp(a.value, scopes));
+    });
+    kids(node, scopes, el); out.appendChild(el);
+  }
+  function kids(parent, scopes, out){ Array.prototype.forEach.call(parent.childNodes, function(c){ build(c, scopes, out); }); }
+  var comp = null, tpl = null, root = null;
+  window.__dcRender = function(){
+    var vals = comp.renderVals ? comp.renderVals() : {};
+    var frag = document.createDocumentFragment(); kids(tpl.content, [vals], frag);
+    root.replaceChildren(frag);
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    tpl = document.getElementById('dc-template'); root = document.getElementById('dc-root');
+    comp = new Component({}); window.__dcRender();
+  });
+})();
+
+
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { src: 'all', kind: 'all' }; }
+  renderVals() {
+    var self = this, st = this.state;
+    var PLAN = [
+      ["Yarpaqların ~95%-i töküləndə", "Noyabr", "Yarpaq döşənəyini xırdalamaq + Karbamid (dozanı aqronomla dəqiqləşdirin)", "—", "Ən vacib iş: yazın yoluxma mənbəyini azaldır. Bütün bağda. Mənbə: kitab, fəsil 45."],
+      ["Tumurcuq açılmadan", "Mart əvvəli", "Xırdalanmamış yerlərdə təkrar xırdalama + Karbamid (dozanı aqronomla)", "—", "Aprel karbamidi də askosporları azaldıb."],
+      ["B–C", "Mart ortası–24.03", "Bordo 50% 5 kq/ha", "M", "Yağışdan əvvəl. Əvəzi: Mis 50% 5 kq/ha və ya Mis 20% 10 kq/ha (Excel)."],
+      ["C3", "≈ 26–28.03", "Mankozeb 2 kq/ha", "M", "Yaşıl uc açılıb, təbəqə kəsilməsin. Əvəzi: Ditianon 500 q."],
+      ["C3 (quru gün)", "Yağış olmayan gün", "Yağ 20 l + Piriproksifen 0,5 l /ha", "IRAC 7C", "D fazasına keçibsə VURMAYIN. Fungisid növbəsini pozmasın."],
+      ["D", "≈ 31.03", "Mankozeb 2 kq + Penkonazol 400 q + Bor və Sink 500 q /ha", "M + FRAC 3 (DMI 1)", "Penkonazol yerinə Difenokonazol 500 q."],
+      ["D3", "≈ 05.04", "Ditianon 500 q + Siprodinil 400 q /ha", "M + FRAC 9 (1)", "Siprodinil yerinə Pirimetanil."],
+      ["E–E2", "≈ 10.04", "Mankozeb 2 kq + Dodin + Bor 1 kq + Aminogal 1 l /ha", "M + U12", "Dodin dozası etiketə görə. Əvəzi: Bellis (FRAC 7 + 11)."],
+      ["F (çiçək başlayır)", "≈ 15.04", "Ditianon 500 q + Difenokonazol 500 q + Bor 1 l /ha", "M + FRAC 3 (DMI 2)", "İNSEKTİSİD YOX. Əvəzi: Embrelia."],
+      ["F2 (tam çiçək)", "≈ 20.04", "Mankozeb 2 kq + Swec 0,5 + Bor 1 l /ha", "M + FRAC 9 + 12", "İNSEKTİSİD YOX. FRAC 9-un sonuncusu."],
+      ["G (çiçək bitir)", "≈ 25.04", "Ditianon 500 q + Bupirimat 500 q + Aminogal 1 l /ha", "M + FRAC 8", "İNSEKTİSİD YOX. Bupirimat yerinə Kükürd."],
+      ["H", "≈ 30.04", "Mankozeb 2 kq + Kresoksim-metil 300 q + Mikroelement /ha. Tələdə kəpənək varsa: Fenoksikarb 600 q", "M + FRAC 11 (1)", "Kresoksimi kontaktsız vurmayın. Əvəzi: Trifloksistrobin 200 q."],
+      ["I", "≈ 05.05", "Kaptan 2 kq (80%) + Tebukonazol 600 q /ha", "M + FRAC 3 (DMI 3)", "Hava isinibsə kaptan olar. Əvəzi: Mankozeb 2 kq."],
+      ["J", "≈ 10.05", "Kaptan 3 kq (50%) + Kükürd 4 kq /1 t", "M", "Sistemik yoxdur: fasilə."],
+      ["J-dən sonra", "≈ 15.05", "Ditianon 500 q + Dodin /1 t", "M + U12", "Yağışdan əvvəl qabaqlayıcı."],
+      ["Meyvə böyüməsi", "≈ 22.05", "Kaptan 2 kq + Difenokonazol 500 q /1 t", "M + FRAC 3 (DMI 4)", "Əvəzi: Kaptan + Bupirimat 500 q."],
+      ["Meyvə böyüməsi", "≈ 30.05", "Kaptan 2 kq + Trifloksistrobin 200 q /1 t. Tələ həddi varsa: Asetamiprid 400 q", "M + FRAC 11 (2)", "Piretroid qatmayın."],
+      ["İyun əvvəli", "Askospor sonu", "Kaptan 2 kq + Penkonazol 400 q /1 t", "M + FRAC 3 (DMI 5)", "Son DMI."],
+      ["İyun–yığım", "Hər yağış proqnozundan əvvəl", "Kaptan 2–3 kq /1 t və ya Ditianon 500 q", "M", "İyunda dayandırmayın: 2025-də ləkə iyundan sonra yayılıb. Gözləmə müddətini yoxlayın."],
+      ["Yoluxma olubsa", "Mills bildirişi, qoruyucu yox idi", "Sistemik + kontakt. Müddət infeksiyanın başlanğıcından: tiofanat-metil 36–48 s, siprodinil 48 s, DMI 72–96 s", "FRAC 1, 9, 3", "Növbəti sistemiki qabağa çəkin. Mənbə: kitab, fəsil 45."],
+      ["Qanlı mənənə", "Yalnız tapılan bloklara, çiçəkdən sonra", "Malatyon 2 l /1 t, TƏK", "IRAC 1B", "Çiçəkdə vurmayın. Piretroidi dayandırın."],
+      ["Gənə", "Yalnız lupa ilə sayandan sonra", "Növbə ilə, hər qrup ildə bir dəfə: Abamektin 1 l → Spirodiklofen 300 q → Piridaben 1 kq → Heksitiazoks 500 q", "IRAC 6, 23, 21, 10", "Saymadan vurmayın."],
+      ["Meyvəyeyən", "Tələ biofix-indən sonra", "Fenoksikarb 600 q və ya Asetamiprid 400 q, nəsildən nəsilə qrupu dəyişərək", "IRAC 7B / 4A", "Hər 4 ha-ya 1 tələ, ən azı 2 (kitab, fəsil 53)."]
+    ];
+    var PLAN_F = [
+      ["B", "Mart sonu", "Damlama: Humik-fulvik turşu 20 l + Kükürd 10 kq /ha", "İkisini birlikdə, yağış dayanandan sonra."],
+      ["E2", "≈ 09.04", "Damlama: MAP 12-61-0 25 kq/ha", "Əsasən fosfordur."],
+      ["D3–E", "≈ 16.04", "Damlama: Dəmir (EDDHA 6%) 25 kq/ha", "2026-da 10 kq verilib. Yarpaq analizinə görə."],
+      ["G–H", "≈ 24.04", "Damlama: MAP 12-61-0 25 kq/ha", "İkinci MAP. Cəmi 50 kq."],
+      ["G–H", "≈ 27.04", "Damlama: NPK 3-20 25 kq/ha", "Yazda azotu artırmayın. 3-20 və ya 20-20-20 — dəqiqləşdirin."],
+      ["J", "≈ 09.05", "Damlama: Kalium nitrat 13-0-46 25 kq/ha", "Əsas azot mənbəyi burada."],
+      ["Meyvə böyüməsi", "≈ 21.05", "Damlama: NPK 3-20 25 kq/ha", "Yalnız ağac zəifdirsə."],
+      ["Meyvə böyüməsi", "≈ 02.06", "Damlama: Humik-fulvik turşu 20 l + Maye kükürd 10 l /ha", ""],
+      ["Meyvə böyüməsi", "≈ 09.06", "Damlama: Kalium 25 kq/ha", "Kalibr böyüməsi."],
+      ["3 kalibrdən", "İyun–sentyabr, ~2 həftədən bir", "Çiləmə: Kalsi-bor 3–4 l /1 t, ~8 dəfə", "Sərin vaxtda."],
+      ["İyul", "Gala yığımından əvvəl", "Damlama: Kalium nitrat 25 kq/ha (Gala); NPK 3-20 25 kq/ha (Fuji)", "Bundan sonra azot verməyin."],
+      ["Avqust–sentyabr", "Fuji, Roza", "Damlama: Kalium fosfat 20 kq/ha, Kalium sulfat 20 kq/ha", "Rəng və dad üçün."],
+      ["Yığımdan 3–4 həftə əvvəl", "Fuji, Roza", "Çiləmə: Kalium oksid 3 l /1 t, 2 dəfə", "Rəng üçün."],
+      ["Yığımdan sonra", "Oktyabr", "Çiləmə: Borzinc 2 kq/ha; sonra Dəmir sulfat 15 kq + Karbamid 10 kq /ha", "Həssas zonada bütün bağa."],
+      ["Hər il", "Yanvar–fevral və iyul", "Torpaq və yarpaq analizi", "Gübrə miqdarları analizə görə dəyişməlidir (kitab, fəsil 40)."]
+    ];
+    var OLD = [
+      ["B", "Həftə 1", "Mis 20% 10 kq; Qislig yag 70% 5 kq", ""],
+      ["B-C", "Həftə 1", "Mis 50% 5 kq", ""],
+      ["C", "Həftə 1", "Mankozeb 80% 2 kq; Lambda Siqaletrin 5% 0,3 l", ""],
+      ["C3", "Həftə 2", "Yazliq yag 80% 25 l; Prepiksfen 10% 1,5 l", ""],
+      ["D3", "Həftə 2", "Mankozeb 80% 2 kq; Kukurd 80% 10 kq", ""],
+      ["E-E2", "Həftə 3", "Bor 11% 3 kq; Siprodinil 75% 0,5 l", ""],
+      ["F", "Həftə 3", "Bor 11% 3 l", ""],
+      ["F-F2", "Həftə 3–4", "Bor 11% 3 kq; Swec 62,5% 0,5 l; İmidakloprid 60% 0,5 l", ""],
+      ["G-H", "Həftə 4", "Difenoconazole 25% 0,5 kq; Kaptan 50% 3 kq", ""],
+      ["G-H", "Həftə 5", "Bupirimat 35% 0,5 l; Gibberellins GA4/GA7 0,5 l", "GA4/GA7: \"7 gündən bir\""],
+      ["I", "Həftə 5–6", "Gibberellins GA4/GA7 0,5 l; Pencanazole 10% 0,4 l; Thiamethoxam 24% 0,5 l", ""],
+      ["J", "Həftə 6", "Mankozeb 80% 2 kq; Thiacloprid 24% 0,5 l", ""],
+      ["May 5-15", "", "Humik Asid; Ditianon 70% 0,6 l; Zn 1 kq; Mikrobutanil 24% 0,4 l; Acetamiprid 20% 0,3 kq", ""],
+      ["10 gün sonra", "2-ci", "Nospider 0,5 l; Krezoksim metil 50% 0,3 l; Feniksikarb 0,6 l; Kaptan 50% 3 kq", "Nospider: \"ehtiyac olsa vurulacaq\""],
+      ["10 gün sonra", "3-cü", "Bupirimat 35% 0,5 l; Difenoconazole 25% 0,3 l; Pencanazole 10% 0,4 l; Ditianon 70% 0,6 l", ""],
+      ["10 gün sonra", "4-cü", "Kaptan 50% 3 kq; Deltamethrin 1 l; Thiacloprid 24% 0,5 l; Bupirimat 35% 0,5 l", ""],
+      ["10 gün sonra", "5-ci", "Kalsium xlorid 26% 50 kq; Karbomid 50 kq; Mis 50% 5 kq", "Kalsium: \"3 kalibrdən başlayaraq 6 kq-dan 8 dəfə\""]
+    ];
+    var OLD_F = [
+      ["Gübrələr", "vaxt yazılmayıb", "NPK 16-16-16 300 kq; MAP 12-61-0 100 kq; Azot 34% 50 kq; Kalsium Nitrat 100 kq", "Dozalar /ha"],
+      ["Gübrələr", "vaxt yazılmayıb", "Potasium Nitrat 200 kq; Demir 6% 15 kq; Potasium oksid 3-0-30 3 kq; Potasium oksid 0-0-20 3 kq", "Dozalar /ha"]
+    ];
+    var J = [
+      ["24.03","Bütün bağ","C–C3","Bordo 50% 5 kq/ha, cəmi 40 kq","M","Yaxşı"],["29.03","Təzə qələmlər","C3–D","Yağ, piriproksifen (miqdar yazılmayıb)","IRAC 7C","Normal"],
+      ["30.03","Fuji","C–C3","Mankozeb 2 kq, lambda-sihalotrin 300 q /ha","M + IRAC 3A","Artıq"],["31.03","Roza + Gala","C–C3","Mankozeb 2 kq, lambda-sihalotrin 300 q; azot turşusu 250 q/1 t","M + IRAC 3A","Artıq"],
+      ["01.04","Fuji","D-yə keçir","Yağ 20 l, piriproksifen 0,5 l; azot turşusu 250 q/1 t","IRAC 7C","Səhv"],["03.04","Bütün bağ","D–D3","Mankozeb 2 kq, penkonazol 400 q /ha; Fujiyə bor + sink 500 q/ha","M + FRAC 3","Yaxşı"],
+      ["07.04","Bütün bağ","E–E2","Mankozeb 2 kq, bor 1 kq, aminogal 1 l /ha","M","Yaxşı"],["11.04","Roza","E2","Siprodinil 400 q, penkonazol 400 q, aminogal 1 l /ha","FRAC 9 + 3","Yaxşı"],
+      ["11.04","Fuji","E2","Mankozeb, bor, aminogal, penkonazol (miqdar yazılmayıb)","M + FRAC 3","Yaxşı"],["14.04","Fuji","E2–F (çiçək)","Pirimetanil, difenokonazol 500 q, mikroelement 2 kq, asetamiprid 400 q /ha","FRAC 9 + 3 + IRAC 4A","Səhv"],
+      ["15.04","Roza + Gala","F–F2","Pirimetanil, difenokonazol 500 q, mikroelement 2 kq, asetamiprid 400 q /ha","FRAC 9 + 3 + IRAC 4A","Səhv"],["17.04","Təzə qələmlər","F–F2","Siprodinil, bor, aminogal (miqdar yazılmayıb)","FRAC 9","Normal"],
+      ["18.04","Fuji + Gala","E2–F","Ditanon 500 q, mikroelement 2 kq, bor 1 l, aminogal 1 l /ha","M","Yaxşı"],["18.04","Roza","F–F2","Siprodinil 400 q, mikroelement 2 kq, aminogal 1 l, penkonazol 400 q /ha","FRAC 9 + 3","Artıq"],
+      ["22.04","Roza","G-yə yaxın","Ditanon 500 q, mikroelement 2 kq, tiofanat-metil 1,5 kq, difenokonazol 500 q /ha","M + FRAC 1 + 3","Normal"],["22.04","Fuji + Gala","F","Siprodinil 400 q, bor 1 kq, mikroelement 2 kq, difenokonazol 500 q /ha","FRAC 9 + 3","Normal"],
+      ["24.04","Roza + Gala","G-yə yaxın","Mankozeb, aminogal, penkonazol, lambda-sihalotrin (miqdar yazılmayıb)","M + FRAC 3 + IRAC 3A","Səhv"],["25.04","Fuji","F2","Mankozeb 2 kq, mikroelement 2 kq, penkonazol 400 q, aminogal 2 l /ha","M + FRAC 3","Yaxşı"],
+      ["30.04","Roza + Gala","H","Kresoksim-metil 300 q, mikroelement 2 kq, difenokonazol 500 q /1 t","FRAC 11 + 3","Artıq"],["01.05","Qalan bağ","H","Kresoksim-metil, mikroelement, difenokonazol","FRAC 11 + 3","Artıq"],
+      ["04.05","Roza + Gala","İ–J","Mankozeb 2 kq, difenokonazol 500 q, mikroelement 2 kq","M + FRAC 3","Yaxşı"],["07.05","Roza + Gala","J","Kükürd 4 kq, kaptan 3 kq (50%), mikroelement 2 kq /1 t","M","Yaxşı"],
+      ["07.05","Fuji","H","Ditanon 500 q, lambda-sihalotrin 300 q, mikroelement 2 kq /1 t","M + IRAC 3A","Artıq"],["09.05","Roza + Gala","J","Tiofanat-metil 1,5 kq, tebukonazol 600 q, mikroelement 2 kq, fenoksikarb 600 q /1 t","FRAC 1 + 3 + IRAC 7B","Artıq"],
+      ["10.05","Fuji","H","Kaptan 3 kq, kükürd 4 kq, mikroelement 2 kq, fenoksikarb 600 q","M + IRAC 7B","Yaxşı"],["12.05","Roza + Gala","J","Kaptan 2 kq, difenokonazol 500 q, penkonazol 400 q, mikroelement 2 kq /1 t","M + FRAC 3 + 3","Səhv"],
+      ["13.05","Fuji","J","Kaptan 2 kq, difenokonazol 500 q, bupirimat 500 q, mikroelement 2 kq /1 t","M + FRAC 3 + 8","Yaxşı"],["15.05","Bütün bağ","J","Ditanon 500 q, difenokonazol 500 q, mikroelement 2 kq /1 t","M + FRAC 3","Yaxşı"],
+      ["19.05","Bütün bağ","J","Kaptan 2 kq, kresoksim-metil 300 q, mikroelement 2 kq, izabion 2 l /1 t","M + FRAC 11","Yaxşı"],["23.05","Alma bağı","J","Abamektin + etoksazol 1,5 l /1 t","IRAC 6 + 10","Yoxlanmalı"],
+      ["26.05","Alma bağı","J","Tiofanat-metil 1,5 kq, difenokonazol 500 q, deltametrin 500 q, mikroelement 2 kq /1 t","FRAC 1 + 3 + IRAC 3A","Artıq"],["03.06","Alma bağı","Meyvə böyüməsi","Kaptan 2 kq, trifloksistrobin 200 q, tiakloprid 500 q, dəniz yosunu 2 l, mikroelement 2 kq /1 t","M + FRAC 11 + IRAC 4A","Normal"],
+      ["05.06","Alma bağı","Meyvə böyüməsi","Kalsi-bor 3 l /1 t","Qida","Normal"],["08.06","Roza + Gala","Meyvə böyüməsi","Kaptan, difenokonazol, dəniz yosunu (miqdar yazılmayıb)","M + FRAC 3","Normal"],
+      ["08.06","Fuji","Meyvə böyüməsi","Malatyon 2 l, dimetoat 1,5 l, xlorpirifos-etil 0,5 l, mikroelement 2 kq","IRAC 1B + 1B + 1B","Səhv"],["11.06","Fuji","Meyvə böyüməsi","Kaptan, difenokonazol, mikroelement (miqdar yazılmayıb)","M + FRAC 3","Normal"],
+      ["17.06","Alma bağı","Meyvə böyüməsi","Abamektin + etoksazol 1,5 l /1 t","IRAC 6 + 10","Yoxlanmalı"],["20.06","Alma bağı","Meyvə böyüməsi","Gibberellin turşusu 500 q /1 t","Boy tənzimləyici","Yoxlanmalı"],
+      ["21.06","Fuji","Meyvə böyüməsi","Kalsi-bor 3 l /1 t","Qida","Normal"],["24.06","Fuji","Meyvə böyüməsi","Kaptan 2 kq, difenokonazol 500 q, deltametrin 500 q, mikroelement 2 kq /1 t","M + FRAC 3 + IRAC 3A","Artıq"],
+      ["24.06","Roza + Gala","Meyvə böyüməsi","Malatyon 2 l, dimetoat 2 l, mikroelement 2 kq /1 t","IRAC 1B + 1B","Səhv"],["01.07","Roza + Gala","Meyvə böyüməsi","Kaptan 2 kq, difenokonazol 500 q, mikroelement 2 kq /1 t","M + FRAC 3","Normal"],
+      ["01.07","Fuji","Meyvə böyüməsi","Tiofanat-metil 1,5 kq, mikroelement 2 kq","FRAC 1","Səhv"],["02.07","Fuji","Meyvə böyüməsi","Kalsi-bor 3 l /1 t (Roza + Gala 03.07)","Qida","Normal"],
+      ["06.07","Fuji","Meyvə böyüməsi","Tiofanat-metil 1,5 kq, asetamiprid 1 kq, mikroelement 2 kq","FRAC 1 + IRAC 4A","Səhv"],["09.07","Alma bağı","Meyvə böyüməsi","Tiofanat-metil 1,5 kq, asetamiprid 1 kq","FRAC 1 + IRAC 4A","Səhv"],
+      ["09.07","Alma bağı","Meyvə böyüməsi","Kalsi-bor 3 l /1 t","Qida","Normal"],["14.07","Fuji","Meyvə böyüməsi","Malatyon 2 l, tiametoksam 500 q, xlorpirifos-etil 1 l, mikroelement 2 kq /1 t","IRAC 1B + 4A + 1B","Səhv"],
+      ["16.07","Fuji","Meyvə böyüməsi","Abamektin + etoksazol 3 l /2 t","IRAC 6 + 10","Normal"],["17.07","Roza + Gala","Meyvə böyüməsi","Abamektin + etoksazol","IRAC 6 + 10","Normal"],
+      ["18.07","Bütün bağ","Meyvə böyüməsi","Kaptan 3 kq (50%), difenokonazol 500 q, mikroelement 2 kq, Anif Amin 2 l /1 t","M + FRAC 3","Normal"],["23.07","Alma bağı","Meyvə böyüməsi","Abamektin 1 l, etoksazol 500 q, spirodiklofen 300 q /1 t","IRAC 6 + 10 + 23","Artıq"],
+      ["24.07","Fuji","Meyvə böyüməsi","0-0-20 2 l, aminoturşu 2 l /1 t (Roza + Gala 27.07)","Qida","Normal"],["31.07","Bütün bağ","Meyvə böyüməsi","Kalsi-bor 4 l /1 t","Qida","Normal"],
+      ["04.08","Alma bağı","Meyvə böyüməsi","Abamektin 1 l, heksitiazoks 500 q, piridaben 1 kq, mikroelement 2 kq /1 t","IRAC 6 + 10 + 21","Artıq"],["06.08","Fuji","Yığımdan əvvəl","Gibberellin turşusu 500 q /1 t","Boy tənzimləyici","Yoxlanmalı"],
+      ["07.08","Roza + Gala","Yığımdan əvvəl","Gibberellin turşusu 500 q /1 t","Boy tənzimləyici","Yoxlanmalı"],["11.08","Fuji","Yığımdan əvvəl","Gibberellin turşusu 500 q /1 t","Boy tənzimləyici","Yoxlanmalı"],
+      ["14.08","Alma bağı","Yığımdan əvvəl","Kalsi-bor 4 l /1 t","Qida","Normal"],["15.08","Fuji","Yığımdan əvvəl","Abamektin + etoksazol 1,5 l, spirodiklofen 300 q, tiofanat-metil 1,5 kq, mikroelement 2 kq /1 t","IRAC 6 + 10 + 23 + FRAC 1","Artıq"],
+      ["16.08","Roza","Yığımdan əvvəl","Abamektin + etoksazol 1,5 l, tiofanat-metil 1,5 kq, mikroelement 2 kq","IRAC 6 + 10 + FRAC 1","Artıq"],["28.08","Fuji","Yığımdan əvvəl","Malatyon 1,5 l, xlorpirifos-etil 1,5 l, mikroelement 2 kq /1 t","IRAC 1B + 1B","Səhv"],
+      ["01.09","Fuji + Roza","Yığımdan əvvəl","Kalsi-bor 4 l /1 t","Qida","Normal"],["02.09","Fuji + Roza","Yığımdan əvvəl","Gənə dərmanı (adı yazılmayıb)","?","Yoxlanmalı"],
+      ["03.09","Fuji + Roza","Yığımdan əvvəl","Kaptan 3 kq, difenokonazol 500 q, mikroelement 2 kq, emamektin benzoat 500 q /1 t","M + FRAC 3 + IRAC 6","Yoxlanmalı"],["10.09","Fuji","Yığımdan əvvəl","Kalsi-bor 4 l /1 t","Qida","Normal"],
+      ["13.09","Fuji + Roza","Yığımdan əvvəl","Kaptan 5 kq (50%), asetamiprid 2 kq, mikroelement 4 kq","M + IRAC 4A","Yoxlanmalı"],["16.09","Fuji","Yığımdan əvvəl","Kalium oksid 3 l /1 t (27.09 təkrar)","Qida","Normal"],
+      ["22.09","Fuji + Roza","Yığımdan əvvəl","Kalsi-bor 4 l /1 t","Qida","Normal"],["24.09","Roza + Gala","Yığımdan əvvəl","Malatyon 1,5 l, xlorpirifos-etil 1,5 l /1 t (qanlı mənənəyə)","IRAC 1B + 1B","Səhv"],
+      ["12.10","Fuji + Roza","Yığımdan əvvəl","Kalsi-bor 4 l /1 t","Qida","Normal"]
+    ];
+    var TAG = {
+      plan: ['★ TÖVSİYƏ', '#1F5E3B', '#FFFFFF', '#1F5E3B'],
+      old: ['▦ KÖHNƏ EXCEL', '#FFFFFF', '#5B4A1E', '#8C7A4B'],
+      j26: ['● 2026 JURNAL', '#E6E9F4', '#2E3A6B', '#E6E9F4']
+    };
+    var GR = { 'Yaxşı': ['#E3F1E8', '#17603A'], 'Normal': ['#ECEEEF', '#444C52'], 'Artıq': ['#FDF3D7', '#7A5300'], 'Səhv': ['#FDE8E7', '#9F1C14'], 'Yoxlanmalı': ['#E8EEF6', '#284A73'] };
+    function mk(src, kind, phase, when, what, group, note, grade) {
+      var t = TAG[src], g = grade ? GR[grade] : null;
+      return { src: src, kind: kind, phase: phase, when: when, what: what, group: group, note: note,
+        tag: t[0], tagBg: t[1], tagFg: t[2], tagBorder: t[3],
+        hasGrade: !!grade, grade: grade ? 'Qiymət: ' + grade : '', gBg: g ? g[0] : '', gFg: g ? g[1] : '' };
+    }
+    var all = [];
+    PLAN.forEach(function (x) { all.push(mk('plan', 'spray', x[0], x[1], x[2], x[3], x[4])); });
+    PLAN_F.forEach(function (x) { all.push(mk('plan', 'fert', x[0], x[1], x[2], 'Gübrə', x[3])); });
+    OLD.forEach(function (x) { all.push(mk('old', 'spray', x[0], x[1], x[2], '—', x[3] || 'Dozalar /ha, Excel-də yazıldığı kimi')); });
+    OLD_F.forEach(function (x) { all.push(mk('old', 'fert', x[0], x[1], x[2], 'Gübrə', x[3])); });
+    J.forEach(function (x) { all.push(mk('j26', x[4] === 'Qida' ? 'fert' : 'spray', x[2], x[0] + '.2026 · ' + x[1], x[3], x[4], '', x[5])); });
+    var bySrc = all.filter(function (r) { return st.src === 'all' || r.src === st.src; });
+    var rows = bySrc.filter(function (r) { return st.kind === 'all' || r.kind === st.kind; });
+    function cnt(s) { return all.filter(function (r) { return s === 'all' || r.src === s; }).length; }
+    var srcTabs = [['all', 'Hamısı'], ['plan', '★ Düzəldilmiş plan'], ['old', '▦ Köhnə Excel'], ['j26', '● 2026 jurnalı']].map(function (x) {
+      var on = st.src === x[0];
+      return { label: x[1], n: cnt(x[0]), on: on, bg: on ? '#16201A' : '#FFFFFF', fg: on ? '#FFFFFF' : '#16201A', border: on ? '#16201A' : '#CDD4CE',
+        pick: function () { self.setState({ src: x[0] }); } };
+    });
+    var kindTabs = [['all', 'Dərman + gübrə'], ['spray', 'Yalnız dərmanlama'], ['fert', 'Yalnız gübrə / qida']].map(function (x) {
+      var on = st.kind === x[0];
+      return { label: x[1], on: on, bg: on ? '#E7EFE9' : '#FFFFFF', fg: on ? '#123D26' : '#33403A', border: on ? '#1F5E3B' : '#CDD4CE',
+        pick: function () { self.setState({ kind: x[0] }); } };
+    });
+    return { rows: rows, srcTabs: srcTabs, kindTabs: kindTabs };
+  }
+}
+
+</script>
+</body>
+</html>
