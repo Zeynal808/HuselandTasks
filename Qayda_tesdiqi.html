@@ -51,7 +51,7 @@ button{font-family:inherit}
       <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px">
         <header style="display: flex; flex-direction: column; gap: 8px">
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
-            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; padding: 4px 8px; border-radius: 6px; background: #FDF3D7; color: #7A5300">QARALAMA</span>
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; padding: 4px 8px; border-radius: 6px; background: {{millsBg}}; color: {{millsFg}}">{{millsChip}}</span>
             <span style="font-size: 13px; color: #5A665E">SCAB_MILLS_VIC · versiya 1.0 · çıxarıldı 11.11.2026</span>
           </div>
           <h1 style="margin: 0; font-size: 26px; letter-spacing: -0.02em">Mills cədvəli — kitab ilə müqayisə</h1>
@@ -110,13 +110,21 @@ button{font-family:inherit}
               <label for="note" style="font-weight: 600; margin-top: 4px">Aqronomun qeydi</label>
               <textarea id="note" rows="3" placeholder="Məsələn: səh. 362 ilə tutuşduruldu, fərq yoxdur" style="font: inherit; padding: 10px; border: 1px solid #CDD4CE; border-radius: 8px; resize: vertical"></textarea>
               <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px">
-                <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid {{approveBorder}}; background: {{approveBg}}; color: {{approveFg}}; font-size: 14px; font-weight: 600">Təsdiqlə → AKTİV</button>
+                <button type="button" onClick="{{approve}}" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid {{approveBorder}}; background: {{approveBg}}; color: {{approveFg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{approveLabel}}</button>
                 <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #CDD4CE; background: #FFFFFF; color: #16201A; font-size: 14px">Rədd et</button>
               </div>
               <div style="font-size: 12px; color: #5A665E">Təsdiq düyməsi bütün 10 sətir yoxlananda aktivləşir. Kim və nə vaxt təsdiqlədiyi audit jurnalına yazılır.</div>
             </div>
           </section>
         </div>
+        <section aria-labelledby="wet-h" style="background: #FFFFFF; border: 1px solid #E2E6E2; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.55">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center"><span style="font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: {{wetBg}}; color: {{wetFg}}">{{wetChip}}</span><span style="font-size: 13px; color: #5A665E">WET_RH_EST · versiya 0.1 · sensor olmadıqda lazımdır</span></div>
+          <h2 id="wet-h" style="margin: 0; font-size: 20px">Yarpaq islanmasının təxmini (sensorsuz)</h2>
+          <div><b>Qayda:</b> saatda yağış &gt; 0 mm və ya nisbi rütubət ≥ 90% olarsa, saat islaq sayılır. İslanma epizodu yağışla (≥ 0,25 mm) başlayır.</div>
+          <div><b>Mənbə:</b> Sentelhas və həmk. (2008), Agricultural and Forest Meteorology, DOI 10.1016/j.agrformet.2007.09.011 — nisbi rütubətin yarpaq islanmasının təxmini kimi yararlılığı. Kitab, Fəsil 45.3: islanma yağışın başlanğıcından sayılır; askosporlar ≥ 0,25 mm yağışla buraxılır.</div>
+          <div style="color: #7A5300"><b>Diqqət:</b> məqalənin tam mətni oxunmayıb — 90% həddi təsdiqdən əvvəl tam mətnlə yoxlanmalıdır. Nəticə həmişə TƏXMİNİ-dir və KRİTİK səviyyəyə çatmır. Bu qayda təsdiqlənməyincə qara ləkə hesabı "məlumat kifayət deyil" göstərir.</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center"><button type="button" onClick="{{approveWet}}" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #1F5E3B; background: #1F5E3B; color: #FFFFFF; font-size: 14px; font-weight: 600; cursor: pointer">{{wetLabel}}</button><span style="font-size: 13px; color: #5A665E">{{liveNote}}</span></div>
+        </section>
       </div>
     </main>
   </div>
@@ -169,7 +177,11 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
   };
   document.addEventListener('DOMContentLoaded', function(){
     tpl = document.getElementById('dc-template'); root = document.getElementById('dc-root');
-    comp = new Component({}); window.__dcRender();
+    var mount = function () { comp = new Component({}); window.__dcRender(); };
+    // Server rejimi: api/state varsa, bütün ekranlar eyni (paylaşılan) məlumatla işləyir; yoxdursa (GitHub) — nümunə rejimi
+    var done = false, go = function (s) { if (done) return; done = true; window.ORCHARD = (s && s.server) ? s : undefined; mount(); };
+    setTimeout(function () { go(null); }, 2500);
+    fetch('api/state', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(go);
   });
 })();
 
@@ -188,7 +200,16 @@ class Component extends DCLogic {
         toggle: function () { var o = Object.assign({}, st.ok); o[i] = !o[i]; self.setState({ ok: o }); } };
     });
     var all = n === data.length;
-    return { rows: rows, checked: n,
+    var live = !!(window.ORCHARD && window.ORCHARD.server), R = live ? window.ORCHARD.rules : {};
+    var mAct = live ? R.SCAB_MILLS_VIC.status === 'AKTİV' : !!st.demoMills, wAct = live ? R.WET_RH_EST.status === 'AKTİV' : !!st.demoWet;
+    var post = function (code) { fetch('api/rules/' + code + '/approve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ by: 'Sahib' }) }).then(function (r) { return r.json(); }).then(function (s) { window.ORCHARD = s; if (window.__dcRender) window.__dcRender(); }); };
+    return { millsChip: mAct ? 'AKTİV' : 'QARALAMA', millsBg: mAct ? '#E3F1E8' : '#FDF3D7', millsFg: mAct ? '#17603A' : '#7A5300',
+      wetChip: wAct ? 'AKTİV' : 'QARALAMA', wetBg: wAct ? '#E3F1E8' : '#FDF3D7', wetFg: wAct ? '#17603A' : '#7A5300',
+      approveLabel: mAct ? 'Təsdiqlənib ✓' : 'Təsdiqlə → AKTİV', wetLabel: wAct ? 'Təsdiqlənib ✓' : 'Təsdiqlə → AKTİV',
+      liveNote: live ? 'Təsdiq serverdə audit jurnalına yazılır.' : 'Nümunə rejimi: təsdiq yalnız bu ekranda görünür.',
+      approve: function () { if (!all || mAct) return; if (live) post('SCAB_MILLS_VIC'); else self.setState({ demoMills: true }); },
+      approveWet: function () { if (wAct) return; if (live) post('WET_RH_EST'); else self.setState({ demoWet: true }); },
+      rows: rows, checked: n,
       approveBg: all ? '#1F5E3B' : '#ECEEEF', approveFg: all ? '#FFFFFF' : '#5F676D', approveBorder: all ? '#1F5E3B' : '#CDD4CE' };
   }
 }

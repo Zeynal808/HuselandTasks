@@ -138,7 +138,11 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
   };
   document.addEventListener('DOMContentLoaded', function(){
     tpl = document.getElementById('dc-template'); root = document.getElementById('dc-root');
-    comp = new Component({}); window.__dcRender();
+    var mount = function () { comp = new Component({}); window.__dcRender(); };
+    // Server rejimi: api/state varsa, bütün ekranlar eyni (paylaşılan) məlumatla işləyir; yoxdursa (GitHub) — nümunə rejimi
+    var done = false, go = function (s) { if (done) return; done = true; window.ORCHARD = (s && s.server) ? s : undefined; mount(); };
+    setTimeout(function () { go(null); }, 2500);
+    fetch('api/state', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(go);
   });
 })();
 

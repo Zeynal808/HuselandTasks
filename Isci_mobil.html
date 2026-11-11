@@ -126,7 +126,11 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
   };
   document.addEventListener('DOMContentLoaded', function(){
     tpl = document.getElementById('dc-template'); root = document.getElementById('dc-root');
-    comp = new Component({}); window.__dcRender();
+    var mount = function () { comp = new Component({}); window.__dcRender(); };
+    // Server rejimi: api/state varsa, bütün ekranlar eyni (paylaşılan) məlumatla işləyir; yoxdursa (GitHub) — nümunə rejimi
+    var done = false, go = function (s) { if (done) return; done = true; window.ORCHARD = (s && s.server) ? s : undefined; mount(); };
+    setTimeout(function () { go(null); }, 2500);
+    fetch('api/state', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(go);
   });
 })();
 
@@ -170,13 +174,17 @@ class Component extends DCLogic {
     function phName(c) { var i = phIdx(c); return i < 0 ? c : PHASES[i][1]; }
     function itemsFor(c) { return PP[c] || []; }
     function nextPhase(c) { var i = phIdx(c); return i >= 0 && i < PHASES.length - 1 ? PHASES[i + 1][0] : null; }
-    function getPhase() { try { var v = JSON.parse(window.localStorage.getItem('orchard_phase')); if (v && v.code && phIdx(v.code) >= 0) return v; } catch (e) {} return { code: 'Payız-1', date: null }; }
-    function setPhase(c) { try { window.localStorage.setItem('orchard_phase', JSON.stringify({ code: c, date: new Date().toISOString() })); } catch (e) {} }
+    function live() { return !!(window.ORCHARD && window.ORCHARD.server); }
+    function api(path, body) { fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(function (r) { return r.json(); }).then(function (s) { if (s && s.server) { window.ORCHARD = s; } if (window.__dcRender) window.__dcRender(); }); }
+    function adviceFor(k) { return live() && window.ORCHARD.advice ? (window.ORCHARD.advice[k] || []) : []; }
+    function mapChecks(list) { return list.map(function (c) { return { text: c.text, icon: c.lvl === 'ok' ? '✓' : (c.lvl === 'warn' ? '⚠' : 'ℹ'), color: c.lvl === 'ok' ? '#17603A' : (c.lvl === 'warn' ? '#9A3412' : '#33403A') }; }); }
+    function getPhase() { if (live() && window.ORCHARD.phase) return window.ORCHARD.phase; try { var v = JSON.parse(window.localStorage.getItem('orchard_phase')); if (v && v.code && phIdx(v.code) >= 0) return v; } catch (e) {} return { code: 'Payız-1', date: null }; }
+    function setPhase(c) { if (live()) { window.ORCHARD.phase = { code: c, date: new Date().toISOString() }; api('api/phase', { code: c }); return; } try { window.localStorage.setItem('orchard_phase', JSON.stringify({ code: c, date: new Date().toISOString() })); } catch (e) {} }
     function phDate(v) { if (!v.date) return 'nümunə'; var d = new Date(v.date); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
     function phLine(v) { return v.code + ' — ' + phName(v.code) + ' (təsdiq: ' + phDate(v) + ')'; }
     function phaseMatch(s, c) { var toks = String(s).split(/[^A-Za-z0-9]+/); for (var i = 0; i < toks.length; i++) { if (toks[i] === c) return true; } return false; }
-    function getMarks() { try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
-    function setMark(k, v) { var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
+    function getMarks() { if (live()) return window.ORCHARD.marks || {}; try { return JSON.parse(window.localStorage.getItem('orchard_marks')) || {}; } catch (e) { return {}; } }
+    function setMark(k, v) { if (live()) { if (v) { window.ORCHARD.marks[k] = v; } else { delete window.ORCHARD.marks[k]; } api('api/mark', { key: k, value: v }); return; } var m = getMarks(); if (v) { m[k] = v; } else { delete m[k]; } try { window.localStorage.setItem('orchard_marks', JSON.stringify(m)); } catch (e) {} }
     function itemKey(c, it) { return c + '|' + it.title; }
     function todayStr() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
