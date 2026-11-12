@@ -13,9 +13,23 @@ a{color:#1F5E3B}a:hover{color:#123D26}
 button,input{font-family:inherit}
 </style>
 
+<style>
+#mnav-btn{display:none;align-items:center;justify-content:center;min-width:44px;min-height:36px;padding:0 10px;border:1px solid rgba(255,255,255,.5);border-radius:8px;background:transparent;color:#fff;font:600 15px Inter,system-ui,sans-serif;cursor:pointer}
+#mnav-shade{display:none}
+@media (max-width:820px){
+  #mnav-btn{display:inline-flex}
+  nav[aria-label="Əsas menyu"]{display:none !important}
+  body.mnav-open nav[aria-label="Əsas menyu"]{display:flex !important;position:fixed;top:0;left:0;bottom:0;width:82vw;max-width:310px;max-height:none;z-index:40;overflow-y:auto;box-shadow:0 0 40px rgba(0,0,0,.35)}
+  body.mnav-open #mnav-shade{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35}
+  main{padding:14px !important}
+  #mnav-btn ~ span{display:none}
+  h1{font-size:22px !important}
+}
+</style>
 </head>
 <body>
-<div style="position:sticky;top:0;z-index:10;background:#123D26;color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#fff">← Bütün ekranlar</a><span style="opacity:.85">ORCHARD AI — dizayn nümunəsi (DEMO, real məlumat deyil)</span></div>
+<div style="position:sticky;top:0;z-index:10;background:#123D26;color:#fff;font:600 13px Inter,system-ui,sans-serif;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><button type="button" id="mnav-btn" aria-label="Menyu" aria-expanded="false">☰ Menyu</button><a href="index.html" style="color:#fff">← Bütün ekranlar</a><span style="opacity:.85">ORCHARD AI — dizayn nümunəsi (DEMO, real məlumat deyil)</span></div>
+<div id="mnav-shade"></div>
 <template id="dc-template">
 
 <div style="font-family: Inter, system-ui, sans-serif; color: #16201A; background: #F4F5F2; min-height: 100vh; font-feature-settings: 'tnum' 1">
@@ -56,7 +70,7 @@ button,input{font-family:inherit}
           <div style="font-size: 15px; color: #33403A; line-height: 1.5">Telegram botu (@Agranom_Zayn_bot) hər səhər və təcili hallarda tapşırıq verir. İşçilər Telegram-da düymə ilə qeyd edir: <b>▶ başladım</b>, <b>✅ edildi</b>, <b>✖ lazım deyil</b>. Vəziyyət burada avtomatik yenilənir.</div>
           <div id="bt-upd" style="font-size: 13px; color: #5A665E"></div>
         </header>
-        <div id="bt-sum" style="display: flex; flex-wrap: wrap; gap: 12px"></div>
+        <div id="bt-sum" style="display: flex; flex-wrap: wrap; gap: 8px"></div>
         <div id="bt-btns" role="group" aria-label="Süz" style="display: flex; flex-wrap: wrap; gap: 8px"></div>
         <div id="bt-list" style="display: flex; flex-direction: column; gap: 12px"></div>
         <div style="font-size: 13px; color: #5A665E; line-height: 1.5; padding-bottom: 24px">Məsləhətlər TƏXMİNİ-dir (hava modeli, sensor yoxdur); yekun qərar bağ sahibi və aqronomdadır. Satış və xərc məlumatları sayta qoyulmur — yalnız bağ sahibinin Excel faylındadır.</div>
@@ -121,6 +135,17 @@ class DCLogic { constructor(p){ this.props = p || {}; this.state = {}; }
 })();
 
 
+(function(){
+  function toggle(open){ document.body.classList.toggle('mnav-open', open); var b=document.getElementById('mnav-btn'); if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  document.addEventListener('click', function(e){
+    if (e.target.closest && e.target.closest('#mnav-btn')) { toggle(!document.body.classList.contains('mnav-open')); return; }
+    if (e.target.id === 'mnav-shade') { toggle(false); return; }
+    if (document.body.classList.contains('mnav-open') && e.target.closest && e.target.closest('nav[aria-label="Əsas menyu"] a')) toggle(false);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') toggle(false); });
+})();
+
+
 class Component extends DCLogic {
   renderVals() { setTimeout(initBT, 0); return {}; }
 }
@@ -134,7 +159,7 @@ function initBT() {
     var T = data.tasks || [], today = new Date().toISOString().slice(0, 10);
     var cnt = {}; T.forEach(function (t) { cnt[t.status] = (cnt[t.status] || 0) + 1; });
     document.getElementById('bt-sum').innerHTML = Object.keys(BT_ST).map(function (k) { var s = BT_ST[k];
-      return '<div style="flex:1 1 160px;background:' + s[1] + ';border-radius:12px;padding:12px 14px"><div style="font-size:13px;color:' + s[2] + '">' + s[0] + ' ' + k + '</div><div style="font-size:26px;font-weight:700;color:' + s[2] + '">' + (cnt[k] || 0) + '</div></div>'; }).join('');
+      return '<div style="flex:1 1 130px;background:' + s[1] + ';border-radius:12px;padding:8px 12px"><div style="font-size:13px;color:' + s[2] + '">' + s[0] + ' ' + k + '</div><div style="font-size:22px;font-weight:700;color:' + s[2] + '">' + (cnt[k] || 0) + '</div></div>'; }).join('');
     var F = T.filter(function (t) { return cur === 'Hamısı' || (cur === 'Açıq' && (t.status === 'Gözləyir' || t.status === 'İcra olunur')) || (cur === 'Bu gün' && t.date === today) || t.status === cur; });
     list.innerHTML = F.length ? F.map(function (t) { var s = BT_ST[t.status] || ['', '#eee', '#333'];
       return '<article style="background:#fff;border:1px solid #E2E6E2;border-left:6px solid ' + (BT_PR[t.prio] || '#999') + ';border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px">' +
