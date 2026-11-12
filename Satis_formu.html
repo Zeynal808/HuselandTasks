@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex">
+<title>Satış forması — ORCHARD AI</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F5F2;--card:#fff;--ink:#16201A;--muted:#5A665E;--line:#E2E6E2;--brand:#1F5E3B;--brand2:#E7EFE9;--warn:#7A5300}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,sans-serif}
+header{background:#123D26;color:#fff;padding:12px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+header a{color:#fff}
+main{max-width:720px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+h1{margin:0;font-size:22px}
+h2{margin:0 0 10px;font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.sorts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.sort{border:2px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.sort img,.sort .ph{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#F2E9DA}
+.sort .ph{display:flex;align-items:center;justify-content:center;font-size:44px}
+.sort b{display:block;padding:8px 10px}
+.sort[aria-pressed="true"]{border-color:var(--brand);box-shadow:0 0 0 3px #CFE3D6}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:99px;border:1px solid #CDD4CE;background:#fff;font:inherit;cursor:pointer;color:inherit}
+.chip[aria-pressed="true"]{background:var(--brand2);border-color:var(--brand);font-weight:600}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+input,select,textarea{width:100%;min-height:44px;padding:8px 10px;border:1px solid #CDD4CE;border-radius:8px;font:inherit;background:#fff;color:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.total{font-size:22px;font-weight:700}
+.btn{width:100%;min-height:52px;border:0;border-radius:12px;background:var(--brand);color:#fff;font:700 17px Inter,system-ui,sans-serif;cursor:pointer}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn2{min-height:44px;padding:0 14px;border:1px solid var(--brand);border-radius:8px;background:#fff;color:var(--brand);font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+.note{font-size:13px;color:var(--muted)}
+.warn{background:#FFF6DB;border:1px solid #E8D48A;color:#3D3412;border-radius:10px;padding:10px 12px;font-size:14px}
+.ok{background:#E3F1E7;border:1px solid #CFE3D6;color:#17603A;border-radius:10px;padding:10px 12px;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{padding:6px;border-bottom:1px solid var(--line);text-align:left}
+td input{min-height:38px}
+code{background:#EEF1EE;padding:2px 6px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header><a href="index.html">← Sayt</a><b>ORCHARD AI · Satış forması</b></header>
+<main>
+  <div><h1>Satışı yaz</h1><div class="note">Sortu və növü seçin, çəkini yazın, sonra "Satışı yaz" düyməsinə basın. Bot satışı dərhal Bağ jurnalına (Excel) yazacaq.</div></div>
+  <div id="env" class="warn" hidden></div>
+  <section class="card"><h2>1. Sort</h2><div id="sorts" class="sorts"></div></section>
+  <section class="card"><h2>2. Növ</h2><div id="grades" class="chips"></div></section>
+  <section class="card">
+    <h2>3. Çəki və qiymət</h2>
+    <div class="row">
+      <div><label for="w">Çəki</label><input id="w" type="text" inputmode="decimal" autocomplete="off" placeholder="məs. 1250"></div>
+      <div><label for="u">Vahid</label><select id="u"><option value="kq">kq</option><option value="ton">ton</option></select></div>
+    </div>
+    <div style="margin-top:10px"><label for="p">Qiymət, AZN/kq</label><input id="p" type="text" inputmode="decimal" autocomplete="off" placeholder="məs. 1,10"></div>
+    <div id="pnote" class="note" style="margin-top:4px"></div>
+    <div style="margin-top:12px" class="note">Cəmi məbləğ</div><div id="tot" class="total">0,00 AZN</div>
+  </section>
+  <section class="card">
+    <h2>4. Alıcı və qeyd (istəyə bağlı)</h2>
+    <label for="b">Alıcı</label><input id="b" placeholder="məs. Bazar, Əli">
+    <label for="n" style="margin-top:10px">Qeyd</label><input id="n" placeholder="məs. qutu ilə, nisyə">
+  </section>
+  <button id="send" class="btn" type="button" disabled>Satışı yaz</button>
+  <div id="fallback" class="card" hidden><h2>Telegram xaricində açılıb</h2><div class="note">Bu formanı bot içində açın (bota şəxsi çatda <b>/satisforma</b> yazın). Və ya bu mətni kopyalayıb kanala yazın:</div><p><code id="cmd"></code></p><button class="btn2" id="copy" type="button">Kopyala</button></div>
+
+  <section id="admin" class="card" hidden>
+    <h2>⚙ Admin: sortlar, növlər, qiymətlər</h2>
+    <div class="note">Yalnız sahib görür. Dəyişiklikdən sonra "Yadda saxla" — bot yeni qiymətləri hamının formasına göndərəcək.</div>
+    <h2 style="margin-top:14px">Sortlar</h2>
+    <div id="adm-sorts" class="chips"></div>
+    <div class="row" style="margin-top:8px"><input id="new-sort" placeholder="Yeni sort adı"><button class="btn2" id="add-sort" type="button">+ Sort əlavə et</button></div>
+    <h2 style="margin-top:14px">Növlər</h2>
+    <div id="adm-grades" class="chips"></div>
+    <div class="row" style="margin-top:8px"><input id="new-grade" placeholder="Yeni növ (məs. 3-cü sort)"><button class="btn2" id="add-grade" type="button">+ Növ əlavə et</button></div>
+    <h2 style="margin-top:14px">Qiymətlər, AZN/kq</h2>
+    <div style="overflow-x:auto"><table id="adm-prices"></table></div>
+    <button class="btn" id="save-cfg" type="button" style="margin-top:12px">Yadda saxla</button>
+  </section>
+  <div class="note">Şəkillər: National Fruit Collection, Brogdale (OGL 2) — Fuji, Gala, Granny Smith; Krzysztof Golik (CC BY-SA 4.0) — Pink Lady (Roza). Wikimedia Commons vasitəsilə.</div>
+</main>
+<script>
+(function () {
+  var IMG = { 'Fuji': 'img/sort/fuji.jpg', 'Gala': 'img/sort/gala.jpg', 'Granny Smith': 'img/sort/granny.jpg', 'Roza': 'img/sort/roza.jpg' };
+  var DEF = { v: ['Fuji', 'Gala', 'Roza', 'Granny Smith', 'Story'], g: ['1-ci sort', '2-ci sort', 'Sənaye (şirəlik)'], p: {} };
+  var qs = new URLSearchParams(location.search), cfg = DEF;
+  try { if (qs.get('cfg')) { var s = qs.get('cfg').replace(/-/g, '+').replace(/_/g, '/'); cfg = JSON.parse(decodeURIComponent(escape(atob(s)))); } } catch (e) {}
+  cfg.v = cfg.v || DEF.v; cfg.g = cfg.g || DEF.g; cfg.p = cfg.p || {};
+  var admin = qs.get('adm') === '1';
+  var tg = window.Telegram && Telegram.WebApp && Telegram.WebApp.initData ? Telegram.WebApp : null;
+  if (tg) { tg.ready(); tg.expand(); }
+  var st = { v: null, g: null };
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (x) { return (Math.round(x * 100) / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+  var num = function (s) { return parseFloat(String(s || '').replace(',', '.')) || 0; };
+  function price() { return cfg.p[st.v + '|' + st.g]; }
+  function drawSorts() {
+    $('sorts').innerHTML = '';
+    cfg.v.forEach(function (v) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sort'; b.setAttribute('aria-pressed', st.v === v ? 'true' : 'false');
+      b.innerHTML = (IMG[v] ? '<img alt="" src="' + IMG[v] + '">' : '<div class="ph">🍎</div>') + '<b>' + v + '</b>';
+      b.onclick = function () { st.v = v; drawSorts(); upd(); }; $('sorts').appendChild(b);
+    });
+  }
+  function drawGrades() {
+    $('grades').innerHTML = '';
+    cfg.g.forEach(function (g) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = g; b.setAttribute('aria-pressed', st.g === g ? 'true' : 'false');
+      b.onclick = function () { st.g = g; drawGrades(); upd(); }; $('grades').appendChild(b);
+    });
+  }
+  function kg() { return num($('w').value) * ($('u').value === 'ton' ? 1000 : 1); }
+  function upd() {
+    var pr = price();
+    if (pr != null && st.v && st.g) { $('p').value = String(pr).replace('.', ','); $('p').readOnly = !admin; $('pnote').textContent = 'Admin qiyməti: ' + fmt(pr) + ' AZN/kq' + (admin ? ' (siz dəyişə bilərsiniz)' : ''); }
+    else { $('p').readOnly = false; $('pnote').textContent = st.v && st.g ? 'Bu sort və növ üçün admin qiyməti yoxdur — qiyməti yazın.' : ''; }
+    var t = kg() * num($('p').value);
+    $('tot').textContent = fmt(t) + ' AZN';
+    var ok = st.v && st.g && kg() > 0 && num($('p').value) > 0;
+    $('send').disabled = !ok;
+    $('cmd').textContent = '/satis ' + (st.v || '?') + ' ' + (st.g || '') + '; ' + fmt(kg()).replace(/ /g, '') + ' kq; ' + String(num($('p').value)).replace('.', ',') + ' AZN/kq' + ($('b').value ? '; alıcı: ' + $('b').value : '') + ($('n').value ? '; qeyd: ' + $('n').value : '');
+  }
+  ['w', 'u', 'p', 'b', 'n'].forEach(function (id) { $(id).addEventListener('input', upd); $(id).addEventListener('change', upd); });
+  $('send').onclick = function () {
+    var d = { t: 'sale', v: st.v, g: st.g, kg: kg(), p: num($('p').value), b: $('b').value.trim(), n: $('n').value.trim() };
+    if (tg) { tg.sendData(JSON.stringify(d)); }
+    else { $('fallback').hidden = false; $('fallback').scrollIntoView({ behavior: 'smooth' }); }
+  };
+  $('copy').onclick = function () { navigator.clipboard && navigator.clipboard.writeText($('cmd').textContent); $('copy').textContent = 'Kopyalandı ✓'; };
+  if (!tg) { $('env').hidden = false; $('env').textContent = 'Forma Telegram botu içində açılanda satış birbaşa Excel-ə yazılır. Saytda açmısınızsa, sonda kanala yazmaq üçün hazır mətn göstəriləcək.'; }
+  // admin
+  function drawAdmin() {
+    if (!admin) return; $('admin').hidden = false;
+    $('adm-sorts').innerHTML = ''; cfg.v.forEach(function (v, i) { var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = v + ' ✕'; b.title = 'Sil';
+      b.onclick = function () { if (confirm(v + ' silinsin?')) { cfg.v.splice(i, 1); drawAll(); } }; $('adm-sorts').appendChild(b); });
+    $('adm-grades').innerHTML = ''; cfg.g.forEach(function (g, i) { var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = g + ' ✕';
+      b.onclick = function () { if (confirm(g + ' silinsin?')) { cfg.g.splice(i, 1); drawAll(); } }; $('adm-grades').appendChild(b); });
+    var h = '<tr><th>Sort</th>' + cfg.g.map(function (g) { return '<th>' + g + '</th>'; }).join('') + '</tr>';
+    cfg.v.forEach(function (v) { h += '<tr><td><b>' + v + '</b></td>' + cfg.g.map(function (g) { var k = v + '|' + g;
+      return '<td><input data-k="' + k.replace(/"/g, '') + '" inputmode="decimal" value="' + (cfg.p[k] != null ? String(cfg.p[k]).replace('.', ',') : '') + '" placeholder="—"></td>'; }).join('') + '</tr>'; });
+    $('adm-prices').innerHTML = h;
+    Array.prototype.forEach.call($('adm-prices').querySelectorAll('input'), function (inp) { inp.addEventListener('input', function () { var x = num(inp.value); if (x > 0) cfg.p[inp.dataset.k] = x; else delete cfg.p[inp.dataset.k]; upd(); }); });
+  }
+  $('add-sort').onclick = function () { var x = $('new-sort').value.trim(); if (x && cfg.v.indexOf(x) < 0) { cfg.v.push(x); $('new-sort').value = ''; drawAll(); } };
+  $('add-grade').onclick = function () { var x = $('new-grade').value.trim(); if (x && cfg.g.indexOf(x) < 0) { cfg.g.push(x); $('new-grade').value = ''; drawAll(); } };
+  $('save-cfg').onclick = function () {
+    var d = { t: 'cfg', v: cfg.v, g: cfg.g, p: cfg.p };
+    if (tg) tg.sendData(JSON.stringify(d)); else alert('Yadda saxlamaq üçün formanı bot içində açın (/satisforma).');
+  };
+  function drawAll() { drawSorts(); drawGrades(); drawAdmin(); upd(); }
+  drawAll();
+})();
+</script>
+</body>
+</html>
